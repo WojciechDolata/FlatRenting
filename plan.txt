@@ -1,0 +1,36 @@
+Entities:
+
+User:
+-id
+-nick
+-email
+-password_hash
+-phone_number
+--offers: List<Offer>
+--converstions: List<Conversation>
+
+Offer:
+-id
+-price
+-location
+-n/o rooms
+-description
+--owner: User
+--pictures: List<Picture>
+
+Conversation:
+-id
+-messages: List<Message>
+
+Message:
+-id
+--sender: User
+--receiver: User
+-timestamp
+-content
+
+Picture:
+-id
+-url
+-name
+--origin: Offer
