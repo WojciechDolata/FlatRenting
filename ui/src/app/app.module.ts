@@ -5,6 +5,8 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {OfferSearchComponent} from './components/offer-search/offer-search.component';
 import {AddOfferComponent} from './components/add-offer/add-offer.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -14,7 +16,10 @@ import {AddOfferComponent} from './components/add-offer/add-offer.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   entryComponents: [
     OfferSearchComponent

@@ -8,13 +8,17 @@ import {HttpClient} from "@angular/common/http";
 })
 export class OfferService {
 
-  private offerUrl = "http://localhost:8080/offer/all";
+  private offerUrl = "http://localhost:8080/offer";
 
   constructor(
     private http: HttpClient
   ) { }
 
   getOffers(): Observable<Offer[]> {
-    return this.http.get<Offer[]>(this.offerUrl);
+    return this.http.get<Offer[]>(this.offerUrl + "/all");
+  }
+
+  addNewOffer(offer: Offer): Observable<Offer> {
+    return this.http.post<Offer>(this.offerUrl + "/add", offer);
   }
 }

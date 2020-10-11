@@ -29,10 +29,9 @@ public class OfferController {
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.OK)
-    public String addOffer(Offer offer) {
+    public String addOffer(@RequestBody Offer offer) {
         offerDao.save(offer);
         return "ok";
     }
-
 
 }

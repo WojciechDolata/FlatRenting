@@ -26,6 +26,9 @@ public class Offer {
     private LocalDateTime creationTimestamp;
 
     @Column
+    private String title;
+
+    @Column
     private String location;
 
     @Column
