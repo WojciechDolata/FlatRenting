@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Offer} from "../../../../../frontend/src/app/models/models";
-import {OfferService} from "../../../../../frontend/src/app/services/offer.service";
+import {Offer} from "../../models/models";
+import {OfferService} from "../../services/offer.service";
 
 @Component({
   selector: 'app-offer-search',

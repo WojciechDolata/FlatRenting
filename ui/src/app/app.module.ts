@@ -4,11 +4,13 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {OfferSearchComponent} from './components/offer-search/offer-search.component';
+import {AddOfferComponent} from './components/add-offer/add-offer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    OfferSearchComponent
+    OfferSearchComponent,
+    AddOfferComponent
   ],
   imports: [
     BrowserModule,
