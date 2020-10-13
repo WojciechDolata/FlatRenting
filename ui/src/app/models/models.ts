@@ -10,7 +10,7 @@ export class Offer extends BasicModel{
   roomCount: number;
   description: string;
   owner: User;
-  photos: number[];
+  photos: Photo[];
 }
 
 export class User extends BasicModel{
@@ -36,6 +36,6 @@ export class Message extends BasicModel{
 
 export class Photo extends BasicModel{
   name: string;
-  origin: number;
-  data: File;
+  origin: Offer;
+  data: Blob;
 }

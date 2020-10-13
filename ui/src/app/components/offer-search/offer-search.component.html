@@ -1,13 +1,34 @@
 <h1>Offers:</h1>
 
-<div *ngFor="let offer of offers" class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">{{offer.title}}</h5>
-    <h6 class="card-subtitle mb-2 text-muted">{{offer.location}}</h6>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">{{offer.roomCount}} rooms</li>
-      <li class="list-group-item">{{offer.size}} square meters</li>
-    </ul>
-    <a routerLink="/offer-detail/{{offer.id}}" class="card-link">Show details</a>
+<!--<div *ngFor="let offer of offers" class="card" style="width: 33%;">-->
+<!--  <div class="card-body">-->
+<!--    <img *ngIf="offer.photos.length > 0" class="card-img-top my-image" src="data:image/png;base64,{{offer.photos[0].data}}" alt="Card image cap">-->
+
+<!--    <h5 class="card-title">{{offer.title}}</h5>-->
+<!--    <h6 class="card-subtitle mb-2 text-muted">{{offer.location}}</h6>-->
+<!--    <ul class="list-group list-group-flush">-->
+<!--      <li class="list-group-item">{{offer.roomCount}} rooms</li>-->
+<!--      <li class="list-group-item">{{offer.size}} square meters</li>-->
+<!--    </ul>-->
+<!--    <a routerLink="/offer-detail/{{offer.id}}" class="card-link">Show details</a>-->
+<!--  </div>-->
+
+<!--</div>-->
+
+<div *ngFor="let offers of splitOffersToThreeInRow()" class="row" style="width: 100%;">
+  <div *ngFor="let offer of offers" class="card column">
+    <div class="card-body">
+      <img *ngIf="offer.photos.length > 0" class="card-img-top my-image" src="data:image/png;base64,{{offer.photos[0].data}}" alt="Card image cap">
+
+      <h5 class="card-title">{{offer.title}}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">{{offer.location}}</h6>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">{{offer.roomCount}} rooms</li>
+        <li class="list-group-item">{{offer.size}} square meters</li>
+      </ul>
+      <a routerLink="/offer-detail/{{offer.id}}" class="card-link">Show details</a>
+    </div>
+
   </div>
+
 </div>

@@ -43,6 +43,6 @@ public class Offer {
     @ManyToOne
     private User owner;
 
-    @OneToMany(cascade = {CascadeType.ALL})
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     private List<Photo> photos;
 }

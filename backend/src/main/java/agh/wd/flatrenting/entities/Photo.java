@@ -30,7 +30,7 @@ public class Photo {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Offer origin;
 
 

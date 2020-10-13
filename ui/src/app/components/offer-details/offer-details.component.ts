@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {OfferService} from "../../services/offer.service";
 import {Offer} from "../../models/models";
 import {ActivatedRoute} from "@angular/router";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-offer-details',
@@ -11,12 +12,14 @@ import {ActivatedRoute} from "@angular/router";
 export class OfferDetailsComponent implements OnInit {
 
   id: number;
+  images: any[];
 
   offer: Offer;
 
   constructor(
     private offerService: OfferService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit(): void {
@@ -26,7 +29,9 @@ export class OfferDetailsComponent implements OnInit {
   fetchOffer() {
     const id = +this.route.snapshot.paramMap.get('id');
     this.offerService.getOffer(id)
-      .subscribe(offer => this.offer = offer);
+      .subscribe(offer => {
+        this.offer = offer;
+      });
   }
 
   isNew(): boolean {

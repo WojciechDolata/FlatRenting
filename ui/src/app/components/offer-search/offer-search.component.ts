@@ -23,4 +23,14 @@ export class OfferSearchComponent implements OnInit {
       data => this.offers = data
     );
   }
+
+  splitOffersToThreeInRow(): Offer[][] {
+    var splitOffers = [];
+
+    for(let i = 0; i < this.offers.length; i = i + 3) {
+      splitOffers.push(this.offers.slice(i, i+3));
+    }
+
+    return splitOffers;
+  }
 }

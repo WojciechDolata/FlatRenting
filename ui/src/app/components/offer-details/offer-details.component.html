@@ -15,5 +15,9 @@
     {{offer.description}}
   </div>
 
+  <div *ngFor="let photo of offer.photos">
+    <img class="my-image" src="data:image/png;base64,{{photo.data}}"/>
+  </div>
+
   TODO: contact form
 </div>

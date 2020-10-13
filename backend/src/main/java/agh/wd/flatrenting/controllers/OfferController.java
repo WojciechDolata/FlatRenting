@@ -57,6 +57,4 @@ public class OfferController {
                 offerDao.addPhotos(id, Collections.singletonList(newPhoto))
         );
     }
-
-
 }
