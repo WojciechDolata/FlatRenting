@@ -6,10 +6,11 @@ export class BasicModel {
 export class Offer extends BasicModel{
   title: string;
   location: string;
+  size: string;
   roomCount: number;
   description: string;
   owner: User;
-  photos: Photo[];
+  photos: number[];
 }
 
 export class User extends BasicModel{
@@ -34,7 +35,7 @@ export class Message extends BasicModel{
 }
 
 export class Photo extends BasicModel{
-  url: string;
   name: string;
-  origin: Offer;
+  origin: number;
+  data: File;
 }

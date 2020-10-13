@@ -7,12 +7,14 @@ import {OfferSearchComponent} from './components/offer-search/offer-search.compo
 import {AddOfferComponent} from './components/add-offer/add-offer.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
+import {OfferDetailsComponent} from './components/offer-details/offer-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     OfferSearchComponent,
-    AddOfferComponent
+    AddOfferComponent,
+    OfferDetailsComponent
   ],
   imports: [
     BrowserModule,

@@ -29,7 +29,7 @@ public class UserController {
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.OK)
-    public String addUser(User user) {
+    public String addUser(@RequestBody User user) {
         userDao.save(user);
         return "ok";
     }

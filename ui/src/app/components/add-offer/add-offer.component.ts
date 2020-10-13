@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {OfferService} from "../../services/offer.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Offer} from "../../models/models";
+import {HttpResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-add-offer',
@@ -10,6 +11,7 @@ import {Offer} from "../../models/models";
 })
 export class AddOfferComponent implements OnInit {
   newOfferForm: FormGroup;
+  fileToUpload: File = null;
 
   constructor(
     private offerService: OfferService,
@@ -28,7 +30,6 @@ export class AddOfferComponent implements OnInit {
   }
 
   onSubmit(formValue) {
-    console.log(formValue);
     var offer: Offer = {
       id: null,
       creationTimestamp: null,
@@ -36,12 +37,30 @@ export class AddOfferComponent implements OnInit {
       location: formValue.location,
       roomCount: formValue.roomCount,
       description: formValue.description,
+      size: formValue.size,
       //TODO: fetch from session (cookies or sth)
       owner: null,
       photos: []
     };
 
     this.offerService.addNewOffer(offer)
-      .subscribe(offer => console.log("Sent new offer: " + offer));
+      .subscribe(offer => {
+        console.log("Sent new offer: " + offer);
+        this.upload(offer.id);
+      });
+  }
+
+  handleFileInput(event) {
+    this.fileToUpload = event.target.files.item(0);
+  }
+
+  upload(id: number) {
+    this.offerService.addPhotoToOffer(id, this.fileToUpload).subscribe(event => {
+        if (event instanceof HttpResponse) {
+          alert('File Successfully Uploaded');
+        }
+        this.fileToUpload = undefined;
+      }
+    );
   }
 }

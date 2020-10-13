@@ -31,6 +31,9 @@ public class Offer {
     @Column
     private String location;
 
+    @Column(name = "flat_size")
+    private String size;
+
     @Column
     private Integer roomCount;
 
@@ -40,6 +43,6 @@ public class Offer {
     @ManyToOne
     private User owner;
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.ALL})
     private List<Photo> photos;
 }

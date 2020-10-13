@@ -1,5 +1,13 @@
-<p>offer-search works!</p>
+<h1>Offers:</h1>
 
-<p *ngFor="let offer of offers">
-  {{offer.description}}
-</p>
+<div *ngFor="let offer of offers" class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">{{offer.title}}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{offer.location}}</h6>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">{{offer.roomCount}} rooms</li>
+      <li class="list-group-item">{{offer.size}} square meters</li>
+    </ul>
+    <a routerLink="/offer-detail/{{offer.id}}" class="card-link">Show details</a>
+  </div>
+</div>

@@ -24,13 +24,14 @@ public class Photo {
     @CreationTimestamp
     private LocalDateTime creationTimestamp;
 
-    @Column(name = "url")
-    private String url;
+    @Column(name = "data", length = 2047)
+    private byte[] data;
 
     @Column(name = "name")
     private String name;
 
     @ManyToOne
     private Offer origin;
+
 
 }

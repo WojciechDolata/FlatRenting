@@ -1,0 +1,19 @@
+<div *ngIf="offer">
+
+  <h1>{{offer.title}} <span *ngIf="isNew()" class="badge badge-secondary">New</span></h1>
+
+  <div class="details">
+    Location:<br/>
+    {{offer.location}}<br/>
+    Number of rooms:<br/>
+    {{offer.roomCount}}<br/>
+    Size:<br/>
+    {{offer.size}}<br/>
+    <br/>
+    <br/>
+    Description:<br/>
+    {{offer.description}}
+  </div>
+
+  TODO: contact form
+</div>
