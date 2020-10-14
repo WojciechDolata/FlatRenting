@@ -1,23 +1,75 @@
 <div *ngIf="offer">
 
-  <h1>{{offer.title}} <span *ngIf="isNew()" class="badge badge-secondary">New</span></h1>
-
-  <div class="details">
-    Location:<br/>
-    {{offer.location}}<br/>
-    Number of rooms:<br/>
-    {{offer.roomCount}}<br/>
-    Size:<br/>
-    {{offer.size}}<br/>
-    <br/>
-    <br/>
-    Description:<br/>
-    {{offer.description}}
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" >
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">All photos</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div id="photosCarousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+              <div *ngFor="let photo of offer.photos; let i = index" class="carousel-item {{i == 0 ? 'active' : ''}}">
+                <img class="d-block w-100" src="data:image/png;base64,{{photo.data}}">
+              </div>
+            </div>
+            <a class="carousel-control-prev" href="#photosCarousel" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#photosCarousel" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div *ngFor="let photo of offer.photos">
-    <img class="my-image" src="data:image/png;base64,{{photo.data}}"/>
+  <div class="card bg-light mb-3" style="width: 100%;">
+    <img *ngIf="offer.photos.length > 0" class="card-img-top limited" src="data:image/png;base64,{{offer.photos[0].data}}"
+         style="background-image: url(data:image/png;base64,{{offer.photos[0].data}});
+                background-size:cover;"
+         alt="Thumbnail placeholder">
+    <div class="card-body">
+      <h1 class="card-title">{{offer.title}} <span *ngIf="isNew()" class="badge badge-secondary">New</span></h1>
+
+      <button *ngIf="offer.photos.length > 0" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Show all photos!
+      </button>
+
+      <div class="card border-dark mb-3" style="max-width: 18rem; float: right">
+        <div class="card-header bg-primary text-white">
+          <h5>Basic information:</h5></div>
+        <div class="card-body text-dark">
+          <h5 class="card-title">{{offer.location}}</h5>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">{{offer.roomCount}} room{{offer.roomCount != 1 ? 's' : ''}}</li>
+            <li class="list-group-item">{{offer.size}} square meters</li>
+            <li class="list-group-item">{{offer.price}} PLN/month</li>
+          </ul>
+        </div>
+      </div>
+      <br/>
+      <br/>
+      <p class="card-text">{{offer.description}}</p>
+      <p *ngIf="offer.owner" class="card-text text-muted">{{offer.owner.nick}}</p>
+
+      <p class="card-text" style="position: absolute; bottom: 10px;"><small class="text-muted">Offer created {{howManyDaysAgo()}}</small></p>
+    </div>
   </div>
 
-  TODO: contact form
+  <h1>TODO: contact form</h1>
+</div>
+
+<div *ngIf="!offer">
+  <app-offer-not-found *ngIf="!offer" [id]="id"></app-offer-not-found>
 </div>

@@ -66,14 +66,14 @@ export class AddOfferComponent implements OnInit {
   }
 
   upload(id: number) {
-    this.filesToUpload.forEach( file =>
-      this.offerService.addPhotoToOffer(id, file).subscribe(event => {
+    for(let i = 0; i < this.filesToUpload.length; i++) {
+      this.offerService.addPhotoToOffer(id, this.filesToUpload[i]).subscribe(event => {
           if (event instanceof HttpErrorResponse) {
             alert('Error while uploading files');
           }
         }
-      )
-    );
+      );
+    }
 
     this.filesToUpload = null;
   }

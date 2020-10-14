@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {OfferService} from "../../services/offer.service";
 import {Offer} from "../../models/models";
 import {ActivatedRoute} from "@angular/router";
-import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-offer-details',
@@ -12,14 +11,12 @@ import {DomSanitizer} from "@angular/platform-browser";
 export class OfferDetailsComponent implements OnInit {
 
   id: number;
-  images: any[];
 
   offer: Offer;
 
   constructor(
     private offerService: OfferService,
-    private route: ActivatedRoute,
-    private sanitizer: DomSanitizer
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -27,17 +24,26 @@ export class OfferDetailsComponent implements OnInit {
   }
 
   fetchOffer() {
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.offerService.getOffer(id)
+    this.id = +this.route.snapshot.paramMap.get('id');
+    this.offerService.getOffer(this.id)
       .subscribe(offer => {
         this.offer = offer;
       });
   }
 
   isNew(): boolean {
-    const weekAgoDate = new Date;
-    weekAgoDate.setHours(weekAgoDate.getHours() - 24*7);
 
+    const weekAgoDate = new Date;
+    weekAgoDate.setHours(weekAgoDate.getHours() - 24*3);
     return this.offer.creationTimestamp >= weekAgoDate;
+  }
+
+  howManyDaysAgo(): string {
+    let dayCount = Math.round(Math.abs(Date.now() - this.offer.creationTimestamp.getTime())/(1000*60*60*24));
+    if (dayCount < 1) {
+      return "in the last 24 hours.";
+    } else {
+      return dayCount + " days ago."
+    }
   }
 }

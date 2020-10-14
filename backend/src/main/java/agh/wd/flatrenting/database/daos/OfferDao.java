@@ -63,8 +63,17 @@ public class OfferDao implements Dao<Offer> {
         return optionalOffer.orElse(null);
     }
 
-    public List<Offer> getAllBy(String searchQuery, boolean descriptionCheck, String roomCount, String size) {
-        return offerRepository.findAllBy(searchQuery, descriptionCheck, roomCount, size);
+    public List<Offer> getAllBy(String searchQuery, boolean descriptionCheck, String roomCount, String size, String orderBy) {
+        List<Offer> offers = offerRepository.findAllBy(searchQuery, descriptionCheck, roomCount, size);
+
+        offers.sort((o1, o2) -> switch (orderBy) {
+            case "2" -> o1.getCreationTimestamp().compareTo(o2.getCreationTimestamp());
+            case "3" -> o2.getPrice().compareTo(o1.getPrice());
+            case "4" -> o1.getPrice().compareTo(o2.getPrice());
+            default -> o2.getCreationTimestamp().compareTo(o1.getCreationTimestamp());
+        });
+
+        return offers;
     }
 
     public List<Offer> findAllOffersBy(String location) {

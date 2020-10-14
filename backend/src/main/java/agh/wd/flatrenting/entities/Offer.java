@@ -31,6 +31,9 @@ public class Offer {
     @Column
     private String location;
 
+    @Column
+    private Integer price;
+
     @Column(name = "flat_size")
     private String size;
 

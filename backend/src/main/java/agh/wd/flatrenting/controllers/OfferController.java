@@ -45,8 +45,9 @@ public class OfferController {
             @RequestParam(value = "searchQuery", required = false) String searchQuery,
             @RequestParam(value = "descriptionCheck", required = false) boolean descriptionCheck,
             @RequestParam(value = "roomCount", required = false) String roomCount,
-            @RequestParam(value = "size", required = false) String size) {
-        return ResponseEntity.ok().body(offerDao.getAllBy(searchQuery, descriptionCheck, roomCount, size));
+            @RequestParam(value = "size", required = false) String size,
+            @RequestParam(value = "orderBy", required = false) String orderBy) {
+        return ResponseEntity.ok().body(offerDao.getAllBy(searchQuery, descriptionCheck, roomCount, size, orderBy));
     }
 
     @PostMapping("/add")

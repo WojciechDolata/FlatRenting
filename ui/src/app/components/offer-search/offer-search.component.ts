@@ -38,8 +38,9 @@ export class OfferSearchComponent implements OnInit {
       formValue.searchString,
       formValue.descriptionCheckbox,
       formValue.roomCount,
-      formValue.size
-    ).subscribe(data => this.offers = data.reverse());
+      formValue.size,
+      formValue.orderBy
+    ).subscribe(data => this.offers = data);
   }
 
   getOffers() {
