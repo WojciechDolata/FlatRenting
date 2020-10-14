@@ -7,6 +7,7 @@ export class Offer extends BasicModel{
   title: string;
   location: string;
   size: string;
+  price: number;
   roomCount: number;
   description: string;
   owner: User;

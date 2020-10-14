@@ -1,6 +1,6 @@
 
 
-<h1>Please complete following form to add another offer</h1>
+<h1>Please complete following form to add new offer</h1>
 <br/>
 <br/>
 <form  [formGroup]="newOfferForm" (ngSubmit)="onSubmit(newOfferForm.value)">
@@ -12,7 +12,13 @@
   </div>
   <div class="form-group">
     <label for="location">Flat location</label>
-    <input type="text" class="form-control" id="location" placeholder="Flat location" formControlName="location">
+    <input type="text" class="form-control" id="location" placeholder="Flat location"
+           formControlName="location" required>
+  </div>
+  <div class="form-group">
+    <label for="price">Price</label>
+    <input type="number" class="form-control" id="price"
+           formControlName="price" required>
   </div>
   <div class="form-group">
     <label for="roomCount">Number of rooms</label>
@@ -34,11 +40,11 @@
     </select>
   </div>
   <div class="form-group">
-    <label for="file">Thumbnail</label> <br/>
+    <label for="file">Photos</label> <br/>
     <input type="file"
            id="file"
            accept="image/png, image/jpeg"
-           (change)="handleFileInput($event)">
+           (change)="handleFileInput($event)" multiple>
   </div>
   <div class="form-group">
     <label for="description">Description</label>

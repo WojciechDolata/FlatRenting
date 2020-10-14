@@ -1,19 +1,57 @@
+<form>
+  <div class="card text-white bg-primary mb-3 form-card">
+    <div class="card-header">Search options</div>
+    <div class="card-body">
+      <form  [formGroup]="searchForm" (ngSubmit)="filterOffers(searchForm.value)">
+        <div class="form-row align-items-center">
+          <div class="col-auto">
+            <input type="text" class="form-control mb-2" id="inlineFormInput" placeholder="Search string" formControlName="searchString">
+          </div>
+          <div class="col-auto">
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="checkbox" id="autoSizingCheck" formControlName="descriptionCheckbox">
+              <label class="form-check-label" for="autoSizingCheck">
+                Search in descriptions.
+              </label>
+            </div>
+          </div>
+          <div class="col-auto">
+           <select class="custom-select my-1 mr-sm-2" id="roomCount" formControlName="roomCount">
+              <option selected>Room count...</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5+">5+</option>
+            </select>
+          </div>
+          <div class="col-auto">
+            <select class="custom-select my-1 mr-sm-2" id="size" formControlName="size">
+              <option selected>Size...</option>
+              <option><25</option>
+              <option>25-40</option>
+              <option>40-70</option>
+              <option>>70</option>
+            </select>
+          </div>
+          <div class="col-auto">
+            <select class="custom-select my-1 mr-sm-2" id="orderBy" formControlName="orderBy">
+              <option value="1">Order by newest</option>
+              <option value="2">Order by oldest</option>
+              <option value="3">Order by cheapest</option>
+              <option value="4">Order by most expensive</option>
+            </select>
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-light mb-2">Apply</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
 <h1>Offers:</h1>
-
-<!--<div *ngFor="let offer of offers" class="card" style="width: 33%;">-->
-<!--  <div class="card-body">-->
-<!--    <img *ngIf="offer.photos.length > 0" class="card-img-top my-image" src="data:image/png;base64,{{offer.photos[0].data}}" alt="Card image cap">-->
-
-<!--    <h5 class="card-title">{{offer.title}}</h5>-->
-<!--    <h6 class="card-subtitle mb-2 text-muted">{{offer.location}}</h6>-->
-<!--    <ul class="list-group list-group-flush">-->
-<!--      <li class="list-group-item">{{offer.roomCount}} rooms</li>-->
-<!--      <li class="list-group-item">{{offer.size}} square meters</li>-->
-<!--    </ul>-->
-<!--    <a routerLink="/offer-detail/{{offer.id}}" class="card-link">Show details</a>-->
-<!--  </div>-->
-
-<!--</div>-->
 
 <div *ngFor="let offers of splitOffersToThreeInRow()" class="row" style="width: 100%;">
   <div *ngFor="let offer of offers" class="card column">

@@ -37,7 +37,7 @@ public class Offer {
     @Column
     private Integer roomCount;
 
-    @Column
+    @Column(length = 1023)
     private String description;
 
     @ManyToOne

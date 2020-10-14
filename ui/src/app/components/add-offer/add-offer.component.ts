@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {OfferService} from "../../services/offer.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Offer} from "../../models/models";
-import {HttpResponse} from "@angular/common/http";
+import {HttpErrorResponse} from "@angular/common/http";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-add-offer',
@@ -11,17 +12,23 @@ import {HttpResponse} from "@angular/common/http";
 })
 export class AddOfferComponent implements OnInit {
   newOfferForm: FormGroup;
-  fileToUpload: File = null;
+  filesToUpload: File[] = null;
 
   constructor(
     private offerService: OfferService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {
+    this.initFormGroup();
+  }
+
+  private initFormGroup() {
     this.newOfferForm = this.formBuilder.group({
       title: '',
       location: '',
-      roomCount: '',
-      size: '',
+      roomCount: '1',
+      size: '<25',
+      price: '',
       description: ''
     });
   }
@@ -38,6 +45,7 @@ export class AddOfferComponent implements OnInit {
       roomCount: formValue.roomCount,
       description: formValue.description,
       size: formValue.size,
+      price: formValue.price,
       //TODO: fetch from session (cookies or sth)
       owner: null,
       photos: []
@@ -47,20 +55,26 @@ export class AddOfferComponent implements OnInit {
       .subscribe(offer => {
         console.log("Sent new offer: " + offer);
         this.upload(offer.id);
+        this.initFormGroup();
+        this.router.navigateByUrl("/offer-detail/" + offer.id);
       });
+
   }
 
   handleFileInput(event) {
-    this.fileToUpload = event.target.files.item(0);
+    this.filesToUpload = event.target.files;
   }
 
   upload(id: number) {
-    this.offerService.addPhotoToOffer(id, this.fileToUpload).subscribe(event => {
-        if (event instanceof HttpResponse) {
-          alert('File Successfully Uploaded');
+    this.filesToUpload.forEach( file =>
+      this.offerService.addPhotoToOffer(id, file).subscribe(event => {
+          if (event instanceof HttpErrorResponse) {
+            alert('Error while uploading files');
+          }
         }
-        this.fileToUpload = undefined;
-      }
+      )
     );
+
+    this.filesToUpload = null;
   }
 }

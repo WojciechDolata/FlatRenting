@@ -13,9 +13,20 @@
   padding: 5px;
 }
 
+.row {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* Clear floats after image containers */
 .row::after {
   content: "";
   clear: both;
   display: table;
+}
+
+.form-card {
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }

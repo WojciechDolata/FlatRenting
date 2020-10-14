@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
 import {Offer} from "../models/models";
-import {HttpClient, HttpEvent, HttpRequest} from "@angular/common/http";
+import {HttpClient, HttpEvent, HttpParams, HttpRequest} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +20,34 @@ export class OfferService {
 
   getOffer(id: number): Observable<Offer> {
     return this.http.get<Offer>(this.offerUrl + "/" + id);
+  }
+
+  getOffersBy(searchQuery: string,
+              descriptionCheck: string,
+              roomCount: string,
+              size: string): Observable<Offer[]> {
+    let params = new HttpParams();
+
+
+    if(searchQuery != "") {
+      params = params.append("searchQuery", searchQuery);
+
+      if(descriptionCheck != "") {
+        params = params.append("descriptionCheck", String(descriptionCheck));
+      }
+    }
+
+    if(roomCount != "Room count...") {
+      params = params.append("roomCount", roomCount);
+    }
+
+    if(size != "Size...") {
+      params = params.append("size", size);
+    }
+
+    return this.http.get<Offer[]>(
+      this.offerUrl + "/allBy",{params: params}
+    )
   }
 
   addNewOffer(offer: Offer): Observable<Offer> {

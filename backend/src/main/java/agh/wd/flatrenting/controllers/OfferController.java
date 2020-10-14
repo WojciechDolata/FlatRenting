@@ -28,8 +28,8 @@ public class OfferController {
 
     @GetMapping(value = "/all", produces = {"application/json"})
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody Collection<Offer> getAllOffers() {
-        return offerDao.getAll();
+    public @ResponseBody ResponseEntity<Collection<Offer>> getAllOffers() {
+        return ResponseEntity.ok().body(offerDao.getAll());
     }
 
     @GetMapping("/{id}")
@@ -37,6 +37,16 @@ public class OfferController {
     public ResponseEntity<Offer> getOfferById(@PathVariable(value = "id") String id) {
         Offer offer = offerDao.get(Integer.parseInt(id)).orElse(null);
         return ResponseEntity.ok().body(offer);
+    }
+
+    @GetMapping(value = "/allBy", produces = {"application/json"})
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Collection<Offer>> getOffersBy(
+            @RequestParam(value = "searchQuery", required = false) String searchQuery,
+            @RequestParam(value = "descriptionCheck", required = false) boolean descriptionCheck,
+            @RequestParam(value = "roomCount", required = false) String roomCount,
+            @RequestParam(value = "size", required = false) String size) {
+        return ResponseEntity.ok().body(offerDao.getAllBy(searchQuery, descriptionCheck, roomCount, size));
     }
 
     @PostMapping("/add")

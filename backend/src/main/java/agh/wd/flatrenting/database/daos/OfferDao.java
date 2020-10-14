@@ -63,6 +63,10 @@ public class OfferDao implements Dao<Offer> {
         return optionalOffer.orElse(null);
     }
 
+    public List<Offer> getAllBy(String searchQuery, boolean descriptionCheck, String roomCount, String size) {
+        return offerRepository.findAllBy(searchQuery, descriptionCheck, roomCount, size);
+    }
+
     public List<Offer> findAllOffersBy(String location) {
         return offerRepository.findAllByLocation(location);
     }
