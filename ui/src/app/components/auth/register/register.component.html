@@ -1,0 +1,51 @@
+
+
+<h1>Please complete following form to register</h1>
+<br/>
+<br/>
+<form  [formGroup]="newUserForm" (ngSubmit)="onSubmit(newUserForm.value)"
+        class="needs-validation" novalidate>
+  <div class="form-group">
+    <label for="nick">Nick</label>
+    <input type="text" class="form-control" id="nick" placeholder="Nick"
+           formControlName="nick" required>
+    <div class="alert alert-danger" role="alert" *ngIf="nickWrong">
+      Too short!
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="pass">Password</label>
+    <input type="password" class="form-control" id="pass" placeholder="********"
+           formControlName="password" required>
+    <div class="alert alert-danger" role="alert" *ngIf="passMismatch">
+      Passwords have to match!
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="passConfirmation">Password confirmation</label>
+    <input type="password" class="form-control" id="passConfirmation" placeholder="********"
+           formControlName="passwordConfirmation" required>
+    <div class="alert alert-danger" role="alert" *ngIf="passMismatch">
+      Passwords have to match!
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="email">E-mail</label>
+    <input type="text" class="form-control" id="email"
+           formControlName="email" required>
+    <div class="alert alert-danger" role="alert" *ngIf="emailWrong">
+      Wrong email!
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="phoneNumber">Phone number</label>
+    <input type="number" class="form-control" id="phoneNumber" aria-describedby="phoneNumberHelp"
+           formControlName="phoneNumber">
+    <small id="phoneNumberHelp" class="form-text text-muted">Can improve contact with potential clients!</small>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Register</button>
+</form>
+
+

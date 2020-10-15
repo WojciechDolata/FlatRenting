@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Offer} from "../../models/models";
-import {OfferService} from "../../services/offer.service";
+import {Offer} from "../../../models/models";
+import {OfferService} from "../../../services/offer.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({

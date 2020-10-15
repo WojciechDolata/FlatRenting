@@ -29,11 +29,16 @@
     </li>
   </ul>
   <div class="btn-group float-right" role="group" aria-label="Basic example">
-    <button type="button" class="btn btn-outline-primary">Register</button>
-    <button type="button" class="btn btn-primary">Login</button>
+    <a [routerLink]="'/register'" >
+      <button type="button" class="btn btn-outline-primary">Register</button>
+    </a>
+    <a [routerLink]="'/login'">
+      <button type="button" class="btn btn-primary" >Login</button>
+    </a>
   </div>
 </div>
 </nav>
+
 <div class="container-fluid">
   <router-outlet></router-outlet>
 </div>

@@ -34,12 +34,11 @@ public class UserDao implements Dao<User> {
     }
 
     @Override
-    public void save(User user) {
-        try {
-            userRepository.save(user);
-        } catch (DataIntegrityViolationException ex) {
-            logger.error("Attempting to save object already in DB.");
+    public void save(User user) throws DataIntegrityViolationException{
+        if(userRepository.existsByNick(user.getNick())) {
+            throw new DataIntegrityViolationException("User already exists.");
         }
+        userRepository.save(user);
     }
 
     @Override
@@ -56,5 +55,9 @@ public class UserDao implements Dao<User> {
     @Override
     public void delete(User user) {
         //TODO: add deletion
+    }
+
+    public Optional<User> findByUserName(String userName) {
+        return userRepository.findByNick(userName);
     }
 }

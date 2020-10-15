@@ -4,12 +4,12 @@ import agh.wd.flatrenting.database.daos.UserDao;
 import agh.wd.flatrenting.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
-@Controller
+@CrossOrigin()
+@RestController
 @RequestMapping("/user")
 public class UserController {
 

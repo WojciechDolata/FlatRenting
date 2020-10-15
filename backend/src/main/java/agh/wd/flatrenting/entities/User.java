@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Data
@@ -36,7 +37,7 @@ public class User {
 
     @Column(name = "password_hash")
     @NonNull
-    private Integer passwordHash;
+    private String passwordHash;
 
     @Column(name = "phone_number")
     private String phoneNumber;
@@ -50,9 +51,13 @@ public class User {
     public User(@NonNull String nick, @NonNull String email, @NonNull String password, String phoneNumber) {
         this.nick = nick;
         this.email = email;
-        this.passwordHash = password.hashCode();
+        this.passwordHash = Integer.toString(password.hashCode());
         this.phoneNumber = phoneNumber;
         this.conversations = new ArrayList<>();
         this.offers = new ArrayList<>();
+    }
+
+    public List<String> getRoles() {
+        return Collections.singletonList("USER");
     }
 }

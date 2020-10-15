@@ -17,7 +17,7 @@ export class Offer extends BasicModel{
 export class User extends BasicModel{
   nick: string;
   email: string;
-  passwordHash: number;
+  passwordHash: string;
   phoneNumber: string;
   offers: Offer[];
   conversations: Conversation[];

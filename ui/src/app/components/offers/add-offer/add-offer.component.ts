@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {OfferService} from "../../services/offer.service";
+import {OfferService} from "../../../services/offer.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {Offer} from "../../models/models";
+import {Offer} from "../../../models/models";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
 
