@@ -4,6 +4,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {User} from "../models/models";
 import * as CryptoJS from 'crypto-js';
 import {Router} from "@angular/router";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,9 @@ export class AuthService {
   nick: string;
   headers: HttpHeaders;
 
-  private loginUrl = "http://localhost:8080/login";
-  private registerUrl = "http://localhost:8080/register";
+  private baseUrl = environment.serverUrl;
+  private loginUrl = this.baseUrl + "login";
+  private registerUrl =  this.baseUrl + "register";
 
   constructor(private http: HttpClient,
               private router: Router) {

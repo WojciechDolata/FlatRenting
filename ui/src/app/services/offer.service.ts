@@ -3,13 +3,16 @@ import {Observable} from "rxjs";
 import {Offer} from "../models/models";
 import {HttpClient, HttpEvent, HttpParams, HttpRequest} from "@angular/common/http";
 import {map} from "rxjs/operators";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class OfferService {
 
-  private offerUrl = "http://localhost:8080/offer";
+
+  private baseUrl = environment.serverUrl;
+  private offerUrl = this.baseUrl + "offer";
 
   constructor(
     private http: HttpClient
