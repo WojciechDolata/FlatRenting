@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -19,6 +20,9 @@ import java.util.List;
 public class AuthUserDetailsService implements UserDetailsService {
 
     private UserDao userDao;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     public AuthUserDetailsService(UserDao userDao) {
@@ -38,8 +42,11 @@ public class AuthUserDetailsService implements UserDetailsService {
         boolean accountNonLocked = true;
         return  new org.springframework.security.core.userdetails.User
                 (user.getEmail(),
-                        user.getPasswordHash().toString(), enabled, accountNonExpired,
-                        credentialsNonExpired, accountNonLocked,
+                        passwordEncoder.encode(user.getPasswordHash()),
+                        enabled,
+                        accountNonExpired,
+                        credentialsNonExpired,
+                        accountNonLocked,
                         getAuthorities(user.getRoles()));
     }
 

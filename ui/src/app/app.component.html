@@ -9,26 +9,32 @@
       <a  class="nav-link" [routerLink]="'/offers'">Home <span  class="sr-only">(current)</span></a>
     </li>
     <li  class="nav-item dropdown">
-      <a  class="nav-link dropdown-toggle"  href="#"  id="navbarDropdown"  role="button"  data-toggle="dropdown"  aria-haspopup="true"  aria-expanded="false">
+      <a  class="nav-link dropdown-toggle"  href="#"  id="offersDropdown"  role="button"  data-toggle="dropdown"  aria-haspopup="true"  aria-expanded="false">
         Offers
       </a>
-      <div  class="dropdown-menu"  aria-labelledby="navbarDropdown">
+      <div  class="dropdown-menu"  aria-labelledby="offersDropdown">
         <a  class="dropdown-item" [routerLink]="'/offers'"> Offer search </a>
         <a  class="dropdown-item" [routerLink]="'/create-offer'"> Create Offer </a>
-<!--        <div  class="dropdown-divider"></div>-->
-<!--        <a  class="dropdown-item" [routerLink]="'/contacts'"> Contacts </a>-->
-<!--        <a  class="dropdown-item" [routerLink]="'/create-contact'"> Create Contact </a>-->
       </div>
     </li>
 <!--    Maybe implement searchbar-->
-    <li>
-      <form class="form-inline">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
-      </form>
+<!--    <li>-->
+<!--      <form class="form-inline">-->
+<!--        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
+<!--        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>-->
+<!--      </form>-->
+<!--    </li>-->
+    <li *ngIf="isLogged()" class="nav-item active">
+      <a  class="nav-link" [routerLink]="'/messages'">Messages <span  class="sr-only">(current)</span></a>
     </li>
   </ul>
-  <div class="btn-group float-right" role="group" aria-label="Basic example">
+
+  <div *ngIf="isLogged()">
+    <h6>Welcome {{getCurrentNick()}}!</h6>
+    <button type="button" class="btn btn-primary" (click)="logout()">Logout</button>
+  </div>
+
+  <div *ngIf="!isLogged()" class="btn-group float-right" role="group" aria-label="Basic example">
     <a [routerLink]="'/register'" >
       <button type="button" class="btn btn-outline-primary">Register</button>
     </a>

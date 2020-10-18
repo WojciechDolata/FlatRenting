@@ -12,6 +12,8 @@ import {OfferNotFoundComponent} from './components/error/offer-not-found/offer-n
 import {LoginComponent} from './components/auth/login/login.component';
 import {RegisterComponent} from './components/auth/register/register.component';
 import {AuthFailedComponent} from './components/error/auth-failed/auth-failed.component';
+import {AllConversationsComponent} from './components/messages/all-conversations/all-conversations.component';
+import {SingleConversationComponent} from './components/messages/single-conversation/single-conversation.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import {AuthFailedComponent} from './components/error/auth-failed/auth-failed.co
     OfferNotFoundComponent,
     LoginComponent,
     RegisterComponent,
-    AuthFailedComponent
+    AuthFailedComponent,
+    AllConversationsComponent,
+    SingleConversationComponent
   ],
   imports: [
     BrowserModule,

@@ -19,7 +19,7 @@ export class LoginComponent {
 
   login() {
     this.authService.authenticate(this.credentials, () => {
-      this.router.navigateByUrl('/offer-search');
+      this.router.navigateByUrl('/offers');
     }, error => this.error = true);
     return false;
   }

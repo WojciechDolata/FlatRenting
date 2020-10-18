@@ -16,11 +16,20 @@ export class AppComponent {
   constructor(private authService: AuthService, private http: HttpClient, private router: Router) {
     this.authService.authenticate(undefined, undefined, undefined);
   }
+
   logout() {
     this.http.post('logout', {}).pipe(finalize(() => {
       this.authService.authenticated = false;
       this.router.navigateByUrl('/offer-search');
     })).subscribe();
+  }
+
+  isLogged(): boolean {
+    return this.authService.authenticated;
+  }
+
+  getCurrentNick(): string {
+    return this.authService.nick;
   }
 
 }
