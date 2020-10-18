@@ -9,7 +9,6 @@ export class MessageService {
 
   private baseUrl = environment.serverUrl;
 
-
   constructor(private authService: AuthService) {
 
   }

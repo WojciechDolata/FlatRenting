@@ -1,7 +1,7 @@
 package agh.wd.flatrenting.controllers;
 
-import agh.wd.flatrenting.database.daos.UserDao;
 import agh.wd.flatrenting.entities.User;
+import agh.wd.flatrenting.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,8 +11,12 @@ import java.security.Principal;
 @RestController
 public class AuthController {
 
+    private final UserService userService;
+
     @Autowired
-    private UserDao userDao;
+    public AuthController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping(produces = "application/json")
     @RequestMapping({ "/login" })
@@ -22,7 +26,7 @@ public class AuthController {
 
     @PostMapping(value = "/register", produces = "application/json")
     public User registerNewUser(@RequestBody User user) {
-        userDao.save(user);
+        userService.save(user);
         return user;
     }
 }

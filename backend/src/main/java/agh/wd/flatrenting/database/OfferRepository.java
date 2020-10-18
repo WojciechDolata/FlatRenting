@@ -1,4 +1,4 @@
-package agh.wd.flatrenting.database.repositories;
+package agh.wd.flatrenting.database;
 
 import agh.wd.flatrenting.entities.Offer;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,5 +22,4 @@ public interface OfferRepository extends JpaRepository<Offer, Integer> {
                           @Param(value = "roomCount") String roomCount,
                           @Param(value = "size") String size);
 
-    List<Offer> findAllByLocation(String location);
 }

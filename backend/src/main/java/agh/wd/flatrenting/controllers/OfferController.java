@@ -1,8 +1,8 @@
 package agh.wd.flatrenting.controllers;
 
-import agh.wd.flatrenting.database.daos.OfferDao;
 import agh.wd.flatrenting.entities.Offer;
 import agh.wd.flatrenting.entities.Photo;
+import agh.wd.flatrenting.services.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,24 +18,24 @@ import java.util.Collections;
 @RequestMapping("/offer")
 public class OfferController {
 
-    private OfferDao offerDao;
+    private OfferService offerService;
 
     @Autowired
-    public OfferController(OfferDao offerDao) {
-        this.offerDao = offerDao;
+    public OfferController(OfferService offerService) {
+        this.offerService = offerService;
     }
 
 
     @GetMapping(value = "/all", produces = {"application/json"})
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody ResponseEntity<Collection<Offer>> getAllOffers() {
-        return ResponseEntity.ok().body(offerDao.getAll());
+        return ResponseEntity.ok().body(offerService.getAll());
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Offer> getOfferById(@PathVariable(value = "id") String id) {
-        Offer offer = offerDao.get(Integer.parseInt(id)).orElse(null);
+        Offer offer = offerService.get(Integer.parseInt(id)).orElse(null);
         return ResponseEntity.ok().body(offer);
     }
 
@@ -47,13 +47,13 @@ public class OfferController {
             @RequestParam(value = "roomCount", required = false) String roomCount,
             @RequestParam(value = "size", required = false) String size,
             @RequestParam(value = "orderBy", required = false) String orderBy) {
-        return ResponseEntity.ok().body(offerDao.getAllBy(searchQuery, descriptionCheck, roomCount, size, orderBy));
+        return ResponseEntity.ok().body(offerService.getAllBy(searchQuery, descriptionCheck, roomCount, size, orderBy));
     }
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Offer> addOffer(@RequestBody Offer offer) {
-        offerDao.save(offer);
+        offerService.save(offer);
         return ResponseEntity.ok().body(offer);
     }
 
@@ -65,7 +65,7 @@ public class OfferController {
         newPhoto.setName(file.getName());
         newPhoto.setData(file.getBytes());
         return ResponseEntity.ok().body(
-                offerDao.addPhotos(id, Collections.singletonList(newPhoto))
+                offerService.addPhotos(id, Collections.singletonList(newPhoto))
         );
     }
 }

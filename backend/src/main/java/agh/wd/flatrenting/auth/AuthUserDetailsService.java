@@ -1,7 +1,7 @@
 package agh.wd.flatrenting.auth;
 
-import agh.wd.flatrenting.database.daos.UserDao;
 import agh.wd.flatrenting.entities.User;
+import agh.wd.flatrenting.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,20 +19,20 @@ import java.util.List;
 @Transactional
 public class AuthUserDetailsService implements UserDetailsService {
 
-    private UserDao userDao;
+    private UserService userService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AuthUserDetailsService(UserDao userDao) {
-        this.userDao = userDao;
+    public AuthUserDetailsService(UserService userService) {
+        this.userService = userService;
     }
 
     public UserDetails loadUserByUsername(String userName)
             throws UsernameNotFoundException {
 
-        User user = userDao.findByUserName(userName).orElseThrow(
+        User user = userService.findByUserName(userName).orElseThrow(
                 () -> new UsernameNotFoundException("No user found with username: "+ userName)
         );
 

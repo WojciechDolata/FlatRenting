@@ -1,7 +1,7 @@
 package agh.wd.flatrenting.controllers;
 
-import agh.wd.flatrenting.database.daos.UserDao;
 import agh.wd.flatrenting.entities.User;
+import agh.wd.flatrenting.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,24 +13,24 @@ import java.util.Collection;
 @RequestMapping("/user")
 public class UserController {
 
-    private UserDao userDao;
+    private UserService userService;
 
     @Autowired
-    public UserController(UserDao userDao) {
-        this.userDao = userDao;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
 
     @GetMapping(value = "/all", produces = {"application/json"})
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody Collection<User> users() {
-        return userDao.getAll();
+        return userService.getAll();
     }
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.OK)
     public String addUser(@RequestBody User user) {
-        userDao.save(user);
+        userService.save(user);
         return "ok";
     }
 }

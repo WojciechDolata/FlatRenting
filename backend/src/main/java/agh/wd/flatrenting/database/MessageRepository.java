@@ -1,4 +1,4 @@
-package agh.wd.flatrenting.database.repositories;
+package agh.wd.flatrenting.database;
 
 import agh.wd.flatrenting.entities.Message;
 import org.springframework.data.repository.CrudRepository;

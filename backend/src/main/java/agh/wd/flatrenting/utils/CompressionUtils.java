@@ -1,62 +1,17 @@
-package agh.wd.flatrenting.database.daos;
+package agh.wd.flatrenting.utils;
 
-import agh.wd.flatrenting.database.repositories.PhotoRepository;
-import agh.wd.flatrenting.entities.Photo;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
-@Component
-public class PhotoDao implements Dao<Photo> {
+public class CompressionUtils {
+    private static final Logger logger = Logger.getLogger(CompressionUtils.class);
 
-    private static Logger logger = Logger.getLogger(PhotoDao.class);
-
-    private PhotoRepository photoRepository;
-
-    @Autowired
-    public PhotoDao(PhotoRepository photoRepository) {
-        this.photoRepository = photoRepository;
-    }
-
-    @Override
-    public Optional<Photo> get(int id) {
-        var optionalPhoto = photoRepository.findById(id);
-        optionalPhoto.ifPresent(
-                photo -> photo.setData(decompressBytes(photo.getData()))
-        );
-
-        return optionalPhoto;
-    }
-
-    @Override
-    public List<Photo> getAll() {
-        return null;
-    }
-
-    @Override
-    public void save(Photo photo) {
-        photo.setData(compressBytes(photo.getData()));
-        photoRepository.save(photo);
-    }
-
-    @Override
-    public void update(Photo photo) {
-
-    }
-
-    @Override
-    public void delete(Photo photo) {
-        photoRepository.findById(photo.getId()).ifPresent(
-                photoRepository::delete
-        );
+    private CompressionUtils() {
     }
 
     public static byte[] compressBytes(byte[] data) {
