@@ -14,6 +14,7 @@ import {RegisterComponent} from './components/auth/register/register.component';
 import {AuthFailedComponent} from './components/error/auth-failed/auth-failed.component';
 import {AllConversationsComponent} from './components/messages/all-conversations/all-conversations.component';
 import {SingleConversationComponent} from './components/messages/single-conversation/single-conversation.component';
+import {MessageFormComponent} from './components/messages/message-form/message-form.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {SingleConversationComponent} from './components/messages/single-conversa
     RegisterComponent,
     AuthFailedComponent,
     AllConversationsComponent,
-    SingleConversationComponent
+    SingleConversationComponent,
+    MessageFormComponent
   ],
   imports: [
     BrowserModule,

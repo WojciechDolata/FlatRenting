@@ -24,8 +24,8 @@ export class User extends BasicModel{
 }
 
 export class Conversation extends BasicModel {
-  user1: User;
-  user2: User;
+  user: User;
+  offer: Offer;
   messages: Message[];
 }
 

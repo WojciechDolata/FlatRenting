@@ -1,0 +1,16 @@
+
+<div *ngIf="isLogged()">
+  <h5>Send message:</h5>
+  <form  [formGroup]="messageForm" (ngSubmit)="onSubmit(messageForm.value)"
+         class="needs-validation" novalidate>
+    <div class="form-group">
+      <textarea class="form-control" id="message" rows="5" formControlName="message"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Send</button>
+  </form>
+</div>
+
+<div *ngIf="!isLogged()">
+  <a [routerLink]="'/login'">Login</a> to send message!
+</div>

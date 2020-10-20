@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {Offer} from "../../../models/models";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-add-offer',
@@ -16,6 +17,7 @@ export class AddOfferComponent implements OnInit {
 
   constructor(
     private offerService: OfferService,
+    private authService: AuthService,
     private formBuilder: FormBuilder,
     private router: Router
   ) {
@@ -46,12 +48,11 @@ export class AddOfferComponent implements OnInit {
       description: formValue.description,
       size: formValue.size,
       price: formValue.price,
-      //TODO: fetch from session (cookies or sth)
       owner: null,
       photos: []
     };
 
-    this.offerService.addNewOffer(offer)
+    this.offerService.addNewOffer(offer, this.authService.nick)
       .subscribe(offer => {
         console.log("Sent new offer: " + offer);
         this.upload(offer.id);

@@ -50,10 +50,11 @@ public class OfferController {
         return ResponseEntity.ok().body(offerService.getAllBy(searchQuery, descriptionCheck, roomCount, size, orderBy));
     }
 
-    @PostMapping("/add")
+    @PostMapping("/add/{ownerNick}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Offer> addOffer(@RequestBody Offer offer) {
-        offerService.save(offer);
+    public ResponseEntity<Offer> addOffer(@PathVariable(value = "ownerNick") String ownerNick,
+                                          @RequestBody Offer offer) {
+        offerService.addOffer(offer, ownerNick);
         return ResponseEntity.ok().body(offer);
     }
 

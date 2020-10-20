@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface OfferRepository extends JpaRepository<Offer, Integer> {
     @Override
@@ -21,5 +22,7 @@ public interface OfferRepository extends JpaRepository<Offer, Integer> {
                           @Param(value = "descriptionCheck") boolean descriptionCheck,
                           @Param(value = "roomCount") String roomCount,
                           @Param(value = "size") String size);
+
+    Optional<Offer> findById(Integer id);
 
 }

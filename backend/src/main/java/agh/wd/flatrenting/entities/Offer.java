@@ -46,6 +46,9 @@ public class Offer {
     @ManyToOne
     private User owner;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private List<Photo> photos;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Conversation> conversations;
 }

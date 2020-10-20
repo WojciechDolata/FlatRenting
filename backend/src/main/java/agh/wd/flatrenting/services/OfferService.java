@@ -1,8 +1,11 @@
 package agh.wd.flatrenting.services;
 
 import agh.wd.flatrenting.database.OfferRepository;
+import agh.wd.flatrenting.database.UserRepository;
 import agh.wd.flatrenting.entities.Offer;
 import agh.wd.flatrenting.entities.Photo;
+import agh.wd.flatrenting.entities.User;
+import agh.wd.flatrenting.exceptions.UserNotFoundException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,10 +20,13 @@ public class OfferService {
     private static Logger logger = Logger.getLogger(OfferService.class);
 
     private final OfferRepository offerRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public OfferService(OfferRepository offerRepository) {
+    public OfferService(OfferRepository offerRepository,
+                        UserRepository userRepository) {
         this.offerRepository = offerRepository;
+        this.userRepository = userRepository;
     }
 
     public Optional<Offer> get(int id) {
@@ -43,6 +49,16 @@ public class OfferService {
         offerRepository.findById(offer.getId()).ifPresent(
                 offerRepository::delete
         );
+    }
+
+    public void addOffer(Offer offer, String ownerNick) {
+        User user = userRepository.findByNick(ownerNick).orElse(null);
+        if(user == null) {
+            logger.error("User " + ownerNick + " not found.", new UserNotFoundException(ownerNick));
+        } else {
+            offer.setOwner(user);
+            save(offer);
+        }
     }
 
     @Transactional

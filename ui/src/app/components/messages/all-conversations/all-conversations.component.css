@@ -1,0 +1,38 @@
+.card {
+  min-height: 70px;
+}
+
+.my-image {
+  max-height: 150px;
+}
+
+/* Three image containers (use 25% for four, and 50% for two, etc) */
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 5px;
+}
+
+.column-wide {
+  float: left;
+  width: 66.66%;
+  padding: 5px;
+}
+
+.row {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Clear floats after image containers */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.form-card {
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}

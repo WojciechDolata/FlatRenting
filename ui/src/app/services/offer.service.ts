@@ -77,8 +77,8 @@ export class OfferService {
     );
   }
 
-  addNewOffer(offer: Offer): Observable<Offer> {
-    return this.http.post<Offer>(this.offerUrl + "/add", offer).pipe(
+  addNewOffer(offer: Offer, ownerNick: string): Observable<Offer> {
+    return this.http.post<Offer>(this.offerUrl + "/add/" + ownerNick, offer).pipe(
       map( offer => this.fixDate(offer))
     );
   }

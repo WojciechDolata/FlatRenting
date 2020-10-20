@@ -1,5 +1,6 @@
 package agh.wd.flatrenting.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -26,11 +27,12 @@ public class Conversation {
     private LocalDateTime creationTimestamp;
 
     @ManyToOne
-    private User user1;
+    private User user;
 
     @ManyToOne
-    private User user2;
+    private Offer offer;
 
-    @OneToMany
+    @OneToMany(mappedBy = "conversation", orphanRemoval = true, cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Message> messages;
 }

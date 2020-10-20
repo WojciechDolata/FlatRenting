@@ -1,6 +1,7 @@
 package agh.wd.flatrenting.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -33,5 +34,9 @@ public class Message {
 
     @ManyToOne
     private User receiver;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonBackReference
+    private Conversation conversation;
 
 }

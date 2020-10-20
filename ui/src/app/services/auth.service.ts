@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {User} from "../models/models";
+import {Conversation, User} from "../models/models";
 import * as CryptoJS from 'crypto-js';
 import {Router} from "@angular/router";
 import {environment} from "../../environments/environment";
@@ -15,6 +15,7 @@ export class AuthService {
   authenticated = false;
   nick: string;
   headers: HttpHeaders;
+  currentConversation: Conversation = null;
 
   private baseUrl = environment.serverUrl;
   private loginUrl = this.baseUrl + "login";

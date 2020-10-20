@@ -1,1 +1,25 @@
-<h1> Here are all conversations for user: {{getCurrentUser()}}</h1>
+<div *ngIf="isLogged()">
+
+  <div class="jumbotron jumbotron-fluid">
+    <h1 class="display-4 pl-5 pr-5">Here are all your conversations</h1>
+  </div>
+
+  <ul class="list-group">
+    <li *ngFor="let conversation of conversations" class="list-group-item row" style="width: 100%;">
+      <div class="card-body column">
+        <h5 class="card-title">{{conversation.offer.title}}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{conversation.offer.location}}</h6>
+      </div>
+      <div class="column-wide">
+        {{conversation.messages[conversation.messages.length-1].content}}
+        <small>{{getLatestMessageDate(conversation)}}</small>
+        <a [routerLink]="'/conversation'"
+           (click)="setAsCurrentConversation(conversation)"
+           class="btn btn-outline-info float-right">Go to conversation</a>
+      </div>
+    </li>
+  </ul>
+
+</div>
+
+<app-login *ngIf="!isLogged()"></app-login>

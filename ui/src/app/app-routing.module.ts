@@ -6,6 +6,7 @@ import {OfferDetailsComponent} from "./components/offers/offer-details/offer-det
 import {LoginComponent} from "./components/auth/login/login.component";
 import {RegisterComponent} from "./components/auth/register/register.component";
 import {AllConversationsComponent} from "./components/messages/all-conversations/all-conversations.component";
+import {SingleConversationComponent} from "./components/messages/single-conversation/single-conversation.component";
 
 const routes: Routes = [
   { path: 'offers', component: OfferSearchComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'offer-detail/:id', component: OfferDetailsComponent },
   { path: 'login', component: LoginComponent },
   { path: 'messages', component: AllConversationsComponent },
+  { path: 'conversation', component: SingleConversationComponent },
   { path: 'register', component: RegisterComponent }
 ];
 

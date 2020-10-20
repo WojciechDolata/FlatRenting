@@ -1,4 +1,9 @@
 import {Component, OnInit} from '@angular/core';
+import {Conversation} from "../../../models/models";
+import {MessageService} from "../../../services/message.service";
+import {AuthService} from "../../../services/auth.service";
+import DateUtils from "../../../utils/date-utils";
+
 
 @Component({
   selector: 'app-single-conversation',
@@ -7,9 +12,28 @@ import {Component, OnInit} from '@angular/core';
 })
 export class SingleConversationComponent implements OnInit {
 
-  constructor() { }
+  conversation: Conversation;
+  secondUser: string;
+  constructor(
+    private messageService: MessageService,
+    private authService: AuthService
+  ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.conversation = this.authService.currentConversation;
+    this.secondUser = this.conversation.user.nick == this.authService.nick ? this.conversation.offer.owner.nick : this.conversation.user.nick;
+  }
+
+  getLoggedUser() {
+    return this.authService.nick;
+  }
+
+  isLogged() {
+    return this.authService.authenticated;
+  }
+
+  formatDate(date) {
+    return DateUtils.formatDate(date);
   }
 
 }
