@@ -95,11 +95,11 @@ public class MessageService {
                 message.setReceiver(offerOwner);
             }
 
+            message.setConversation(conversation);
             List<Message> messages = conversation.getMessages();
             messages.add(message);
             conversation.setMessages(messages);
 
-//            conversationRepository.save(conversation);
             entityManager.persist(conversation);
 
             return message;
