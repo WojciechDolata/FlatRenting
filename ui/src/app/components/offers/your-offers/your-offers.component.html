@@ -1,0 +1,33 @@
+<div *ngIf="isLogged()">
+
+  <div class="jumbotron jumbotron-fluid">
+    <h1 class="display-4 pl-5 pr-5">Here are all your offers</h1>
+  </div>
+
+  <ul class="list-group">
+    <li *ngFor="let offer of offers" class="list-group-item row" style="width: 100%;">
+      <div class="card-body column">
+        <img *ngIf="offer.photos.length > 0" class="card-img-top my-image" src="data:image/png;base64,{{offer.photos[0].data}}" alt="Card image cap">
+
+        <h5 class="card-title">{{offer.title}}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{offer.location}}</h6>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">{{offer.roomCount}} rooms</li>
+          <li class="list-group-item">{{offer.size}} square meters</li>
+        </ul>
+        <a routerLink="/offer-detail/{{offer.id}}" class="card-link">Show details</a>
+      </div>
+
+<!--      <div class="column-wide">-->
+<!--        {{conversation.messages[conversation.messages.length-1].content}}-->
+<!--        <small>{{getLatestMessageDate(conversation)}}</small>-->
+<!--        <a [routerLink]="'/conversation'"-->
+<!--           (click)="setAsCurrentConversation(conversation)"-->
+<!--           class="btn btn-outline-info float-right">Go to conversation</a>-->
+<!--      </div>-->
+    </li>
+  </ul>
+
+</div>
+
+<app-login *ngIf="!isLogged()"></app-login>

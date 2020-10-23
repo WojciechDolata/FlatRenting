@@ -14,10 +14,4 @@ public class FlatrentingApplication {
 
 	}
 
-//	@Bean
-//	ApplicationRunner init(UserRepository repository) {
-//		return args ->
-//				repository.save(new User("admin", "admin@google.com", "admin", "997"));
-//	}
-
 }

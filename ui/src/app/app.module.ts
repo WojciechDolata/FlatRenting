@@ -15,6 +15,8 @@ import {AuthFailedComponent} from './components/error/auth-failed/auth-failed.co
 import {AllConversationsComponent} from './components/messages/all-conversations/all-conversations.component';
 import {SingleConversationComponent} from './components/messages/single-conversation/single-conversation.component';
 import {MessageFormComponent} from './components/messages/message-form/message-form.component';
+import {YourOffersComponent} from './components/offers/your-offers/your-offers.component';
+import {ProfileDetailsComponent} from './components/profile/profile-details/profile-details.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import {MessageFormComponent} from './components/messages/message-form/message-f
     AuthFailedComponent,
     AllConversationsComponent,
     SingleConversationComponent,
-    MessageFormComponent
+    MessageFormComponent,
+    YourOffersComponent,
+    ProfileDetailsComponent
   ],
   imports: [
     BrowserModule,

@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -33,17 +34,20 @@ public class MessageService {
     private UserRepository userRepository;
     private OfferRepository offerRepository;
     private ConversationRepository conversationRepository;
+    private OfferService offerService;
     private EntityManager entityManager;
 
     @Autowired
     public MessageService(MessageRepository messageRepository,
                           UserRepository userRepository,
                           OfferRepository offerRepository,
+                          OfferService offerService,
                           ConversationRepository conversationRepository,
                           EntityManager entityManager) {
         this.messageRepository = messageRepository;
         this.userRepository = userRepository;
         this.offerRepository = offerRepository;
+        this.offerService = offerService;
         this.conversationRepository = conversationRepository;
         this.entityManager = entityManager;
     }
@@ -52,8 +56,8 @@ public class MessageService {
         Conversation conversation = conversationRepository.findById(conversationId).orElse(null);
 
         if(conversation == null) {
-            logger.error("Conversation " + conversationId + " not found.", new ConversationNotFoundException(conversationId.toString()));
-            return null;
+            logger.error("Conversation " + conversationId + " not found.");
+            throw new ConversationNotFoundException(conversationId.toString());
         }
 
         List<Message> messages = conversation.getMessages();
@@ -66,23 +70,44 @@ public class MessageService {
         User user = userRepository.findByNick(nick).orElse(null);
 
         if(user == null) {
-            logger.error("User " + nick + " not found.", new UserNotFoundException(nick));
+            logger.error("User " + nick + " not found.");
+            throw new UserNotFoundException(nick);
         } else {
             return conversationRepository.findAllByUser(user);
         }
+    }
 
-        return null;
+    public List<List<Conversation>> getAllConversationsForOfferIds(List<Integer> offerIds) {
+        List<List<Conversation>> conversationsListList = new ArrayList<>();
+        offerIds.forEach(
+                id -> conversationsListList.add(getAllForOffer(id))
+        );
+
+        return conversationsListList;
+    }
+
+    private List<Conversation> getAllForOffer(Integer offerId) {
+        Offer offer = offerRepository.findById(offerId).orElse(null);
+
+        if(offer == null) {
+            logger.error("Offer " + offerId + " not found.");
+            throw new OfferNotFoundException(offerId.toString());
+        } else {
+            return conversationRepository.findAllByOffer(offer);
+        }
     }
 
     @Transactional
-    public Message addMessage(String messageText, String senderNick, Integer conversationId) {
+    public Conversation addMessage(String messageText, String senderNick, Integer conversationId) {
         User sender = userRepository.findByNick(senderNick).orElse(null);
         Conversation conversation = conversationRepository.findById(conversationId).orElse(null);
 
         if(sender == null) {
-            logger.error("User " + senderNick + " not found.", new UserNotFoundException(senderNick));
+            logger.error("User " + senderNick + " not found.");
+            throw new UserNotFoundException(senderNick);
         } else if(conversation == null) {
-            logger.error("Conversation " + conversationId + " not found.", new ConversationNotFoundException(conversationId.toString()));
+            logger.error("Conversation " + conversationId + " not found.");
+            throw new ConversationNotFoundException(conversationId.toString());
         } else {
             Message message = new Message();
             message.setContent(messageText);
@@ -102,10 +127,8 @@ public class MessageService {
 
             entityManager.persist(conversation);
 
-            return message;
+            return conversation;
         }
-
-        return null;
     }
 
     @Transactional
@@ -114,11 +137,14 @@ public class MessageService {
         Offer offer = offerRepository.findById(offerId).orElse(null);
 
         if(sender == null) {
-            logger.error("User " + senderNick + " not found.", new UserNotFoundException(senderNick));
+            logger.error("User " + senderNick + " not found.");
+            throw new UserNotFoundException(senderNick);
         } else if(offer == null) {
-            logger.error("Offer " + offerId + " not found.", new OfferNotFoundException(offerId.toString()));
+            logger.error("Offer " + offerId + " not found.");
+            throw new OfferNotFoundException(offerId.toString());
         } else if(conversationRepository.existsByOfferAndAndUser(offer, sender)) {
-            logger.error("Conversation already exists.", new ConversationExistsException());
+            logger.error("Conversation already exists.");
+            throw new ConversationExistsException();
         } else {
             Message message = new Message();
             message.setContent(messageText);
@@ -135,7 +161,5 @@ public class MessageService {
 
             return conversation;
         }
-
-        return null;
     }
 }

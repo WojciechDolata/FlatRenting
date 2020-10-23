@@ -14,8 +14,12 @@
       </a>
       <div  class="dropdown-menu"  aria-labelledby="offersDropdown">
         <a  class="dropdown-item" [routerLink]="'/offers'"> Offer search </a>
-        <a  class="dropdown-item" [routerLink]="'/create-offer'"> Create Offer </a>
+        <a *ngIf="isLogged()" class="dropdown-item" [routerLink]="'/create-offer'"> Create Offer </a>
+        <a *ngIf="isLogged()" class="dropdown-item" [routerLink]="'/your-offers'"> Your Offers </a>
       </div>
+    </li>
+    <li *ngIf="!isLogged()" class="nav-item active">
+      <div  class="nav-link">Log in to see more!</div>
     </li>
 <!--    Maybe implement searchbar-->
 <!--    <li>-->
@@ -24,8 +28,17 @@
 <!--        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>-->
 <!--      </form>-->
 <!--    </li>-->
+    <li *ngIf="isLogged()" class="nav-item dropdown">
+      <a  class="nav-link dropdown-toggle"  href="#"  id="messagesDropdown"  role="button"  data-toggle="dropdown"  aria-haspopup="true"  aria-expanded="false">
+        Messages
+      </a>
+      <div  class="dropdown-menu"  aria-labelledby="messagesDropdown">
+        <a  class="dropdown-item" [routerLink]="'/messages'"> About other offers </a>
+        <a  class="dropdown-item" [routerLink]="'/your-offers'"> About your offers </a>
+      </div>
+    </li>
     <li *ngIf="isLogged()" class="nav-item active">
-      <a  class="nav-link" [routerLink]="'/messages'">Messages <span  class="sr-only">(current)</span></a>
+      <a  class="nav-link" [routerLink]="'/profile'">Your profile</a>
     </li>
   </ul>
 

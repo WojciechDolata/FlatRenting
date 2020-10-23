@@ -24,6 +24,10 @@ export class SingleConversationComponent implements OnInit {
     this.secondUser = this.conversation.user.nick == this.authService.nick ? this.conversation.offer.owner.nick : this.conversation.user.nick;
   }
 
+  updateConversationData(updatedConversation: Conversation) {
+    this.conversation = updatedConversation;
+  }
+
   getLoggedUser() {
     return this.authService.nick;
   }

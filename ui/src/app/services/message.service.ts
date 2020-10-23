@@ -17,12 +17,23 @@ export class MessageService {
               private http: HttpClient) {
   }
 
-  getConversations(): Observable<Conversation[]> {
+  getConversationsByNick(): Observable<Conversation[]> {
     return this.http.get<Conversation[]>(
-      this.messageUrl + "/all/" + this.authService.nick,
+      this.messageUrl + "/allByNick/" + this.authService.nick,
       {headers: this.authService.headers}
       );
   }
+
+  getAllConversationsForOffers(offerIds): Observable<Conversation[][]> {
+    const data: FormData = new FormData();
+    data.append('offerIds', offerIds);
+    return this.http.post<Conversation[][]>(
+      this.messageUrl + "/allByOffers",
+      data,
+      {headers: this.authService.headers}
+    );
+  }
+
 
   addConversation(message: string, offerId: number) {
     const data: FormData = new FormData();

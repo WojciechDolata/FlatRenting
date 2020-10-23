@@ -20,7 +20,7 @@ export class AppComponent {
   logout() {
     this.http.post('logout', {}).pipe(finalize(() => {
       this.authService.authenticated = false;
-      this.router.navigateByUrl('/offer-search');
+      this.router.navigateByUrl('/@Dataarch');
     })).subscribe();
   }
 

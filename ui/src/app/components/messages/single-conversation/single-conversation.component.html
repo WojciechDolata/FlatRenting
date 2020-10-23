@@ -17,7 +17,9 @@
   <br/>
   <br/>
   <br/>
-  <app-message-form [conversationId]="conversation.id" [createNewConversation]="false"></app-message-form>
+  <app-message-form [conversationId]="conversation.id"
+                    [createNewConversation]="false"
+                    (onSend)="updateConversationData($event)"></app-message-form>
 </div>
 
 <app-login *ngIf="!isLogged()"></app-login>

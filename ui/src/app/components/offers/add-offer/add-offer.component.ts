@@ -78,4 +78,8 @@ export class AddOfferComponent implements OnInit {
 
     this.filesToUpload = null;
   }
+
+  isLogged() {
+    return this.authService.authenticated;
+  }
 }

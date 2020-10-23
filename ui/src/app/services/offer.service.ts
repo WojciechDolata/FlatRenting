@@ -77,6 +77,10 @@ export class OfferService {
     );
   }
 
+  getAllForUser(nick: string): Observable<Offer[]> {
+    return this.http.get<Offer[]>(this.offerUrl + "/" + nick +"/all");
+  }
+
   addNewOffer(offer: Offer, ownerNick: string): Observable<Offer> {
     return this.http.post<Offer>(this.offerUrl + "/add/" + ownerNick, offer).pipe(
       map( offer => this.fixDate(offer))

@@ -7,6 +7,8 @@ import {LoginComponent} from "./components/auth/login/login.component";
 import {RegisterComponent} from "./components/auth/register/register.component";
 import {AllConversationsComponent} from "./components/messages/all-conversations/all-conversations.component";
 import {SingleConversationComponent} from "./components/messages/single-conversation/single-conversation.component";
+import {ProfileDetailsComponent} from "./components/profile/profile-details/profile-details.component";
+import {YourOffersComponent} from "./components/offers/your-offers/your-offers.component";
 
 const routes: Routes = [
   { path: 'offers', component: OfferSearchComponent },
@@ -15,6 +17,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'messages', component: AllConversationsComponent },
   { path: 'conversation', component: SingleConversationComponent },
+  { path: 'profile', component: ProfileDetailsComponent },
+  { path: 'your-offers', component: YourOffersComponent },
   { path: 'register', component: RegisterComponent }
 ];
 

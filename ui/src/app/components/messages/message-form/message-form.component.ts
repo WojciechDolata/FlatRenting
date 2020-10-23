@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {MessageService} from "../../../services/message.service";
 import {AuthService} from "../../../services/auth.service";
@@ -14,7 +14,7 @@ export class MessageFormComponent implements OnInit {
   @Input() offerId: number;
   @Input() conversationId: number;
   @Input() createNewConversation: boolean;
-
+  @Output() onSend: EventEmitter<any> = new EventEmitter();
 
   constructor(private formBuilder: FormBuilder,
               private messageService: MessageService,
@@ -37,11 +37,11 @@ export class MessageFormComponent implements OnInit {
   onSubmit(formValue) {
     if(this.createNewConversation) {
       this.messageService.addConversation(formValue.message, this.offerId).subscribe(
-        conversation => console.log("message sent correctly")
+        conversation => console.log('')
       )
     } else {
       this.messageService.addMessage(formValue.message, this.conversationId).subscribe(
-        conversation => console.log("message sent correctly")
+        conversation => this.onSend.emit(conversation)
       )
     }
   }

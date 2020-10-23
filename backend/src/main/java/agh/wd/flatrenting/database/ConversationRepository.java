@@ -11,5 +11,7 @@ public interface ConversationRepository extends CrudRepository<Conversation, Int
 
     List<Conversation> findAllByUser(User user);
 
+    List<Conversation> findAllByOffer(Offer offer);
+
     boolean existsByOfferAndAndUser(Offer offer, User user);
 }

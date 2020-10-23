@@ -54,7 +54,8 @@ public class OfferService {
     public void addOffer(Offer offer, String ownerNick) {
         User user = userRepository.findByNick(ownerNick).orElse(null);
         if(user == null) {
-            logger.error("User " + ownerNick + " not found.", new UserNotFoundException(ownerNick));
+            logger.error("User " + ownerNick + " not found.");
+            throw new UserNotFoundException(ownerNick);
         } else {
             offer.setOwner(user);
             save(offer);
@@ -85,6 +86,16 @@ public class OfferService {
         });
 
         return offers;
+    }
+
+    public List<Offer> getAllForUser(String nick) {
+        User user = userRepository.findByNick(nick).orElse(null);
+        if(user == null) {
+            logger.error("User " + nick + " not found.");
+            throw new UserNotFoundException(nick);
+        } else {
+            return offerRepository.findAllByOwner(user);
+        }
     }
 }
 

@@ -62,8 +62,9 @@
       <h5 class="card-title">{{offer.title}}</h5>
       <h6 class="card-subtitle mb-2 text-muted">{{offer.location}}</h6>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item">{{offer.roomCount}} rooms</li>
+        <li class="list-group-item">{{offer.roomCount}} room{{offer.roomCount != 1 ? 's' : ''}}</li>
         <li class="list-group-item">{{offer.size}} square meters</li>
+        <li class="list-group-item">{{offer.price}} PLN/month</li>
       </ul>
       <a routerLink="/offer-detail/{{offer.id}}" class="card-link">Show details</a>
     </div>

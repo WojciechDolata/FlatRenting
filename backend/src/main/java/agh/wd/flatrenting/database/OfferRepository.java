@@ -1,6 +1,7 @@
 package agh.wd.flatrenting.database;
 
 import agh.wd.flatrenting.entities.Offer;
+import agh.wd.flatrenting.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -24,5 +25,8 @@ public interface OfferRepository extends JpaRepository<Offer, Integer> {
                           @Param(value = "size") String size);
 
     Optional<Offer> findById(Integer id);
+
+    @Query(value = "Select o from Offer o where o.owner = :owner")
+    List<Offer> findAllByOwner(@Param(value = "owner") User owner);
 
 }

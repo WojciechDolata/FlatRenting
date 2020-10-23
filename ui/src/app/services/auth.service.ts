@@ -52,7 +52,7 @@ export class AuthService {
     this.http.post(this.registerUrl, user).subscribe(
       nextUser => {
         this.authenticate({username: user.nick, password: password}, () => {
-          this.router.navigateByUrl('/offer-search');
+          this.router.navigateByUrl('/offers');
         }, () => {});
       }
     );

@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Controller
 @RequestMapping("/offer")
@@ -68,5 +69,11 @@ public class OfferController {
         return ResponseEntity.ok().body(
                 offerService.addPhotos(id, Collections.singletonList(newPhoto))
         );
+    }
+
+    @GetMapping("/{nick}/all")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<List<Offer>> getAllOffersForUser(@PathVariable(value = "nick") String nick) {
+        return ResponseEntity.ok(offerService.getAllForUser(nick));
     }
 }

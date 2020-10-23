@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
 
 @CrossOrigin()
 @RestController
@@ -24,15 +25,23 @@ public class MessageController {
 
     @GetMapping(value = "/getLastMessage/{conversationId}", produces = {"application/json"})
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody ResponseEntity<Message> getLastMessageFor(@PathVariable String conversationId) {
-        return ResponseEntity.ok(messageService.getLastMessageForConversation(Integer.parseInt(conversationId)));
+    public @ResponseBody ResponseEntity<Message> getLastMessageFor(@PathVariable Integer conversationId) {
+        return ResponseEntity.ok(messageService.getLastMessageForConversation(conversationId));
     }
 
-    @GetMapping(value = "/all/{nick}", produces = {"application/json"})
+    @GetMapping(value = "/allByNick/{nick}", produces = {"application/json"})
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody ResponseEntity<Collection<Conversation>> getAllConversationsBy(@PathVariable String nick) {
+    public @ResponseBody ResponseEntity<Collection<Conversation>> getAllConversationsByNick(@PathVariable String nick) {
         return ResponseEntity.ok(messageService.getAllForUser(nick));
     }
+
+    @PostMapping(value = "/allByOffers", produces = {"application/json"})
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody ResponseEntity<List<List<Conversation>>> getAllByOffers(
+            @RequestParam(value = "offerIds") List<Integer> offerIds) {
+        return ResponseEntity.ok(messageService.getAllConversationsForOfferIds(offerIds));
+    }
+
 
 
     @PostMapping(value = "/addConversation", produces = {"application/json"})
@@ -46,7 +55,7 @@ public class MessageController {
 
     @PostMapping(value = "/addMessage", produces = {"application/json"})
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody ResponseEntity<Message> addMessage(
+    public @ResponseBody ResponseEntity<Conversation> addMessage(
             @RequestParam(value = "message") String message,
             @RequestParam(value = "userNick") String userNick,
             @RequestParam(value = "conversationId") String conversationId) {

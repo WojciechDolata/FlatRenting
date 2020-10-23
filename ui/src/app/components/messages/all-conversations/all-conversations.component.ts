@@ -25,7 +25,7 @@ export class AllConversationsComponent implements OnInit {
   }
 
   fetchConversations() {
-    this.messageService.getConversations().subscribe(data => this.conversations = data);
+    this.messageService.getConversationsByNick().subscribe(data => this.conversations = data);
   }
 
   setAsCurrentConversation(conversation: Conversation) {
