@@ -11,7 +11,8 @@ import {OfferService} from "../../../services/offer.service";
 })
 export class YourOffersComponent implements OnInit {
   offers: Offer[];
-  conversationLists: Conversation[][];
+  conversationLists: Conversation[][] = null;
+  offerListMap = new Map<Offer, Conversation[]>();
 
   constructor(private authService: AuthService,
               private offerService: OfferService,
@@ -30,13 +31,29 @@ export class YourOffersComponent implements OnInit {
         this.messageService.getAllConversationsForOffers(offerIds).subscribe(
           data => {
             this.conversationLists = data;
-            console.log(data);
+            this.setMap()
           }
         );
       }
     )
+  }
 
+  setMap() {
+    for(let i = 0; i<this.offers.length; i++) {
+      this.offerListMap.set(this.offers[i], this.conversationLists[i]);
+    }
+  }
 
+  splitOffersToThreeInRow(): Offer[][] {
+    let splitOffers = [];
+
+    if(this.offerListMap) {
+      for(let i = 0; i < this.offers.length; i = i + 3) {
+        splitOffers.push(this.offers.slice(i, i+3));
+      }
+    }
+
+    return splitOffers;
   }
 
   isLogged() {

@@ -43,7 +43,7 @@
   </ul>
 
   <div *ngIf="isLogged()">
-    <h6>Welcome {{getCurrentNick()}}!</h6>
+    <strong class="pr-3">Welcome {{getCurrentNick()}}! </strong>
     <button type="button" class="btn btn-primary" (click)="logout()">Logout</button>
   </div>
 

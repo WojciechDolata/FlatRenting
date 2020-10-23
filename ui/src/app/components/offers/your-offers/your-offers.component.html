@@ -1,32 +1,36 @@
 <div *ngIf="isLogged()">
 
   <div class="jumbotron jumbotron-fluid">
-    <h1 class="display-4 pl-5 pr-5">Here are all your offers</h1>
+    <h1 class="lead pl-5 pr-5">Here are all your offers</h1>
   </div>
 
-  <ul class="list-group">
-    <li *ngFor="let offer of offers" class="list-group-item row" style="width: 100%;">
-      <div class="card-body column">
-        <img *ngIf="offer.photos.length > 0" class="card-img-top my-image" src="data:image/png;base64,{{offer.photos[0].data}}" alt="Card image cap">
+  <div *ngIf="this.conversationLists">
+    <div *ngFor="let offers of splitOffersToThreeInRow()" class="row" style="width: 100%;">
+      <div *ngFor="let offer of offers" class="card column">
+        <div class="card-body">
+          <h5 class="card-title">{{offer.title}}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{offer.location}}</h6>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <span class="badge badge-pill badge-primary">{{offerListMap.get(offer).length}}</span> total message{{offerListMap.get(offer).length != 1 ? 's' : ''}}
+            </li>
+            <li class="list-group-item">
+              <span class="badge badge-pill badge-primary">{{offerListMap.get(offer).length}}</span> new message{{offerListMap.get(offer).length != 1 ? 's' : ''}}
+            </li>
+          </ul>
+          <a routerLink="/offer-detail/{{offer.id}}"
+             class="btn btn-outline-primary">Show offer details
+          </a>
+          <br/>
+          <a routerLink="/offer-messages/{{offer.id}}"
+             class="btn btn-outline-primary">Show messages
+          </a>
+        </div>
 
-        <h5 class="card-title">{{offer.title}}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">{{offer.location}}</h6>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">{{offer.roomCount}} rooms</li>
-          <li class="list-group-item">{{offer.size}} square meters</li>
-        </ul>
-        <a routerLink="/offer-detail/{{offer.id}}" class="card-link">Show details</a>
       </div>
 
-<!--      <div class="column-wide">-->
-<!--        {{conversation.messages[conversation.messages.length-1].content}}-->
-<!--        <small>{{getLatestMessageDate(conversation)}}</small>-->
-<!--        <a [routerLink]="'/conversation'"-->
-<!--           (click)="setAsCurrentConversation(conversation)"-->
-<!--           class="btn btn-outline-info float-right">Go to conversation</a>-->
-<!--      </div>-->
-    </li>
-  </ul>
+    </div>
+  </div>
 
 </div>
 

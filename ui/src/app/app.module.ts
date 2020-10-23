@@ -17,6 +17,7 @@ import {SingleConversationComponent} from './components/messages/single-conversa
 import {MessageFormComponent} from './components/messages/message-form/message-form.component';
 import {YourOffersComponent} from './components/offers/your-offers/your-offers.component';
 import {ProfileDetailsComponent} from './components/profile/profile-details/profile-details.component';
+import {OfferConversationsComponent} from './components/messages/offer-conversations/offer-conversations.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {ProfileDetailsComponent} from './components/profile/profile-details/prof
     SingleConversationComponent,
     MessageFormComponent,
     YourOffersComponent,
-    ProfileDetailsComponent
+    ProfileDetailsComponent,
+    OfferConversationsComponent
   ],
   imports: [
     BrowserModule,

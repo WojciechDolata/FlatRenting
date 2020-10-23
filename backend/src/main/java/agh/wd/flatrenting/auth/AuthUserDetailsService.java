@@ -20,6 +20,7 @@ import java.util.List;
 public class AuthUserDetailsService implements UserDetailsService {
 
     private UserService userService;
+    //TODO: make another service for storing JUST auth data
 
     @Autowired
     private PasswordEncoder passwordEncoder;

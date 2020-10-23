@@ -35,11 +35,13 @@ export class AuthService {
     } : {});
 
     this.http.get(this.loginUrl, {headers: this.headers}).subscribe(response => {
-      if (response['name']) {
-        this.authenticated = true;
-        this.nick = credentials.username;
-      } else {
-        this.authenticated = false;
+      if(response) {
+        if (response['name']) {
+          this.authenticated = true;
+          this.nick = credentials.username;
+        } else {
+          this.authenticated = false;
+        }
       }
       return callback && callback();
     }, error => errorFunction && errorFunction());

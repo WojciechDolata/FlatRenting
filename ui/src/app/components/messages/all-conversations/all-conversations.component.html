@@ -1,7 +1,7 @@
 <div *ngIf="isLogged()">
 
   <div class="jumbotron jumbotron-fluid">
-    <h1 class="display-4 pl-5 pr-5">Here are all your conversations</h1>
+    <h1 class="lead pl-5 pr-5">Here are all your conversations</h1>
   </div>
 
   <ul class="list-group">
@@ -11,11 +11,14 @@
         <h6 class="card-subtitle mb-2 text-muted">{{conversation.offer.location}}</h6>
       </div>
       <div class="column-wide">
-        {{conversation.messages[conversation.messages.length-1].content}}
+        <div *ngIf="conversation.messages.length != 0">
+          {{conversation.messages[conversation.messages.length-1].content}}
+        </div>
         <small>{{getLatestMessageDate(conversation)}}</small>
         <a [routerLink]="'/conversation'"
            (click)="setAsCurrentConversation(conversation)"
-           class="btn btn-outline-info float-right">Go to conversation</a>
+           class="btn btn-outline-primary float-right">Go to conversation
+        </a>
       </div>
     </li>
   </ul>

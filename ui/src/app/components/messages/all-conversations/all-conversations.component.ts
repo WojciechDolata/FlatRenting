@@ -17,7 +17,8 @@ export class AllConversationsComponent implements OnInit {
               private messageService: MessageService) { }
 
   ngOnInit(): void {
-    this.fetchConversations();
+    if (this.isLogged())
+      this.fetchConversations();
   }
 
   getCurrentUser(): string {

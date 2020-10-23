@@ -1,0 +1,25 @@
+
+<div *ngIf="isAuthorized() && conversations">
+  <div class="jumbotron jumbotron-fluid">
+    <h1 class="lead pl-5 pr-5">
+      Here are all conversations for offer <strong>{{offer.title}}</strong> in <strong>{{offer.location}}</strong>
+    </h1>
+  </div>
+  <ul class="list-group">
+
+    <li *ngFor="let conversation of conversations.reverse()" class="list-group-item">
+      <h5 class="mb-1">{{conversation.user.nick}}</h5>
+      Last message: <strong>{{conversation.messages[conversation.messages.length-1].content}}</strong>
+      <small class="right">{{formatDate(conversation.messages[conversation.messages.length-1].creationTimestamp)}}</small>
+      <br/>
+      <br/>
+      <a [routerLink]="'/conversation'"
+         (click)="setAsCurrentConversation(conversation)">
+        <button type="button" class="btn btn-outline-primary btn-sm right">Go to conversation</button>
+      </a>
+    </li>
+  </ul>
+
+</div>
+
+<app-auth-failed *ngIf="!isAuthorized()"></app-auth-failed>
