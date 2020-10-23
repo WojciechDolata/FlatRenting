@@ -1,6 +1,7 @@
 package agh.wd.flatrenting.controllers;
 
 import agh.wd.flatrenting.entities.User;
+import agh.wd.flatrenting.entities.UserCredentials;
 import agh.wd.flatrenting.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +26,12 @@ public class AuthController {
     }
 
     @PostMapping(value = "/register", produces = "application/json")
-    public User registerNewUser(@RequestBody User user) {
-        userService.save(user);
-        return user;
+    public User registerNewUser(
+            @RequestParam(value = "nick") String nick,
+            @RequestParam(value = "passwordHash") String passwordHash,
+            @RequestParam(value = "phoneNumber") String phoneNumber,
+            @RequestParam(value = "email") String email) {
+        userService.save(new User(nick, phoneNumber), new UserCredentials(nick, email, passwordHash));
+        return userService.findByUserName(nick).orElse(null);
     }
 }

@@ -50,8 +50,13 @@ export class AuthService {
 
   register(user: User) {
     var password = user.passwordHash;
-    user.passwordHash = this.hashString(user.passwordHash);
-    this.http.post(this.registerUrl, user).subscribe(
+    const data: FormData = new FormData();
+    data.append('nick', user.nick);
+    data.append('passwordHash', this.hashString(user.passwordHash));
+    data.append('phoneNumber', user.phoneNumber);
+    data.append('email', user.email);
+
+    this.http.post(this.registerUrl, data).subscribe(
       nextUser => {
         this.authenticate({username: user.nick, password: password}, () => {
           this.router.navigateByUrl('/offers');

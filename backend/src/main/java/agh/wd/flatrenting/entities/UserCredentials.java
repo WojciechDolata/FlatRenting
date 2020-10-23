@@ -5,6 +5,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
 
 @Data
 @Getter
@@ -35,4 +37,14 @@ public class UserCredentials {
     @Column(name = "password_hash")
     @NonNull
     private String passwordHash;
+
+    public UserCredentials(@NonNull String nick, @NonNull String email, @NonNull String passwordHash) {
+        this.nick = nick;
+        this.email = email;
+        this.passwordHash = passwordHash;
+    }
+
+    public List<String> getRoles() {
+        return Collections.singletonList("USER");
+    }
 }

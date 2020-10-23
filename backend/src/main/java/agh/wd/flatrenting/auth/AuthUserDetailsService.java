@@ -1,7 +1,7 @@
 package agh.wd.flatrenting.auth;
 
-import agh.wd.flatrenting.entities.User;
-import agh.wd.flatrenting.services.UserService;
+import agh.wd.flatrenting.database.UserCredentialsRepository;
+import agh.wd.flatrenting.entities.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,21 +19,20 @@ import java.util.List;
 @Transactional
 public class AuthUserDetailsService implements UserDetailsService {
 
-    private UserService userService;
-    //TODO: make another service for storing JUST auth data
+    private UserCredentialsRepository userCredentialsRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AuthUserDetailsService(UserService userService) {
-        this.userService = userService;
+    public AuthUserDetailsService(UserCredentialsRepository userCredentialsRepository) {
+        this.userCredentialsRepository = userCredentialsRepository;
     }
 
     public UserDetails loadUserByUsername(String userName)
             throws UsernameNotFoundException {
 
-        User user = userService.findByUserName(userName).orElseThrow(
+        UserCredentials user = userCredentialsRepository.findByNick(userName).orElseThrow(
                 () -> new UsernameNotFoundException("No user found with username: "+ userName)
         );
 

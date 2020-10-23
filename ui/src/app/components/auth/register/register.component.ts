@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
   emailWrong: boolean;
   nickWrong: boolean;
 
-  EMAIL: string = "[a-zA-Z0-9_\\.\\+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-\\.]+";
+  EMAIL_MATCHER: string = "[a-zA-Z0-9_\\.\\+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-\\.]+";
 
   constructor(private authService: AuthService,
               private formBuilder: FormBuilder,
@@ -42,10 +42,8 @@ export class RegisterComponent implements OnInit {
   }
 
   validate(formValue): boolean {
-    this.emailWrong = ! (String(formValue.email).match(this.EMAIL));
+    this.emailWrong = ! (String(formValue.email).match(this.EMAIL_MATCHER));
     this.passMismatch = formValue.password !== formValue.passwordConfirmation;
-    console.log(formValue.nick !== '');
-    console.log(formValue.nick.length > 5);
 
     this.nickWrong = ! (formValue.nick !== '' || formValue.nick.length > 5);
     return !this.passMismatch && !this.emailWrong && !this.nickWrong;
