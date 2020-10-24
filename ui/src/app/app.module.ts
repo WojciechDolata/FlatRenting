@@ -18,6 +18,9 @@ import {MessageFormComponent} from './components/messages/message-form/message-f
 import {YourOffersComponent} from './components/offers/your-offers/your-offers.component';
 import {ProfileDetailsComponent} from './components/profile/profile-details/profile-details.component';
 import {OfferConversationsComponent} from './components/messages/offer-conversations/offer-conversations.component';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {FooterComponent} from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -34,14 +37,17 @@ import {OfferConversationsComponent} from './components/messages/offer-conversat
     MessageFormComponent,
     YourOffersComponent,
     ProfileDetailsComponent,
-    OfferConversationsComponent
+    OfferConversationsComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatProgressSpinnerModule
   ],
   entryComponents: [
     OfferSearchComponent

@@ -1,5 +1,5 @@
 <form>
-  <div class="card text-white bg-primary mb-3 form-card">
+  <div class="card text-white bg-primary m-3 form-card">
     <div class="card-header">Search options</div>
     <div class="card-body">
       <form  [formGroup]="searchForm" (ngSubmit)="filterOffers(searchForm.value)">
@@ -54,6 +54,7 @@
 
 <h1>Offers:</h1>
 
+<mat-spinner *ngIf="!offers" style="margin: 20% auto;" [color]="'primary'"></mat-spinner>
 <div *ngFor="let offers of splitOffersToThreeInRow()" class="row" style="width: 100%;">
   <div *ngFor="let offer of offers" class="card column">
     <div class="card-body">
@@ -61,8 +62,6 @@
            style="background-image: url(data:image/png;base64,{{offer.photos[0].data}});
                 background-size:cover;"
            alt="Thumbnail placeholder">
-<!--      <img *ngIf="offer.photos.length > 0" class="card-img-top my-image" src="data:image/png;base64,{{offer.photos[0].data}}" alt="Card image cap">-->
-
       <h5 class="card-title">{{offer.title}}</h5>
       <h6 class="card-subtitle mb-2 text-muted">{{offer.location}}</h6>
       <ul class="list-group list-group-flush">
