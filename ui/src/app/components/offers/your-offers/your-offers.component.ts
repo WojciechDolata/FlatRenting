@@ -24,7 +24,7 @@ export class YourOffersComponent implements OnInit {
   }
 
   fetchData() {
-    this.offerService.getAllForUser(this.authService.nick).subscribe(
+    this.offerService.getAllForUser(this.authService.getNick()).subscribe(
       data => {
         this.offers = data;
         let offerIds = this.offers.map(offer => offer.id);

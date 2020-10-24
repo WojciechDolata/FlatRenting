@@ -52,7 +52,7 @@ export class AddOfferComponent implements OnInit {
       photos: []
     };
 
-    this.offerService.addNewOffer(offer, this.authService.nick)
+    this.offerService.addNewOffer(offer, this.authService.getNick())
       .subscribe(offer => {
         console.log("Sent new offer: " + offer);
         this.upload(offer.id);

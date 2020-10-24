@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {AuthService} from "./services/auth.service";
-import {finalize} from "rxjs/operators";
 
 @Component({
   selector: 'app-root',
@@ -10,7 +9,7 @@ import {finalize} from "rxjs/operators";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'ui';
+  title = 'Flat Renting';
 
 
   constructor(private authService: AuthService, private http: HttpClient, private router: Router) {
@@ -18,10 +17,10 @@ export class AppComponent {
   }
 
   logout() {
-    this.http.post('logout', {}).pipe(finalize(() => {
-      this.authService.authenticated = false;
-      this.router.navigateByUrl('/@Dataarch');
-    })).subscribe();
+    this.authService.authenticated = false;
+    localStorage.removeItem("authString");
+    localStorage.removeItem("user");
+    this.router.navigateByUrl('/@Dataarch');
   }
 
   isLogged(): boolean {
@@ -29,7 +28,7 @@ export class AppComponent {
   }
 
   getCurrentNick(): string {
-    return this.authService.nick;
+    return this.authService.getNick();
   }
 
 }

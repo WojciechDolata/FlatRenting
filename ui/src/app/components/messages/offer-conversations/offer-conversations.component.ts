@@ -39,7 +39,7 @@ export class OfferConversationsComponent implements OnInit {
   }
 
   getLoggedUser() {
-    return this.authService.nick;
+    return this.authService.getNick();
   }
 
   isAuthorized(): boolean {

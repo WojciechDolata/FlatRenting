@@ -22,7 +22,7 @@ export class AllConversationsComponent implements OnInit {
   }
 
   getCurrentUser(): string {
-    return this.authService.nick;
+    return this.authService.getNick();
   }
 
   fetchConversations() {

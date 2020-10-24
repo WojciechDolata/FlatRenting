@@ -21,7 +21,8 @@ const routes: Routes = [
   { path: 'conversation', component: SingleConversationComponent },
   { path: 'profile', component: ProfileDetailsComponent },
   { path: 'your-offers', component: YourOffersComponent },
-  { path: 'register', component: RegisterComponent }
+  { path: 'register', component: RegisterComponent },
+  { path: '**', component: OfferSearchComponent }
 ];
 
 @NgModule({

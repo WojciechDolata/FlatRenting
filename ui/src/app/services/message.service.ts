@@ -19,8 +19,8 @@ export class MessageService {
 
   getConversationsByNick(): Observable<Conversation[]> {
     return this.http.get<Conversation[]>(
-      this.messageUrl + "/allByNick/" + this.authService.nick,
-      {headers: this.authService.headers}
+      this.messageUrl + "/allByNick/" + this.authService.getNick(),
+      {headers: this.authService.getHeaders()}
       );
   }
 
@@ -30,7 +30,7 @@ export class MessageService {
     return this.http.post<Conversation[][]>(
       this.messageUrl + "/allByOffers",
       data,
-      {headers: this.authService.headers}
+      {headers: this.authService.getHeaders()}
     );
   }
 
@@ -38,33 +38,33 @@ export class MessageService {
   addConversation(message: string, offerId: number) {
     const data: FormData = new FormData();
     data.append('message', message);
-    data.append('userNick', this.authService.nick);
+    data.append('userNick', this.authService.getNick());
     data.append('offerId', offerId.toString());
 
     return this.http.post<Conversation>(
       this.messageUrl + "/addConversation",
       data,
-      {headers: this.authService.headers}
+      {headers: this.authService.getHeaders()}
     )
   }
 
   addMessage(message: string, conversationId: number) {
     const data: FormData = new FormData();
     data.append('message', message);
-    data.append('userNick', this.authService.nick);
+    data.append('userNick', this.authService.getNick());
     data.append('conversationId', conversationId.toString());
 
     return this.http.post<Conversation>(
       this.messageUrl + "/addMessage",
       data,
-      {headers: this.authService.headers}
+      {headers: this.authService.getHeaders()}
     )
   }
 
   getLastMessage(conversationId): Observable<Message> {
     return this.http.get<Message>(
       this.messageUrl + "/getLastMessage/" + conversationId,
-      {headers: this.authService.headers}
+      {headers: this.authService.getHeaders()}
     )
   }
 

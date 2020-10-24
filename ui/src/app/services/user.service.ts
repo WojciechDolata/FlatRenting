@@ -20,51 +20,51 @@ export class UserService {
 
   getEmail(): Observable<string> {
     const data = new FormData();
-    data.append('nick', this.authService.nick);
+    data.append('nick', this.authService.getNick());
     return this.http.post<string>(
       this.userUrl + "/getEmail",
       data,
-      {headers: this.authService.headers}
+      {headers: this.authService.getHeaders()}
     );
   }
 
   updatePassword(passwordHash): Observable<string> {
     const data = new FormData();
-    data.append('nick', this.authService.nick);
+    data.append('nick', this.authService.getNick());
     data.append('passwordHash', passwordHash);
     return this.http.post<string>(
       this.userUrl + "/updatePassword",
       data,
-      {headers: this.authService.headers}
+      {headers: this.authService.getHeaders()}
     );
   }
 
   updateEmail(email): Observable<string> {
     const data = new FormData();
-    data.append('nick', this.authService.nick);
+    data.append('nick', this.authService.getNick());
     data.append('email', email);
     return this.http.post<string>(
       this.userUrl + "/updateEmail",
       data,
-      {headers: this.authService.headers}
+      {headers: this.authService.getHeaders()}
     );
   }
 
   updatePhoneNumber(phoneNumber): Observable<string> {
     const data = new FormData();
-    data.append('nick', this.authService.nick);
+    data.append('nick', this.authService.getNick());
     data.append('phoneNumber', phoneNumber);
     return this.http.post<string>(
       this.userUrl + "/updatePhoneNumber",
       data,
-      {headers: this.authService.headers}
+      {headers: this.authService.getHeaders()}
     );
   }
 
   getUser(): Observable<User> {
     return this.http.get<User>(
-      this.userUrl + "/byNick/" + this.authService.nick,
-      {headers: this.authService.headers}
+      this.userUrl + "/byNick/" + this.authService.getNick(),
+      {headers: this.authService.getHeaders()}
     );
   }
 }

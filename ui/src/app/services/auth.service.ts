@@ -13,8 +13,8 @@ import {environment} from "../../environments/environment";
 export class AuthService {
 
   authenticated = false;
-  nick: string;
-  headers: HttpHeaders;
+  // nick: string;
+  // headers: HttpHeaders;
   currentConversation: Conversation = null;
 
   private baseUrl = environment.serverUrl;
@@ -25,20 +25,32 @@ export class AuthService {
               private router: Router) {
   }
 
-  private hashString(pass: string): string {
+  private static hashString(pass: string): string {
     return CryptoJS.SHA256(pass).toString(CryptoJS.enc.Hex)
   }
 
-  authenticate(credentials, callback, errorFunction) {
-    this.headers = new HttpHeaders(credentials ? {
-      authorization : 'Basic ' + btoa(credentials.username + ':' + this.hashString(credentials.password))
-    } : {});
+  getNick() {
+    return localStorage.getItem("user");
+  }
 
-    this.http.get(this.loginUrl, {headers: this.headers}).subscribe(response => {
+  getHeaders() {
+    let authString = localStorage.getItem("authString")
+    return new HttpHeaders(authString ? {authorization: authString} : {});
+  }
+
+  authenticate(credentials, callback, errorFunction) {
+    if(credentials) {
+      localStorage.setItem('authString', 'Basic ' + btoa(credentials.username + ':' + AuthService.hashString(credentials.password)));
+      localStorage.setItem('user', credentials.username);
+    }
+    // this.headers = new HttpHeaders(credentials ? {
+    //   authorization : 'Basic ' + btoa(credentials.username + ':' + AuthService.hashString(credentials.password))
+    // } : {});
+
+    this.http.get(this.loginUrl, {headers: this.getHeaders()}).subscribe(response => {
       if(response) {
         if (response['name']) {
           this.authenticated = true;
-          this.nick = credentials.username;
         } else {
           this.authenticated = false;
         }
@@ -52,7 +64,7 @@ export class AuthService {
     var password = user.passwordHash;
     const data: FormData = new FormData();
     data.append('nick', user.nick);
-    data.append('passwordHash', this.hashString(user.passwordHash));
+    data.append('passwordHash', AuthService.hashString(user.passwordHash));
     data.append('phoneNumber', user.phoneNumber);
     data.append('email', user.email);
 

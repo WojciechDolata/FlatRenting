@@ -21,7 +21,7 @@ export class SingleConversationComponent implements OnInit {
 
   ngOnInit() {
     this.conversation = this.authService.currentConversation;
-    this.secondUser = this.conversation.user.nick == this.authService.nick ? this.conversation.offer.owner.nick : this.conversation.user.nick;
+    this.secondUser = this.conversation.user.nick == this.authService.getNick() ? this.conversation.offer.owner.nick : this.conversation.user.nick;
   }
 
   updateConversationData(updatedConversation: Conversation) {
@@ -29,7 +29,7 @@ export class SingleConversationComponent implements OnInit {
   }
 
   getLoggedUser() {
-    return this.authService.nick;
+    return this.authService.getNick();
   }
 
   isLogged() {
