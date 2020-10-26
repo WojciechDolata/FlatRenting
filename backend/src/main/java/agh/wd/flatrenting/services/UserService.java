@@ -1,9 +1,11 @@
 package agh.wd.flatrenting.services;
 
 import agh.wd.flatrenting.database.UserCredentialsRepository;
+import agh.wd.flatrenting.database.UserPreferencesRepository;
 import agh.wd.flatrenting.database.UserRepository;
 import agh.wd.flatrenting.entities.User;
 import agh.wd.flatrenting.entities.UserCredentials;
+import agh.wd.flatrenting.entities.UserPreferences;
 import agh.wd.flatrenting.exceptions.UserNotFoundException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +22,17 @@ public class UserService {
 
     private EntityManager em;
     private UserRepository userRepository;
+    private UserPreferencesRepository userPreferencesRepository;
     private UserCredentialsRepository userCredentialsRepository;
 
     @Autowired
     public UserService(EntityManager em,
                        UserRepository userRepository,
+                       UserPreferencesRepository userPreferencesRepository,
                        UserCredentialsRepository userCredentialsRepository) {
         this.em = em;
         this.userRepository = userRepository;
+        this.userPreferencesRepository = userPreferencesRepository;
         this.userCredentialsRepository = userCredentialsRepository;
     }
 
@@ -80,5 +85,24 @@ public class UserService {
         return userCredentialsRepository.findByNick(nick)
                 .orElseThrow(() -> new UserNotFoundException("User " + nick + " not found."))
                 .getEmail();
+    }
+
+    @Transactional
+    public void updatePreferences(UserPreferences preferences) {
+        userPreferencesRepository.findByNick(preferences.getNick())
+                .ifPresentOrElse(
+                        preferencesFromDb -> {
+                            preferencesFromDb.copyValues(preferences);
+                            em.persist(preferencesFromDb);
+                        },
+                        () -> userPreferencesRepository.save(preferences)
+                );
+    }
+
+    public UserPreferences getPreferences(String nick) {
+        return userPreferencesRepository.findByNick(nick)
+                .orElseThrow(
+                        () -> new UserNotFoundException(nick)
+                );
     }
 }

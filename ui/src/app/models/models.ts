@@ -40,3 +40,15 @@ export class Photo extends BasicModel{
   origin: Offer;
   data: Blob;
 }
+
+export class UserPreferences extends BasicModel{
+  nick: string;
+  maxPrice: number;
+  minPrice: number;
+  location: string;
+  minNumberOfRooms: number;
+  maxNumberOfRooms: number;
+  minSize: number;
+  maxSize: number;
+  maxDaysAgo: number;
+}

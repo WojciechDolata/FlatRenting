@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {User} from "../models/models";
+import {User, UserPreferences} from "../models/models";
 import {environment} from "../../environments/environment";
 import {AuthService} from "./auth.service";
 
@@ -12,6 +12,7 @@ export class UserService {
 
   private baseUrl = environment.serverUrl;
   private userUrl = this.baseUrl + "user";
+  private preferencesUrl = this.baseUrl + "preferences";
 
   constructor(
     private http: HttpClient,
@@ -26,6 +27,26 @@ export class UserService {
       data,
       {headers: this.authService.getHeaders()}
     );
+  }
+
+  getPreferences(): Observable<UserPreferences> {
+    const data = new FormData();
+    data.append('nick', this.authService.getNick());
+    return this.http.post<UserPreferences>(
+      this.preferencesUrl + "/get",
+      data,
+      {headers: this.authService.getHeaders()}
+    )
+  }
+
+  updatePreferences(preferences): Observable<string> {
+    const data = new FormData();
+    data.append('preferences', preferences);
+    return this.http.post<string>(
+      this.preferencesUrl + "/update",
+      preferences,
+      {headers: this.authService.getHeaders()}
+    )
   }
 
   updatePassword(passwordHash): Observable<string> {

@@ -13,8 +13,6 @@ import {environment} from "../../environments/environment";
 export class AuthService {
 
   authenticated = false;
-  // nick: string;
-  // headers: HttpHeaders;
   currentConversation: Conversation = null;
 
   private baseUrl = environment.serverUrl;
@@ -43,9 +41,6 @@ export class AuthService {
       localStorage.setItem('authString', 'Basic ' + btoa(credentials.username + ':' + AuthService.hashString(credentials.password)));
       localStorage.setItem('user', credentials.username);
     }
-    // this.headers = new HttpHeaders(credentials ? {
-    //   authorization : 'Basic ' + btoa(credentials.username + ':' + AuthService.hashString(credentials.password))
-    // } : {});
 
     this.http.get(this.loginUrl, {headers: this.getHeaders()}).subscribe(response => {
       if(response) {

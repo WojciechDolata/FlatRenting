@@ -29,7 +29,7 @@ export class AddOfferComponent implements OnInit {
       title: '',
       location: '',
       roomCount: '1',
-      size: '<25',
+      size: '',
       price: '',
       description: ''
     });
@@ -54,7 +54,6 @@ export class AddOfferComponent implements OnInit {
 
     this.offerService.addNewOffer(offer, this.authService.getNick())
       .subscribe(offer => {
-        console.log("Sent new offer: " + offer);
         this.upload(offer.id);
         this.initFormGroup();
         this.router.navigateByUrl("/offer-detail/" + offer.id);

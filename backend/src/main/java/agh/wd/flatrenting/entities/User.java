@@ -29,14 +29,6 @@ public class User {
     @NonNull
     private String nick;
 
-//    @Column(name = "email", unique = true)
-//    @NonNull
-//    private String email;
-//
-//    @Column(name = "password_hash")
-//    @NonNull
-//    private String passwordHash;
-
     @Column(name = "phone_number")
     private String phoneNumber;
 

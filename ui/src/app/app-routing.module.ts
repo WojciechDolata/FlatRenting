@@ -10,6 +10,7 @@ import {SingleConversationComponent} from "./components/messages/single-conversa
 import {ProfileDetailsComponent} from "./components/profile/profile-details/profile-details.component";
 import {YourOffersComponent} from "./components/offers/your-offers/your-offers.component";
 import {OfferConversationsComponent} from "./components/messages/offer-conversations/offer-conversations.component";
+import {UserPreferencesComponent} from "./components/profile/user-preferences/user-preferences.component";
 
 const routes: Routes = [
   { path: 'offers', component: OfferSearchComponent },
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'conversation', component: SingleConversationComponent },
   { path: 'profile', component: ProfileDetailsComponent },
   { path: 'your-offers', component: YourOffersComponent },
+  { path: 'preferences', component: UserPreferencesComponent },
   { path: 'register', component: RegisterComponent },
   { path: '**', component: OfferSearchComponent }
 ];
