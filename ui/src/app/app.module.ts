@@ -22,6 +22,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {FooterComponent} from './components/footer/footer.component';
 import {UserPreferencesComponent} from './components/profile/user-preferences/user-preferences.component';
+import {PreferredOffersComponent} from './components/offers/preferred-offers/preferred-offers.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import {UserPreferencesComponent} from './components/profile/user-preferences/us
     ProfileDetailsComponent,
     OfferConversationsComponent,
     FooterComponent,
-    UserPreferencesComponent
+    UserPreferencesComponent,
+    PreferredOffersComponent
   ],
   imports: [
     BrowserModule,

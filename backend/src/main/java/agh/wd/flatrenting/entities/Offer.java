@@ -35,7 +35,7 @@ public class Offer {
     private Integer price;
 
     @Column(name = "flat_size")
-    private String size;
+    private Integer size;
 
     @Column
     private Integer roomCount;

@@ -40,8 +40,6 @@ export class UserService {
   }
 
   updatePreferences(preferences): Observable<string> {
-    const data = new FormData();
-    data.append('preferences', preferences);
     return this.http.post<string>(
       this.preferencesUrl + "/update",
       preferences,
@@ -85,6 +83,13 @@ export class UserService {
   getUser(): Observable<User> {
     return this.http.get<User>(
       this.userUrl + "/byNick/" + this.authService.getNick(),
+      {headers: this.authService.getHeaders()}
+    );
+  }
+
+  hasPreferences(): Observable<boolean> {
+    return this.http.get<boolean>(
+      this.preferencesUrl + "/hasByNick/" + this.authService.getNick(),
       {headers: this.authService.getHeaders()}
     );
   }

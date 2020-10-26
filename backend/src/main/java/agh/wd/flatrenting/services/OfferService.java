@@ -5,12 +5,14 @@ import agh.wd.flatrenting.database.UserRepository;
 import agh.wd.flatrenting.entities.Offer;
 import agh.wd.flatrenting.entities.Photo;
 import agh.wd.flatrenting.entities.User;
+import agh.wd.flatrenting.entities.UserPreferences;
 import agh.wd.flatrenting.exceptions.UserNotFoundException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,12 +23,15 @@ public class OfferService {
 
     private final OfferRepository offerRepository;
     private final UserRepository userRepository;
+    private final UserService userService;
 
     @Autowired
     public OfferService(OfferRepository offerRepository,
-                        UserRepository userRepository) {
+                        UserRepository userRepository,
+                        UserService userService) {
         this.offerRepository = offerRepository;
         this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     public Optional<Offer> get(int id) {
@@ -95,6 +100,31 @@ public class OfferService {
             throw new UserNotFoundException(nick);
         } else {
             return offerRepository.findAllByOwner(user);
+        }
+    }
+
+    public List<Offer> getPreferredOffers(String nick, Integer maxSize) {
+        UserPreferences preferences = userService.getPreferences(nick);
+
+        LocalDateTime minDay = preferences.getMaxDaysAgo() != null ? LocalDateTime.now().minusDays(preferences.getMaxDaysAgo()) : null;
+
+        List<Offer> preferredOffers = offerRepository.findAllByPreference(
+                preferences.getMinPrice(),
+                preferences.getMaxPrice(),
+                preferences.getMinNumberOfRooms(),
+                preferences.getMaxNumberOfRooms(),
+                preferences.getMinSize(),
+                preferences.getMaxSize(),
+                minDay,
+                preferences.getLocation()
+        );
+
+        int offersLength = preferredOffers.size();
+
+        if(offersLength == 0) {
+            return List.of();
+        } else {
+            return preferredOffers.subList(0, offersLength < maxSize ? offersLength - 1 : maxSize - 1);
         }
     }
 }

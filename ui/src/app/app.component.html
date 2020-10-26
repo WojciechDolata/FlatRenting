@@ -46,6 +46,9 @@
         <a  class="dropdown-item" [routerLink]="'/preferences'">Your preferences</a>
       </div>
     </li>
+    <li *ngIf="isLogged()" class="nav-item active">
+      <a  class="nav-link" [routerLink]="'/preferred-offers'">TOP 10 offers for you</a>
+    </li>
   </ul>
 
   <div *ngIf="isLogged()">

@@ -11,6 +11,7 @@ import {ProfileDetailsComponent} from "./components/profile/profile-details/prof
 import {YourOffersComponent} from "./components/offers/your-offers/your-offers.component";
 import {OfferConversationsComponent} from "./components/messages/offer-conversations/offer-conversations.component";
 import {UserPreferencesComponent} from "./components/profile/user-preferences/user-preferences.component";
+import {PreferredOffersComponent} from "./components/offers/preferred-offers/preferred-offers.component";
 
 const routes: Routes = [
   { path: 'offers', component: OfferSearchComponent },
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'your-offers', component: YourOffersComponent },
   { path: 'preferences', component: UserPreferencesComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'preferred-offers', component: PreferredOffersComponent },
   { path: '**', component: OfferSearchComponent }
 ];
 

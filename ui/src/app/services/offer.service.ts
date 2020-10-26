@@ -4,6 +4,7 @@ import {Offer} from "../models/models";
 import {HttpClient, HttpEvent, HttpParams, HttpRequest} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {environment} from "../../environments/environment";
+import {AuthService} from "./auth.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +14,11 @@ export class OfferService {
 
   private baseUrl = environment.serverUrl;
   private offerUrl = this.baseUrl + "offer";
+  private preferencesUrl = this.baseUrl + "preferences";
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private authService: AuthService
   ) { }
 
   private fixDate(offer: Offer): Offer {
@@ -96,5 +99,15 @@ export class OfferService {
     });
 
     return this.http.request(newRequest);
+  }
+
+  getPreferredOffers(): Observable<Offer[]> {
+    const data = new FormData();
+    data.append('nick', this.authService.getNick());
+    return this.http.post<Offer[]>(
+      this.preferencesUrl + "/getOffers",
+      data,
+      {headers: this.authService.getHeaders()}
+    )
   }
 }

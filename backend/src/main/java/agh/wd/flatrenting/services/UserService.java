@@ -105,4 +105,8 @@ public class UserService {
                         () -> new UserNotFoundException(nick)
                 );
     }
+
+    public boolean hasPreferences(String nick) {
+        return userPreferencesRepository.existsByNick(nick);
+    }
 }
