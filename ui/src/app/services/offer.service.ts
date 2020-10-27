@@ -83,11 +83,11 @@ export class OfferService {
   }
 
   getAllForUser(nick: string): Observable<Offer[]> {
-    return this.http.get<Offer[]>(this.offerUrl + "/" + nick +"/all");
+    return this.http.get<Offer[]>(this.offerUrl + "/allFor/" + nick, {headers: this.authService.getHeaders()});
   }
 
   addNewOffer(offer: Offer, ownerNick: string): Observable<Offer> {
-    return this.http.post<Offer>(this.offerUrl + "/add/" + ownerNick, offer).pipe(
+    return this.http.post<Offer>(this.offerUrl + "/add/" + ownerNick, offer, {headers: this.authService.getHeaders()}).pipe(
       map( offer => this.fixDate(offer))
     );
   }
@@ -95,7 +95,8 @@ export class OfferService {
   addPhotoToOffer(id: number, file: File): Observable<HttpEvent<{}>> {
     const data: FormData = new FormData();
     data.append('file', file);
-    const newRequest = new HttpRequest('POST', this.offerUrl + "/" + id + "/addPhoto", data, {
+    const newRequest = new HttpRequest('POST', this.offerUrl + "/addPhoto/" + id, data, {
+      headers: this.authService.getHeaders(),
       reportProgress: true,
       responseType: 'text'
     });
@@ -111,5 +112,9 @@ export class OfferService {
       data,
       {headers: this.authService.getHeaders()}
     )
+  }
+
+  deleteOffer(id): Observable<any> {
+    return this.http.get(this.offerUrl + "/delete/" + id, {headers: this.authService.getHeaders()});
   }
 }

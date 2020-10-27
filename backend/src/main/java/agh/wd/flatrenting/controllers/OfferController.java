@@ -72,7 +72,20 @@ public class OfferController {
         }
     }
 
-    @PostMapping("/{id}/addPhoto")
+    @GetMapping("/delete/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Object> addOffer(@PathVariable(value = "id") Integer offerId,
+                                          Principal user) {
+        Offer offer = offerService.get(offerId).orElseThrow(() -> new OfferNotFoundException(offerId.toString()));
+        if(offer.getOwner().getNick().equals(user.getName())) {
+            offerService.delete(offer);
+            return ResponseEntity.ok(List.of());
+        } else {
+            throw new NotAuthorizedException();
+        }
+    }
+
+    @PostMapping("/addPhoto/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Offer> addPhoto(@PathVariable(value = "id") Integer id,
                                           @RequestParam(value = "file", required = false) MultipartFile file,
@@ -92,7 +105,7 @@ public class OfferController {
 
     }
 
-    @GetMapping("/{nick}/all")
+    @GetMapping("/allFor/{nick}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<Offer>> getAllOffersForUser(@PathVariable(value = "nick") String nick,
                                                            Principal user) {

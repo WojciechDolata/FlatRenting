@@ -29,7 +29,7 @@ export class AddOfferComponent implements OnInit {
       title: '',
       location: '',
       roomCount: '1',
-      size: '',
+      flatSize: '',
       price: '',
       description: ''
     });
@@ -46,7 +46,7 @@ export class AddOfferComponent implements OnInit {
       location: formValue.location,
       roomCount: formValue.roomCount,
       description: formValue.description,
-      size: formValue.size,
+      size: formValue.flatSize,
       price: formValue.price,
       owner: null,
       photos: []
@@ -54,7 +54,7 @@ export class AddOfferComponent implements OnInit {
 
     this.offerService.addNewOffer(offer, this.authService.getNick())
       .subscribe(offer => {
-        this.upload(offer.id);
+        if(this.filesToUpload) this.upload(offer.id);
         this.initFormGroup();
         this.router.navigateByUrl("/offer-detail/" + offer.id);
       });

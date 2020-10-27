@@ -18,13 +18,17 @@
               <span class="badge badge-pill badge-primary">{{offerListMap.get(offer).length}}</span> new message{{offerListMap.get(offer).length != 1 ? 's' : ''}}
             </li>
           </ul>
-          <a routerLink="/offer-detail/{{offer.id}}"
+          <div style="float: right">
+          <a routerLink="/offer-detail/{{offer.id}}" style="width: 100%"
              class="btn btn-outline-primary">Show offer details
           </a>
           <br/>
-          <a routerLink="/offer-messages/{{offer.id}}"
+          <a routerLink="/offer-messages/{{offer.id}}" style="width: 100%"
              class="btn btn-outline-primary">Show messages
           </a>
+          <br/>
+          <button (click)="delete(offer.id)" class="btn btn-danger" style="width: 100%">Delete</button>
+          </div>
         </div>
 
       </div>

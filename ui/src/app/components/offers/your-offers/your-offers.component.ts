@@ -60,4 +60,13 @@ export class YourOffersComponent implements OnInit {
     return this.authService.authenticated;
   }
 
+  delete(id: number) {
+    if(confirm("Are you sure you want to delete this offer?")) {
+      this.offerService.deleteOffer(id).subscribe(
+        data => this.fetchData()
+      );
+    }
+
+  }
+
 }

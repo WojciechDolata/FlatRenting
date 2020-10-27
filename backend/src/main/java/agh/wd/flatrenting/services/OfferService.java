@@ -92,7 +92,34 @@ public class OfferService {
             case "4" -> Sort.by("price").descending();
             default -> Sort.by("creationTimestamp").descending();
         };
-        return offerRepository.findAllBy(searchQuery, descriptionCheck, roomCount, size, PageRequest.of(page, pageSize, sort)).toList();
+        Integer sizeMin = null;
+        Integer sizeMax = null;
+        if(size != null) {
+            switch (size) {
+                case "<25" -> {
+                    sizeMin = 0;
+                    sizeMax = 25;
+                }
+                case "25-40" -> {
+                    sizeMin = 25;
+                    sizeMax = 40;
+                }
+                case "40-70" -> {
+                    sizeMin = 40;
+                    sizeMax = 70;
+                }
+                case "70-100" -> {
+                    sizeMin = 70;
+                    sizeMax = 100;
+                }
+                case ">100" -> {
+                    sizeMin = 100;
+                    sizeMax = Integer.MAX_VALUE;
+                }
+            }
+        }
+
+        return offerRepository.findAllBy(searchQuery, descriptionCheck, roomCount, sizeMin, sizeMax, PageRequest.of(page, pageSize, sort)).toList();
     }
 
     public List<Offer> getAllForUser(String nick) {
