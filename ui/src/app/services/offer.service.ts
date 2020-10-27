@@ -12,7 +12,7 @@ import {AuthService} from "./auth.service";
 export class OfferService {
 
 
-  private baseUrl = environment.serverUrl;
+  private baseUrl = environment.SERVER_URL;
   private offerUrl = this.baseUrl + "offer";
   private preferencesUrl = this.baseUrl + "preferences";
 
@@ -33,8 +33,8 @@ export class OfferService {
     return offer;
   }
 
-  getOffers(): Observable<Offer[]> {
-    return this.http.get<Offer[]>(this.offerUrl + "/all").pipe(
+  getOffers(pageNumber: number): Observable<Offer[]> {
+    return this.http.get<Offer[]>(this.offerUrl + "/all/" + pageNumber).pipe(
       map( offerList => offerList.map(this.fixDate)
       )
     );
@@ -50,7 +50,8 @@ export class OfferService {
               descriptionCheck: string,
               roomCount: string,
               size: string,
-              orderBy: string): Observable<Offer[]> {
+              orderBy: string,
+              page: number): Observable<Offer[]> {
     let params = new HttpParams();
 
 
@@ -71,6 +72,7 @@ export class OfferService {
     }
 
     params = params.append("orderBy", orderBy);
+    params = params.append("page", page.toString());
 
     return this.http.get<Offer[]>(
       this.offerUrl + "/allBy",{params: params}

@@ -10,7 +10,7 @@ import {AuthService} from "./auth.service";
 })
 export class UserService {
 
-  private baseUrl = environment.serverUrl;
+  private baseUrl = environment.SERVER_URL;
   private userUrl = this.baseUrl + "user";
   private preferencesUrl = this.baseUrl + "preferences";
 

@@ -2,6 +2,8 @@ package agh.wd.flatrenting.database;
 
 import agh.wd.flatrenting.entities.Offer;
 import agh.wd.flatrenting.entities.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,7 +14,7 @@ import java.util.Optional;
 
 public interface OfferRepository extends JpaRepository<Offer, Integer> {
     @Override
-    List<Offer> findAll();
+    Page<Offer> findAll(Pageable pageable);
 
     @Query(value = "Select o from Offer o " +
             "where (:size is null or o.size = :size) " +
@@ -20,10 +22,11 @@ public interface OfferRepository extends JpaRepository<Offer, Integer> {
             "and (:searchQuery is null " +
             "   or (o.title LIKE CONCAT('%',:searchQuery,'%') " +
             "       or (:descriptionCheck = true and o.description LIKE CONCAT('%',:searchQuery,'%'))))")
-    List<Offer> findAllBy(@Param(value = "searchQuery") String searchQuery,
+    Page<Offer> findAllBy(@Param(value = "searchQuery") String searchQuery,
                           @Param(value = "descriptionCheck") boolean descriptionCheck,
-                          @Param(value = "roomCount") String roomCount,
-                          @Param(value = "size") String size);
+                          @Param(value = "roomCount") Integer roomCount,
+                          @Param(value = "size") String size,
+                          Pageable pageable);
 
     @Query(value = "Select o from Offer o " +
             "where (:minPrice is null or (o.price >= :minPrice))" +

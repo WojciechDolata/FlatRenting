@@ -15,7 +15,7 @@ export class AuthService {
   authenticated = false;
   currentConversation: Conversation = null;
 
-  private baseUrl = environment.serverUrl;
+  private baseUrl = environment.SERVER_URL;
   private loginUrl = this.baseUrl + "login";
   private registerUrl =  this.baseUrl + "register";
 

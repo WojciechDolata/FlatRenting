@@ -20,13 +20,13 @@ import java.util.List;
 public class AuthUserDetailsService implements UserDetailsService {
 
     private final UserCredentialsRepository userCredentialsRepository;
-    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AuthUserDetailsService(UserCredentialsRepository userCredentialsRepository,
-                                  PasswordEncoder passwordEncoder) {
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public AuthUserDetailsService(UserCredentialsRepository userCredentialsRepository) {
         this.userCredentialsRepository = userCredentialsRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     public UserDetails loadUserByUsername(String userName) {

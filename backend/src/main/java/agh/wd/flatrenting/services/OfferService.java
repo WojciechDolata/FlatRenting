@@ -9,6 +9,9 @@ import agh.wd.flatrenting.entities.UserPreferences;
 import agh.wd.flatrenting.exceptions.UserNotFoundException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -38,16 +41,18 @@ public class OfferService {
         return offerRepository.findById(id);
     }
 
-    public List<Offer> getAll() {
-        return offerRepository.findAll();
+    public Page<Offer> getAll(int page, int size) {
+        return offerRepository.findAll(
+                PageRequest.of(
+                        page,
+                        size,
+                        Sort.by("creationTimestamp").descending()
+                )
+        );
     }
 
     public void save(Offer offer) {
         offerRepository.save(offer);
-    }
-
-    public void edit(Offer offer) {
-
     }
 
     public void delete(Offer offer) {
@@ -80,17 +85,14 @@ public class OfferService {
         return optionalOffer.orElse(null);
     }
 
-    public List<Offer> getAllBy(String searchQuery, boolean descriptionCheck, String roomCount, String size, String orderBy) {
-        List<Offer> offers = offerRepository.findAllBy(searchQuery, descriptionCheck, roomCount, size);
-
-        offers.sort((o1, o2) -> switch (orderBy) {
-            case "2" -> o1.getCreationTimestamp().compareTo(o2.getCreationTimestamp());
-            case "3" -> o2.getPrice().compareTo(o1.getPrice());
-            case "4" -> o1.getPrice().compareTo(o2.getPrice());
-            default -> o2.getCreationTimestamp().compareTo(o1.getCreationTimestamp());
-        });
-
-        return offers;
+    public List<Offer> getAllBy(String searchQuery, boolean descriptionCheck, Integer roomCount, String size, String orderBy, int page, int pageSize) {
+        Sort sort = switch (orderBy) {
+            case "2" -> Sort.by("creationTimestamp").ascending();
+            case "3" -> Sort.by("price").ascending();
+            case "4" -> Sort.by("price").descending();
+            default -> Sort.by("creationTimestamp").descending();
+        };
+        return offerRepository.findAllBy(searchQuery, descriptionCheck, roomCount, size, PageRequest.of(page, pageSize, sort)).toList();
     }
 
     public List<Offer> getAllForUser(String nick) {

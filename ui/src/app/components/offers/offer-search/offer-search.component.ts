@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {Offer} from "../../../models/models";
 import {OfferService} from "../../../services/offer.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-offer-search',
@@ -9,9 +10,14 @@ import {FormBuilder, FormGroup} from "@angular/forms";
   styleUrls: ['./offer-search.component.css']
 })
 export class OfferSearchComponent implements OnInit {
-  offers: Offer[];
+  offers: Offer[] = [];
   searchForm: FormGroup;
   order = "newest";
+  pageNumber = 0;
+  private canFetchMore = true;
+  private hasAlreadyFetchedAll = false;
+  private areFiltersApplied = false;
+  loading = false;
 
   constructor(
     private offerService: OfferService,
@@ -19,6 +25,7 @@ export class OfferSearchComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.pageNumber = 0;
     this.getOffers();
     this.initFormGroup();
   }
@@ -34,18 +41,45 @@ export class OfferSearchComponent implements OnInit {
   }
 
   filterOffers(formValue) {
+    this.pageNumber = 0;
+    this.offers = [];
+    this.areFiltersApplied = true;
+    this.hasAlreadyFetchedAll = false;
+    this.getFilteredOffers();
+  }
+
+  getFilteredOffers() {
     this.offerService.getOffersBy(
-      formValue.searchString,
-      formValue.descriptionCheckbox,
-      formValue.roomCount,
-      formValue.size,
-      formValue.orderBy
-    ).subscribe(data => this.offers = data);
+        this.searchForm.value.searchString,
+        this.searchForm.value.descriptionCheckbox,
+        this.searchForm.value.roomCount,
+        this.searchForm.value.size,
+        this.searchForm.value.orderBy,
+        this.pageNumber
+      ).subscribe(
+      data => {
+        data.forEach(item => this.offers.push(item));
+        if(data.length != environment.OFFER_PAGE_SIZE) {
+          this.hasAlreadyFetchedAll = true;
+        }
+        this.pageNumber++;
+        this.canFetchMore = true;
+        this.loading = false;
+      }
+    );
   }
 
   getOffers() {
-    this.offerService.getOffers().subscribe(
-      data => this.offers = data.reverse()
+    this.offerService.getOffers(this.pageNumber).subscribe(
+      data => {
+        data.forEach(item => this.offers.push(item));
+        if(data.length != environment.OFFER_PAGE_SIZE) {
+          this.hasAlreadyFetchedAll = true;
+        }
+        this.pageNumber++;
+        this.canFetchMore = true;
+        this.loading = false;
+      }
     );
   }
 
@@ -60,5 +94,24 @@ export class OfferSearchComponent implements OnInit {
     }
 
     return splitOffers;
+  }
+
+  private loadMoreOffers() {
+    this.loading = true;
+    if(this.areFiltersApplied) {
+      this.getFilteredOffers();
+    } else {
+      this.getOffers();
+    }
+  }
+
+  @HostListener('window:scroll', ['$event']) // for window scroll events
+  onScroll(event) {
+    let screenHeight = window.screen.availHeight;
+    let scrollPosition = window.scrollY;
+    if(scrollPosition > screenHeight - 200 && this.canFetchMore && !this.hasAlreadyFetchedAll) {
+      this.canFetchMore = false;
+      this.loadMoreOffers();
+    }
   }
 }

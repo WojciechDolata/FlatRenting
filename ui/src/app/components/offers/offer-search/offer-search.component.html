@@ -27,7 +27,8 @@
               <option value="6">6</option>
               <option value="7">7</option>
               <option value="8">8</option>
-              <option value="9+">9+</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
             </select>
           </div>
           <div class="col-auto">
@@ -60,7 +61,6 @@
 
 <h1>Offers:</h1>
 
-<mat-spinner *ngIf="!offers" style="margin: 20% auto;" [color]="'primary'"></mat-spinner>
 <div *ngFor="let offers of splitOffersToThreeInRow()" class="row" style="width: 100%;">
   <div *ngFor="let offer of offers" class="card column">
     <div class="card-body">
@@ -81,3 +81,5 @@
   </div>
 
 </div>
+<mat-spinner *ngIf="!offers || loading" style="margin: 20% auto;" [color]="'primary'"></mat-spinner>
+

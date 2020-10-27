@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  serverUrl: 'http://localhost:8080/'
+  SERVER_URL: 'http://localhost:8080/',
+  OFFER_PAGE_SIZE: 12,
 };
 
 /*

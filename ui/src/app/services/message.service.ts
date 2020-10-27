@@ -10,7 +10,7 @@ import {HttpClient} from "@angular/common/http";
 })
 export class MessageService {
 
-  private baseUrl = environment.serverUrl;
+  private baseUrl = environment.SERVER_URL;
   private messageUrl = this.baseUrl + 'message';
 
   constructor(private authService: AuthService,

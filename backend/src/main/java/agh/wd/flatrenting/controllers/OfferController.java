@@ -6,6 +6,7 @@ import agh.wd.flatrenting.exceptions.NotAuthorizedException;
 import agh.wd.flatrenting.exceptions.OfferNotFoundException;
 import agh.wd.flatrenting.services.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,16 +25,19 @@ public class OfferController {
 
     private final OfferService offerService;
 
+    @Value("${offerPageSize}")
+    private int offerPageSize;
+
     @Autowired
     public OfferController(OfferService offerService) {
         this.offerService = offerService;
     }
 
 
-    @GetMapping(value = "/all", produces = {"application/json"})
+    @GetMapping(value = "/all/{pageNumber}", produces = {"application/json"})
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody ResponseEntity<Collection<Offer>> getAllOffers() {
-        return ResponseEntity.ok().body(offerService.getAll());
+    public @ResponseBody ResponseEntity<Collection<Offer>> getAllOffers(@PathVariable(value = "pageNumber") int pageNumber) {
+        return ResponseEntity.ok(offerService.getAll(pageNumber, offerPageSize).toList());
     }
 
     @GetMapping("/{id}")
@@ -48,10 +52,11 @@ public class OfferController {
     public ResponseEntity<Collection<Offer>> getOffersBy(
             @RequestParam(value = "searchQuery", required = false) String searchQuery,
             @RequestParam(value = "descriptionCheck", required = false) boolean descriptionCheck,
-            @RequestParam(value = "roomCount", required = false) String roomCount,
+            @RequestParam(value = "roomCount", required = false) Integer roomCount,
             @RequestParam(value = "size", required = false) String size,
-            @RequestParam(value = "orderBy", required = false) String orderBy) {
-        return ResponseEntity.ok().body(offerService.getAllBy(searchQuery, descriptionCheck, roomCount, size, orderBy));
+            @RequestParam(value = "orderBy", required = false) String orderBy,
+            @RequestParam(value = "page") int page) {
+        return ResponseEntity.ok().body(offerService.getAllBy(searchQuery, descriptionCheck, roomCount, size, orderBy, page, offerPageSize));
     }
 
     @PostMapping("/add/{ownerNick}")
