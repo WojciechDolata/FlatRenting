@@ -9,6 +9,7 @@ export class Offer extends BasicModel{
   size: number;
   price: number;
   roomCount: number;
+  visitCount: number = 0;
   description: string;
   owner: User;
   photos: Photo[];
@@ -31,6 +32,7 @@ export class Conversation extends BasicModel {
 
 export class Message extends BasicModel{
   content: string;
+  wasRead: boolean = false;
   sender: User;
   receiver: User;
 }

@@ -26,6 +26,7 @@ export class YourOffersComponent implements OnInit {
   fetchData() {
     this.offerService.getAllForUser(this.authService.getNick()).subscribe(
       data => {
+        console.log(data);
         this.offers = data;
         let offerIds = this.offers.map(offer => offer.id);
         this.messageService.getAllConversationsForOffers(offerIds).subscribe(

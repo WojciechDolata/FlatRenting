@@ -17,6 +17,9 @@
             <li class="list-group-item">
               <span class="badge badge-pill badge-primary">{{offerListMap.get(offer).length}}</span> new message{{offerListMap.get(offer).length != 1 ? 's' : ''}}
             </li>
+            <li class="list-group-item">
+              <span class="badge badge-pill badge-light">{{offer.visitCount}}</span> visit{{offer.visitCount != 1 ? 's' : ''}}
+            </li>
           </ul>
           <div style="float: right">
           <a routerLink="/offer-detail/{{offer.id}}" style="width: 100%"

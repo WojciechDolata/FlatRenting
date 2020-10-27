@@ -6,6 +6,7 @@ import agh.wd.flatrenting.entities.Offer;
 import agh.wd.flatrenting.entities.Photo;
 import agh.wd.flatrenting.entities.User;
 import agh.wd.flatrenting.entities.UserPreferences;
+import agh.wd.flatrenting.exceptions.OfferNotFoundException;
 import agh.wd.flatrenting.exceptions.UserNotFoundException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,14 @@ public class OfferService {
 
     public Optional<Offer> get(int id) {
         return offerRepository.findById(id);
+    }
+
+    @Transactional
+    public Offer getOffer(Integer id) {
+        Offer offer = get(id).orElseThrow(() -> new OfferNotFoundException(id.toString()));
+        offer.addVisit();
+        save(offer);
+        return offer;
     }
 
     public Page<Offer> getAll(int page, int size) {

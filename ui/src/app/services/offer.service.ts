@@ -41,7 +41,7 @@ export class OfferService {
   }
 
   getOffer(id: number): Observable<Offer> {
-    return this.http.get<Offer>(this.offerUrl + "/" + id).pipe(
+    return this.http.get<Offer>(this.offerUrl + "/getBy/" + id).pipe(
       map( offer => this.fixDate(offer))
     );
   }

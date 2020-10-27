@@ -29,6 +29,9 @@ public class Message {
     @Column(name = "content")
     private String content;
 
+    @Column
+    private boolean wasRead;
+
     @ManyToOne
     private User sender;
 

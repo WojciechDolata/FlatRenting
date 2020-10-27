@@ -40,6 +40,9 @@ public class Offer {
     @Column
     private Integer roomCount;
 
+    @Column
+    private Integer visitCount;
+
     @Column(length = 1023)
     private String description;
 
@@ -51,4 +54,12 @@ public class Offer {
 
     @OneToMany(fetch = FetchType.LAZY)
     private List<Conversation> conversations;
+
+    public void addVisit() {
+        if(visitCount == null) {
+            visitCount = 1;
+        } else {
+            visitCount++;
+        }
+    }
 }

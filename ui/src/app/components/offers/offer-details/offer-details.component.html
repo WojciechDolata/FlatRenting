@@ -63,6 +63,7 @@
       <p class="card-text">{{offer.description}}</p>
       <p *ngIf="offer.owner" class="card-text text-muted">{{offer.owner.nick}}</p>
 
+      <p class="card-text" style="position: absolute; bottom: 13px;"><small class="text-muted">This offer has {{offer.visitCount}} view{{offer.visitCount == 1 ? '' : 's'}}.</small></p>
       <p class="card-text" style="position: absolute; bottom: 10px;"><small class="text-muted">Offer created {{howManyDaysAgo()}}</small></p>
     </div>
   </div>

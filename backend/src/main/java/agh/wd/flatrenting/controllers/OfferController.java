@@ -40,10 +40,10 @@ public class OfferController {
         return ResponseEntity.ok(offerService.getAll(pageNumber, offerPageSize).toList());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getBy/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Offer> getOfferById(@PathVariable(value = "id") String id) {
-        Offer offer = offerService.get(Integer.parseInt(id)).orElse(null);
+        Offer offer = offerService.getOffer(Integer.parseInt(id));
         return ResponseEntity.ok().body(offer);
     }
 
@@ -115,4 +115,6 @@ public class OfferController {
             throw new NotAuthorizedException();
         }
     }
+
+
 }
