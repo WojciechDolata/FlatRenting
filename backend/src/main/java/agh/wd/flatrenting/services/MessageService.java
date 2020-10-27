@@ -2,7 +2,6 @@ package agh.wd.flatrenting.services;
 
 
 import agh.wd.flatrenting.database.ConversationRepository;
-import agh.wd.flatrenting.database.MessageRepository;
 import agh.wd.flatrenting.database.OfferRepository;
 import agh.wd.flatrenting.database.UserRepository;
 import agh.wd.flatrenting.entities.Conversation;
@@ -27,27 +26,21 @@ import java.util.List;
 @Service
 public class MessageService {
 
-    private static Logger logger = Logger.getLogger(MessageService.class);
+    private static final Logger logger = Logger.getLogger(MessageService.class);
 
 
-    private MessageRepository messageRepository;
-    private UserRepository userRepository;
-    private OfferRepository offerRepository;
-    private ConversationRepository conversationRepository;
-    private OfferService offerService;
-    private EntityManager entityManager;
+    private final UserRepository userRepository;
+    private final OfferRepository offerRepository;
+    private final ConversationRepository conversationRepository;
+    private final EntityManager entityManager;
 
     @Autowired
-    public MessageService(MessageRepository messageRepository,
-                          UserRepository userRepository,
+    public MessageService(UserRepository userRepository,
                           OfferRepository offerRepository,
-                          OfferService offerService,
                           ConversationRepository conversationRepository,
                           EntityManager entityManager) {
-        this.messageRepository = messageRepository;
         this.userRepository = userRepository;
         this.offerRepository = offerRepository;
-        this.offerService = offerService;
         this.conversationRepository = conversationRepository;
         this.entityManager = entityManager;
     }
@@ -142,7 +135,7 @@ public class MessageService {
         } else if(offer == null) {
             logger.error("Offer " + offerId + " not found.");
             throw new OfferNotFoundException(offerId.toString());
-        } else if(conversationRepository.existsByOfferAndAndUser(offer, sender)) {
+        } else if(conversationRepository.existsByOfferAndUser(offer, sender)) {
             logger.error("Conversation already exists.");
             throw new ConversationExistsException();
         } else {

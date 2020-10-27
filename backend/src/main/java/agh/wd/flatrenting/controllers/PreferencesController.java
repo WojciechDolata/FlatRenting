@@ -18,8 +18,8 @@ import java.util.List;
 @RequestMapping("/preferences")
 public class PreferencesController {
 
-    private UserService userService;
-    private OfferService offerService;
+    private final UserService userService;
+    private final OfferService offerService;
 
     @Autowired
     public PreferencesController(UserService userService, OfferService offerService) {

@@ -19,7 +19,7 @@ import java.util.Optional;
 @Service
 public class OfferService {
 
-    private static Logger logger = Logger.getLogger(OfferService.class);
+    private static final Logger logger = Logger.getLogger(OfferService.class);
 
     private final OfferRepository offerRepository;
     private final UserRepository userRepository;

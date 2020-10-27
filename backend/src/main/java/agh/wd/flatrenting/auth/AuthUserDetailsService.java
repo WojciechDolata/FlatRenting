@@ -19,14 +19,14 @@ import java.util.List;
 @Transactional
 public class AuthUserDetailsService implements UserDetailsService {
 
-    private UserCredentialsRepository userCredentialsRepository;
+    private final UserCredentialsRepository userCredentialsRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    public AuthUserDetailsService(UserCredentialsRepository userCredentialsRepository) {
+    public AuthUserDetailsService(UserCredentialsRepository userCredentialsRepository,
+                                  PasswordEncoder passwordEncoder) {
         this.userCredentialsRepository = userCredentialsRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public UserDetails loadUserByUsername(String userName) {

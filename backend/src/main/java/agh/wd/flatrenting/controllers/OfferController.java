@@ -22,7 +22,7 @@ import java.util.List;
 @RequestMapping("/offer")
 public class OfferController {
 
-    private OfferService offerService;
+    private final OfferService offerService;
 
     @Autowired
     public OfferController(OfferService offerService) {

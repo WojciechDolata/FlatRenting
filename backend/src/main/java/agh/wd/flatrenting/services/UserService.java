@@ -20,17 +20,17 @@ import java.util.Optional;
 public class UserService {
     private static final Logger logger = Logger.getLogger(UserService.class);
 
-    private EntityManager em;
-    private UserRepository userRepository;
-    private UserPreferencesRepository userPreferencesRepository;
-    private UserCredentialsRepository userCredentialsRepository;
+    private final EntityManager entityManager;
+    private final UserRepository userRepository;
+    private final UserPreferencesRepository userPreferencesRepository;
+    private final UserCredentialsRepository userCredentialsRepository;
 
     @Autowired
-    public UserService(EntityManager em,
+    public UserService(EntityManager entityManager,
                        UserRepository userRepository,
                        UserPreferencesRepository userPreferencesRepository,
                        UserCredentialsRepository userCredentialsRepository) {
-        this.em = em;
+        this.entityManager = entityManager;
         this.userRepository = userRepository;
         this.userPreferencesRepository = userPreferencesRepository;
         this.userCredentialsRepository = userCredentialsRepository;
@@ -93,7 +93,7 @@ public class UserService {
                 .ifPresentOrElse(
                         preferencesFromDb -> {
                             preferencesFromDb.copyValues(preferences);
-                            em.persist(preferencesFromDb);
+                            entityManager.persist(preferencesFromDb);
                         },
                         () -> userPreferencesRepository.save(preferences)
                 );
