@@ -2,7 +2,7 @@
 <div *ngIf="isAuthorized() && conversations">
   <div class="jumbotron jumbotron-fluid">
     <h1 class="lead pl-5 pr-5">
-      Here are all conversations for offer <strong>{{offer.title}}</strong> in <strong>{{offer.location}}</strong>
+      Here are all conversations for offer <strong style="cursor: pointer" routerLink="/offer-detail/{{offer.id}}">{{offer.title}}</strong> in <strong>{{offer.location}}</strong>
     </h1>
   </div>
   <ul class="list-group">
@@ -21,7 +21,7 @@
       </a>
     </li>
   </ul>
-
 </div>
+<app-nothing-here *ngIf="isAuthorized() && !conversations"></app-nothing-here>
 
 <app-auth-failed *ngIf="!isAuthorized()"></app-auth-failed>

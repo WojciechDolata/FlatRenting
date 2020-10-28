@@ -1,3 +1,12 @@
 .right {
   float: right;
 }
+
+.message-second-user{
+  background-color: #aeccf8;
+}
+
+.message-your{
+  background-color: #ecf2f6;
+  border-color: darkgray;
+}

@@ -4,6 +4,7 @@ import {OfferService} from "../../../services/offer.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {environment} from "../../../../environments/environment";
 import {cities} from "../../../../environments/cities";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-offer-search',
@@ -27,7 +28,7 @@ export class OfferSearchComponent implements OnInit {
 
   ngOnInit(): void {
     this.pageNumber = 0;
-    this.getOffers();
+    this.getAllOffers();
     this.initFormGroup();
   }
 
@@ -50,16 +51,8 @@ export class OfferSearchComponent implements OnInit {
     this.getFilteredOffers();
   }
 
-  getFilteredOffers() {
-    this.offerService.getOffersBy(
-        this.searchForm.value.searchString,
-        this.searchForm.value.descriptionCheckbox,
-        this.searchForm.value.roomCount,
-        this.searchForm.value.location,
-        this.searchForm.value.size,
-        this.searchForm.value.orderBy,
-        this.pageNumber
-      ).subscribe(
+  processData(observable: Observable<Offer[]>): void {
+    observable.subscribe(
       data => {
         data.forEach(item => this.offers.push(item));
         if(data.length != environment.OFFER_PAGE_SIZE) {
@@ -72,18 +65,20 @@ export class OfferSearchComponent implements OnInit {
     );
   }
 
-  getOffers() {
-    this.offerService.getOffers(this.pageNumber).subscribe(
-      data => {
-        data.forEach(item => this.offers.push(item));
-        if(data.length != environment.OFFER_PAGE_SIZE) {
-          this.hasAlreadyFetchedAll = true;
-        }
-        this.pageNumber++;
-        this.canFetchMore = true;
-        this.loading = false;
-      }
-    );
+  getAllOffers() {
+    this.processData(this.offerService.getOffers(this.pageNumber));
+  }
+
+  getFilteredOffers() {
+    this.processData(this.offerService.getOffersBy(
+      this.searchForm.value.searchString,
+      this.searchForm.value.descriptionCheckbox,
+      this.searchForm.value.roomCount,
+      this.searchForm.value.location,
+      this.searchForm.value.size,
+      this.searchForm.value.orderBy,
+      this.pageNumber
+    ));
   }
 
   splitOffersToThreeInRow(): Offer[][] {
@@ -104,7 +99,7 @@ export class OfferSearchComponent implements OnInit {
     if(this.areFiltersApplied) {
       this.getFilteredOffers();
     } else {
-      this.getOffers();
+      this.getAllOffers();
     }
   }
 

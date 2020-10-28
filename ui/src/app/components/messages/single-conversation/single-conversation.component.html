@@ -2,15 +2,15 @@
   <div class="jumbotron jumbotron-fluid">
     <p class="lead pl-5 pr-5">
       Conversation with <strong>{{secondUser}}</strong>
-      regarding {{conversation.offer.owner == getLoggedUser() ? 'your' : ''}} offer <strong>{{conversation.offer.title}}</strong>
+      regarding {{conversation.offer.owner == getLoggedUser() ? 'your' : ''}} offer <strong style="cursor: pointer" routerLink="/offer-detail/{{conversation.offer.id}}">{{conversation.offer.title}}</strong>
     </p>
   </div>
-  <ul class="list-group">
-    <li *ngFor="let message of conversation.messages" class="list-group-item">
-      <div class="{{message.sender.nick === getLoggedUser() ? 'right' : ''}}">
-        <div>{{message.content}}</div>
-        <small class="{{message.sender.nick === getLoggedUser() ? 'right' : ''}}">{{message.sender.nick === getLoggedUser() ? 'you' : secondUser}}, {{formatDate(message.creationTimestamp)}}</small>
-      </div>
+  <ul style=" list-style-type: none;" class="list-group">
+    <li *ngFor="let message of conversation.messages"
+         class="alert {{message.sender.nick === getLoggedUser() ? 'message-your right ml-5' : 'message-second-user mr-5'}}">
+      <div>{{message.content}}</div>
+      <small class="{{message.sender.nick === getLoggedUser() ? 'right' : ''}}">{{message.sender.nick === getLoggedUser() ? 'you' : secondUser}}, {{formatDate(message.creationTimestamp)}}</small>
+
     </li>
   </ul>
 

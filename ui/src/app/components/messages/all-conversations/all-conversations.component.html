@@ -25,7 +25,8 @@
       </div>
     </li>
   </ul>
-
 </div>
+
+<app-nothing-here *ngIf="isLogged() && !conversations"></app-nothing-here>
 
 <app-login *ngIf="!isLogged()"></app-login>

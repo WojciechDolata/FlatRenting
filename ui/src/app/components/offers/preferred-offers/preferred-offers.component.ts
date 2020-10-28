@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {OfferService} from "../../../services/offer.service";
 import {Offer} from "../../../models/models";
 import {UserService} from "../../../services/user.service";
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-preferred-offers',
@@ -15,7 +16,8 @@ export class PreferredOffersComponent implements OnInit {
 
   constructor(
     private offerService: OfferService,
-    private userService: UserService
+    private userService: UserService,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -43,6 +45,10 @@ export class PreferredOffersComponent implements OnInit {
     }
 
     return splitOffers;
+  }
+
+  isLogged() {
+    return this.authService.authenticated;
   }
 
 }

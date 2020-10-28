@@ -1,31 +1,37 @@
-<div class="jumbotron jumbotron-fluid">
-  <h1 class="lead pl-5 pr-5">Here are the TOP {{offers && offers.length ? offers.length : 10}} offers chosen for You!</h1>
-</div>
+<div *ngIf="isLogged()">
+  <div class="jumbotron jumbotron-fluid">
+    <h1 class="lead pl-5 pr-5">Here are the TOP {{offers && offers.length ? offers.length : 10}} offers chosen for You!</h1>
+  </div>
 
-<div *ngIf="!hasPreferences">
-  <h5> Please first select your preferences in your Profile!</h5>
-</div>
+  <div *ngIf="!hasPreferences">
+    <h5> Please first select your preferences in your Profile!</h5>
+  </div>
 
-<div *ngIf="hasPreferences">
-  <mat-spinner *ngIf="!offers" style="margin: 20% auto;" [color]="'primary'"></mat-spinner>
-  <div *ngFor="let offers of splitOffersToThreeInRow()" class="row" style="width: 100%;">
-    <div *ngFor="let offer of offers" class="card column">
-      <div class="card-body">
-        <img *ngIf="offer.photos.length > 0" class="card-img-top limited" src="data:image/png;base64,{{offer.photos[0].data}}"
-             style="background-image: url(data:image/png;base64,{{offer.photos[0].data}});
-                  background-size:cover;"
-             alt="Thumbnail placeholder">
-        <h5 class="card-title">{{offer.title}}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">{{offer.location}}</h6>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">{{offer.roomCount}} room{{offer.roomCount != 1 ? 's' : ''}}</li>
-          <li class="list-group-item">{{offer.size}} square meters</li>
-          <li class="list-group-item">{{offer.price}} PLN/month</li>
-        </ul>
-        <a routerLink="/offer-detail/{{offer.id}}" class="card-link">Show details</a>
+  <div *ngIf="hasPreferences">
+    <mat-spinner *ngIf="!offers" style="margin: 20% auto;" [color]="'primary'"></mat-spinner>
+    <div *ngFor="let offers of splitOffersToThreeInRow()" class="row" style="width: 100%;">
+      <div *ngFor="let offer of offers" class="card column">
+        <div class="card-body">
+          <img *ngIf="offer.photos.length > 0" class="card-img-top limited" src="data:image/png;base64,{{offer.photos[0].data}}"
+               style="background-image: url(data:image/png;base64,{{offer.photos[0].data}});
+                    background-size:cover;"
+               alt="Thumbnail placeholder">
+          <h5 class="card-title">{{offer.title}}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{offer.location}}</h6>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">{{offer.roomCount}} room{{offer.roomCount != 1 ? 's' : ''}}</li>
+            <li class="list-group-item">{{offer.size}} square meters</li>
+            <li class="list-group-item">{{offer.price}} PLN/month</li>
+          </ul>
+          <a routerLink="/offer-detail/{{offer.id}}" class="card-link">Show details</a>
+        </div>
+
       </div>
 
     </div>
-
   </div>
 </div>
+
+<app-nothing-here *ngIf="isLogged() && !offers && hasPreferences"></app-nothing-here>
+
+<app-auth-failed *ngIf="!isLogged()"></app-auth-failed>

@@ -121,7 +121,6 @@ public class MessageService {
             List<Message> messages = conversation.getMessages();
             messages.add(message);
             conversation.setMessages(messages);
-
             entityManager.persist(conversation);
 
             return conversation;

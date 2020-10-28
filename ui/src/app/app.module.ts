@@ -23,6 +23,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {FooterComponent} from './components/footer/footer.component';
 import {UserPreferencesComponent} from './components/profile/user-preferences/user-preferences.component';
 import {PreferredOffersComponent} from './components/offers/preferred-offers/preferred-offers.component';
+import {NothingHereComponent} from './components/nothing-here/nothing-here.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import {PreferredOffersComponent} from './components/offers/preferred-offers/pre
     OfferConversationsComponent,
     FooterComponent,
     UserPreferencesComponent,
-    PreferredOffersComponent
+    PreferredOffersComponent,
+    NothingHereComponent
   ],
   imports: [
     BrowserModule,

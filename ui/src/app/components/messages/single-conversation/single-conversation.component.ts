@@ -35,6 +35,9 @@ export class SingleConversationComponent implements OnInit {
   }
 
   updateConversationData(updatedConversation: Conversation) {
+    updatedConversation.messages = updatedConversation.messages.sort(
+      (m1, m2) => m1.creationTimestamp.valueOf() - m2.creationTimestamp.valueOf()
+    );
     this.conversation = updatedConversation;
   }
 

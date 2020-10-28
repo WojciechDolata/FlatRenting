@@ -41,4 +41,6 @@
 
 </div>
 
+<app-nothing-here *ngIf="isLogged() && !offers"></app-nothing-here>
+
 <app-login *ngIf="!isLogged()"></app-login>
