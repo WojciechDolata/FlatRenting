@@ -49,10 +49,10 @@ public class Offer {
     @ManyToOne
     private User owner;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, cascade = {CascadeType.ALL})
     private List<Photo> photos;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, cascade = {CascadeType.ALL})
     private List<Conversation> conversations;
 
     public void addVisit() {

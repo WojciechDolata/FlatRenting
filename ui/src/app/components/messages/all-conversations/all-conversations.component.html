@@ -5,14 +5,18 @@
   </div>
 
   <ul class="list-group">
-    <li *ngFor="let conversation of conversations" class="list-group-item row" style="width: 100%;">
+    <li *ngFor="let conversation of conversationNewMessageMap.keys()" class="list-group-item row" style="width: 100%;">
       <div class="card-body column">
-        <h5 class="card-title">{{conversation.offer.title}}</h5>
+        <h5 class="card-title">
+          {{conversation.offer.title}}
+          <span *ngIf="conversationNewMessageMap.get(conversation) > 0" class="badge badge-pill badge-primary">{{conversationNewMessageMap.get(conversation)}}</span>
+        </h5>
         <h6 class="card-subtitle mb-2 text-muted">{{conversation.offer.location}}</h6>
       </div>
       <div class="column-wide">
         <div *ngIf="conversation.messages.length != 0">
-          {{conversation.messages[conversation.messages.length-1].content}}
+          <strong *ngIf="conversationNewMessageMap.get(conversation) > 0">{{conversation.messages[conversation.messages.length-1].content}}</strong>
+          <div *ngIf="conversationNewMessageMap.get(conversation) == 0">{{conversation.messages[conversation.messages.length-1].content}}</div>
         </div>
         <small>{{getLatestMessageDate(conversation)}}</small>
         <a [routerLink]="'/conversation'"

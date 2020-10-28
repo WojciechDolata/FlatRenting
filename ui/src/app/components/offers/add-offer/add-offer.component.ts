@@ -49,7 +49,8 @@ export class AddOfferComponent implements OnInit {
       size: formValue.flatSize,
       price: formValue.price,
       owner: null,
-      photos: []
+      photos: [],
+      visitCount: 0
     };
 
     this.offerService.addNewOffer(offer, this.authService.getNick())

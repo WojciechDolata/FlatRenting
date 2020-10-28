@@ -86,4 +86,11 @@ public class MessageController {
         }
     }
 
+    @GetMapping(value = "/markRead/{id}", produces = {"application/json"})
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody ResponseEntity<Conversation> markConversationAsRead(
+            @PathVariable(value = "id") Integer conversationId,
+            Principal user) {
+        return ResponseEntity.ok(messageService.markAsRead(user.getName(), conversationId));
+    }
 }

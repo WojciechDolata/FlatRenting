@@ -9,7 +9,7 @@
     <li *ngFor="let message of conversation.messages" class="list-group-item">
       <div class="{{message.sender.nick === getLoggedUser() ? 'right' : ''}}">
         <div>{{message.content}}</div>
-        <small class="right">{{message.sender.nick === getLoggedUser() ? 'you' : secondUser}}, {{formatDate(message.creationTimestamp)}}</small>
+        <small class="{{message.sender.nick === getLoggedUser() ? 'right' : ''}}">{{message.sender.nick === getLoggedUser() ? 'you' : secondUser}}, {{formatDate(message.creationTimestamp)}}</small>
       </div>
     </li>
   </ul>

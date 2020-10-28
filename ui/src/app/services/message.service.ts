@@ -68,5 +68,12 @@ export class MessageService {
     )
   }
 
+  markRead(conversationId): Observable<Conversation> {
+    return this.http.get<Conversation>(
+      this.messageUrl + "/markRead/" + conversationId,
+      {headers: this.authService.getHeaders()}
+    );
+  }
+
 
 }

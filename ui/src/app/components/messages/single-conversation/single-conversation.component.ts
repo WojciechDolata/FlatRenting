@@ -20,8 +20,12 @@ export class SingleConversationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.conversation = this.authService.currentConversation;
-    this.secondUser = this.conversation.user.nick == this.authService.getNick() ? this.conversation.offer.owner.nick : this.conversation.user.nick;
+    this.messageService.markRead(this.authService.currentConversation.id).subscribe(
+      conversation => {
+        this.conversation = conversation;
+        this.secondUser = this.conversation.user.nick == this.authService.getNick() ? this.conversation.offer.owner.nick : this.conversation.user.nick;
+      }
+    );
   }
 
   updateConversationData(updatedConversation: Conversation) {

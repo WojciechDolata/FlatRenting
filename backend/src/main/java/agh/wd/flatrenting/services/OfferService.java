@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,13 +29,16 @@ public class OfferService {
     private final OfferRepository offerRepository;
     private final UserRepository userRepository;
     private final UserService userService;
+    private final EntityManager entityManager;
 
     @Autowired
     public OfferService(OfferRepository offerRepository,
                         UserRepository userRepository,
+                        EntityManager entityManager,
                         UserService userService) {
         this.offerRepository = offerRepository;
         this.userRepository = userRepository;
+        this.entityManager = entityManager;
         this.userService = userService;
     }
 
@@ -64,10 +68,10 @@ public class OfferService {
         offerRepository.save(offer);
     }
 
+    @Transactional
     public void delete(Offer offer) {
-        offerRepository.findById(offer.getId()).ifPresent(
-                offerRepository::delete
-        );
+//        offer.getConversations().forEach(entityManager::remove);
+        offerRepository.delete(offer);
     }
 
     public void addOffer(Offer offer, String ownerNick) {

@@ -26,7 +26,6 @@ export class YourOffersComponent implements OnInit {
   fetchData() {
     this.offerService.getAllForUser(this.authService.getNick()).subscribe(
       data => {
-        console.log(data);
         this.offers = data;
         let offerIds = this.offers.map(offer => offer.id);
         this.messageService.getAllConversationsForOffers(offerIds).subscribe(
@@ -37,6 +36,15 @@ export class YourOffersComponent implements OnInit {
         );
       }
     )
+  }
+
+  getNewMessageCountForConversationList(list: Conversation[]) {
+    return list
+      .map(conv => conv.messages
+        .map(mess => mess.wasReadByOfferOwner)
+        .reduce((acc, n) => acc && n))
+      .filter(m => !m)
+      .length;
   }
 
   setMap() {

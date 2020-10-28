@@ -68,7 +68,7 @@
     </div>
   </div>
 
-  <app-message-form [offerId]="offer.id" [createNewConversation]="true"></app-message-form>
+  <app-message-form *ngIf="shouldCreateConversation" [offerId]="offer.id" [createNewConversation]="true"></app-message-form>
 </div>
 
 <div *ngIf="!offer">

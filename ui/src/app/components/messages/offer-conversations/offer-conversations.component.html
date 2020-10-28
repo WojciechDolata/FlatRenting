@@ -8,7 +8,10 @@
   <ul class="list-group">
 
     <li *ngFor="let conversation of conversations.reverse()" class="list-group-item">
-      <h5 class="mb-1">{{conversation.user.nick}}</h5>
+      <h5 class="mb-1">
+        {{conversation.user.nick}}
+        <span *ngIf="getNewMessageCountForConversation(conversation) > 0" class="badge badge-pill badge-primary">{{getNewMessageCountForConversation(conversation)}}</span>
+      </h5>
       Last message: <strong>{{conversation.messages[conversation.messages.length-1].content}}</strong>
       <small class="right">{{formatDate(conversation.messages[conversation.messages.length-1].creationTimestamp)}}</small>
       <br/>

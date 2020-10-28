@@ -32,7 +32,8 @@ export class Conversation extends BasicModel {
 
 export class Message extends BasicModel{
   content: string;
-  wasRead: boolean = false;
+  wasReadByOfferOwner: boolean = false;
+  wasReadBySecondUser: boolean = false;
   sender: User;
   receiver: User;
 }

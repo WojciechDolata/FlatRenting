@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {OfferService} from "../../../services/offer.service";
 import {Offer} from "../../../models/models";
 import {ActivatedRoute} from "@angular/router";
+import {AuthService} from "../../../services/auth.service";
+import {MessageService} from "../../../services/message.service";
 
 @Component({
   selector: 'app-offer-details',
@@ -14,9 +16,13 @@ export class OfferDetailsComponent implements OnInit {
 
   offer: Offer;
 
+  shouldCreateConversation: boolean
+
   constructor(
     private offerService: OfferService,
-    private route: ActivatedRoute
+    private messageService: MessageService,
+    private route: ActivatedRoute,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -28,6 +34,7 @@ export class OfferDetailsComponent implements OnInit {
     this.offerService.getOffer(this.id)
       .subscribe(offer => {
         this.offer = offer;
+        this.setShouldCreateConversation();
       });
   }
 
@@ -44,6 +51,24 @@ export class OfferDetailsComponent implements OnInit {
       return "in the last 24 hours.";
     } else {
       return dayCount + " days ago."
+    }
+  }
+
+  setShouldCreateConversation() {
+    if(this.offer.owner.nick === this.authService.getNick()) {
+      this.shouldCreateConversation = false;
+    } else {
+      this.messageService.getConversationsByNick().subscribe(
+        conversations => {
+          if(conversations.length === 0) {
+            this.shouldCreateConversation = true;
+          } else {
+            this.shouldCreateConversation = !conversations
+              .map(conversation => conversation.offer.id === this.offer.id)
+              .reduce((a,b) => a || b );
+          }
+        }
+      );
     }
   }
 }

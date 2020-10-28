@@ -12,6 +12,7 @@ import DateUtils from "../../../utils/date-utils";
 export class AllConversationsComponent implements OnInit {
 
   conversations: Conversation[];
+  conversationNewMessageMap: Map<Conversation, number> = new Map();
 
   constructor(private authService: AuthService,
               private messageService: MessageService) { }
@@ -26,11 +27,18 @@ export class AllConversationsComponent implements OnInit {
   }
 
   fetchConversations() {
-    this.messageService.getConversationsByNick().subscribe(data => this.conversations = data);
+    this.messageService.getConversationsByNick().subscribe(data => {
+      // this.conversations = data;
+      data.forEach(conv => this.conversationNewMessageMap.set(conv, this.getNewMessageCount(conv)))
+    });
   }
 
   setAsCurrentConversation(conversation: Conversation) {
     this.authService.currentConversation = conversation;
+  }
+
+  getNewMessageCount(conversation: Conversation) {
+    return conversation.messages.filter(message => !message.wasReadBySecondUser).length;
   }
 
   isLogged() {

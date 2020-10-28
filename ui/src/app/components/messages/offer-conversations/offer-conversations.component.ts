@@ -38,6 +38,10 @@ export class OfferConversationsComponent implements OnInit {
       });
   }
 
+  getNewMessageCountForConversation(conversation: Conversation) {
+    return conversation.messages.filter(message => !message.wasReadByOfferOwner).length;
+  }
+
   getLoggedUser() {
     return this.authService.getNick();
   }

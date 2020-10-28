@@ -8,10 +8,7 @@ import agh.wd.flatrenting.entities.Conversation;
 import agh.wd.flatrenting.entities.Message;
 import agh.wd.flatrenting.entities.Offer;
 import agh.wd.flatrenting.entities.User;
-import agh.wd.flatrenting.exceptions.ConversationExistsException;
-import agh.wd.flatrenting.exceptions.ConversationNotFoundException;
-import agh.wd.flatrenting.exceptions.OfferNotFoundException;
-import agh.wd.flatrenting.exceptions.UserNotFoundException;
+import agh.wd.flatrenting.exceptions.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -103,6 +100,13 @@ public class MessageService {
             throw new ConversationNotFoundException(conversationId.toString());
         } else {
             Message message = new Message();
+            if(conversation.getUser().getNick().equals(senderNick)) {
+                message.setWasReadBySecondUser(true);
+                message.setWasReadByOfferOwner(false);
+            } else {
+                message.setWasReadBySecondUser(false);
+                message.setWasReadByOfferOwner(true);
+            }
             message.setContent(messageText);
             message.setSender(sender);
 
@@ -140,6 +144,8 @@ public class MessageService {
             throw new ConversationExistsException();
         } else {
             Message message = new Message();
+            message.setWasReadBySecondUser(true);
+            message.setWasReadByOfferOwner(false);
             message.setContent(messageText);
             message.setReceiver(offer.getOwner());
             message.setSender(sender);
@@ -154,5 +160,27 @@ public class MessageService {
 
             return conversation;
         }
+    }
+
+    @Transactional
+    public Conversation markAsRead(String userNick, Integer conversationId) {
+        Conversation conversation = conversationRepository.getById(conversationId)
+                .orElseThrow(() -> new ConversationNotFoundException(conversationId.toString()));
+
+        if(!userNick.equals(conversation.getUser().getNick()) && !userNick.equals(conversation.getOffer().getOwner().getNick())) {
+            throw new NotAuthorizedException();
+        }
+
+        List<Message> messages = conversation.getMessages();
+        messages.forEach(message -> {
+            if(conversation.getUser().getNick().equals(userNick)) {
+                message.setWasReadBySecondUser(true);
+            } else {
+                message.setWasReadByOfferOwner(true);
+            }
+        });
+        conversation.setMessages(messages);
+        conversationRepository.save(conversation);
+        return conversation;
     }
 }

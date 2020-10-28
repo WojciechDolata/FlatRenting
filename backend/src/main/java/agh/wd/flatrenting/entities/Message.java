@@ -30,7 +30,10 @@ public class Message {
     private String content;
 
     @Column
-    private boolean wasRead;
+    private boolean wasReadByOfferOwner;
+
+    @Column
+    private boolean wasReadBySecondUser;
 
     @ManyToOne
     private User sender;
