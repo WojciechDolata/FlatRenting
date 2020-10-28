@@ -4,6 +4,7 @@ import {UserService} from "../../../services/user.service";
 import {UserPreferences} from "../../../models/models";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Router} from "@angular/router";
+import {cities} from "../../../../environments/cities";
 
 @Component({
   selector: 'app-user-preferences',
@@ -73,6 +74,10 @@ export class UserPreferencesComponent implements OnInit {
     this.userService.updatePreferences(newPreferences).subscribe(
       data => this.router.navigateByUrl("/offers")
     );
+  }
+
+  getCities() {
+    return cities;
   }
 
   isLogged() {

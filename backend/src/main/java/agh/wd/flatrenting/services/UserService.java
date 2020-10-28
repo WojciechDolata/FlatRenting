@@ -6,6 +6,7 @@ import agh.wd.flatrenting.database.UserRepository;
 import agh.wd.flatrenting.entities.User;
 import agh.wd.flatrenting.entities.UserCredentials;
 import agh.wd.flatrenting.entities.UserPreferences;
+import agh.wd.flatrenting.exceptions.PreferencesNotFoundException;
 import agh.wd.flatrenting.exceptions.UserNotFoundException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,7 +103,7 @@ public class UserService {
     public UserPreferences getPreferences(String nick) {
         return userPreferencesRepository.findByNick(nick)
                 .orElseThrow(
-                        () -> new UserNotFoundException(nick)
+                        () -> new PreferencesNotFoundException(nick)
                 );
     }
 

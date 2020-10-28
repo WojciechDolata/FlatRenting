@@ -32,6 +32,6 @@
   </div>
 </div>
 
-<app-nothing-here *ngIf="isLogged() && !offers && hasPreferences"></app-nothing-here>
+<app-nothing-here *ngIf="isLogged() && offers.length === 0 && hasPreferences"></app-nothing-here>
 
 <app-auth-failed *ngIf="!isLogged()"></app-auth-failed>

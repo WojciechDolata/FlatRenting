@@ -6,7 +6,7 @@
 
   <div *ngIf="this.conversationLists">
     <div *ngFor="let offers of splitOffersToThreeInRow()" class="row" style="width: 100%;">
-      <div *ngFor="let offer of offers" class="card column">
+      <div *ngFor="let offer of offers" class="card column m-2">
         <div class="card-body">
           <h5 class="card-title">{{offer.title}}</h5>
           <h6 class="card-subtitle mb-2 text-muted">{{offer.location}}</h6>
@@ -23,14 +23,14 @@
           </ul>
           <div style="float: right">
           <a routerLink="/offer-detail/{{offer.id}}" style="width: 100%"
-             class="btn btn-outline-primary">Show offer details
+             class="btn btn-outline-primary mb-1">Show offer details
           </a>
           <br/>
           <a routerLink="/offer-messages/{{offer.id}}" style="width: 100%"
-             class="btn btn-outline-primary">Show messages
+             class="btn btn-outline-primary mb-1">Show messages
           </a>
           <br/>
-          <button (click)="delete(offer.id)" class="btn btn-danger" style="width: 100%">Delete</button>
+          <button (click)="delete(offer.id)" class="btn btn-danger mb-1" style="width: 100%">Delete</button>
           </div>
         </div>
 
