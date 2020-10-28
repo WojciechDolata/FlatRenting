@@ -179,6 +179,7 @@ public class MessageService {
                 message.setWasReadByOfferOwner(true);
             }
         });
+        messages.sort(Comparator.comparing(Message::getCreationTimestamp));
         conversation.setMessages(messages);
         conversationRepository.save(conversation);
         return conversation;

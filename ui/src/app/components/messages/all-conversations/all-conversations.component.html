@@ -19,8 +19,7 @@
           <div *ngIf="conversationNewMessageMap.get(conversation) == 0">{{conversation.messages[conversation.messages.length-1].content}}</div>
         </div>
         <small>{{getLatestMessageDate(conversation)}}</small>
-        <a [routerLink]="'/conversation'"
-           (click)="setAsCurrentConversation(conversation)"
+        <a routerLink="/conversation/{{conversation.id}}"
            class="btn btn-outline-primary float-right">Go to conversation
         </a>
       </div>

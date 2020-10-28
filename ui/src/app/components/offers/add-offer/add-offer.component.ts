@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {OfferService} from "../../../services/offer.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Offer} from "../../../models/models";
-import {HttpErrorResponse} from "@angular/common/http";
+import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {AuthService} from "../../../services/auth.service";
 
@@ -14,6 +14,7 @@ import {AuthService} from "../../../services/auth.service";
 export class AddOfferComponent implements OnInit {
   newOfferForm: FormGroup;
   filesToUpload: File[] = null;
+  loading = false;
 
   constructor(
     private offerService: OfferService,
@@ -55,9 +56,12 @@ export class AddOfferComponent implements OnInit {
 
     this.offerService.addNewOffer(offer, this.authService.getNick())
       .subscribe(offer => {
-        if(this.filesToUpload) this.upload(offer.id);
-        this.initFormGroup();
-        this.router.navigateByUrl("/offer-detail/" + offer.id);
+        if(this.filesToUpload) {
+          this.upload(offer.id);
+        } else {
+          this.initFormGroup();
+          this.router.navigateByUrl("/offer-detail/" + offer.id);
+        }
       });
 
   }
@@ -67,11 +71,22 @@ export class AddOfferComponent implements OnInit {
   }
 
   upload(id: number) {
+    this.loading = true;
+    let loadedPhotosCount = 0;
+    let totalPhotosCount = this.filesToUpload.length;
     for(let i = 0; i < this.filesToUpload.length; i++) {
       this.offerService.addPhotoToOffer(id, this.filesToUpload[i]).subscribe(event => {
           if (event instanceof HttpErrorResponse) {
             alert('Error while uploading files');
+          } else if(event instanceof HttpResponse) {
+            loadedPhotosCount++;
+            if(loadedPhotosCount == totalPhotosCount) {
+              this.loading = false;
+              this.initFormGroup();
+              this.router.navigateByUrl("/offer-detail/" + id);
+            }
           }
+
         }
       );
     }

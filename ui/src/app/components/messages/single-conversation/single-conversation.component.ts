@@ -3,6 +3,7 @@ import {Conversation} from "../../../models/models";
 import {MessageService} from "../../../services/message.service";
 import {AuthService} from "../../../services/auth.service";
 import DateUtils from "../../../utils/date-utils";
+import {ActivatedRoute} from "@angular/router";
 
 
 @Component({
@@ -14,16 +15,21 @@ export class SingleConversationComponent implements OnInit {
 
   conversation: Conversation;
   secondUser: string;
+  isLoaded = false;
+
   constructor(
     private messageService: MessageService,
-    private authService: AuthService
+    private authService: AuthService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.messageService.markRead(this.authService.currentConversation.id).subscribe(
+    let id = +this.route.snapshot.paramMap.get('id');
+    this.messageService.markRead(id).subscribe(
       conversation => {
         this.conversation = conversation;
         this.secondUser = this.conversation.user.nick == this.authService.getNick() ? this.conversation.offer.owner.nick : this.conversation.user.nick;
+        this.isLoaded = true;
       }
     );
   }

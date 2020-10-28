@@ -33,10 +33,6 @@ export class AllConversationsComponent implements OnInit {
     });
   }
 
-  setAsCurrentConversation(conversation: Conversation) {
-    this.authService.currentConversation = conversation;
-  }
-
   getNewMessageCount(conversation: Conversation) {
     return conversation.messages.filter(message => !message.wasReadBySecondUser).length;
   }

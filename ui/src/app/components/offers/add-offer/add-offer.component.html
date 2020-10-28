@@ -56,5 +56,8 @@
   </form>
 </div>
 
+<mat-spinner *ngIf="loading" style="margin: 20% auto;" [color]="'primary'"></mat-spinner>
+
+
 <app-login *ngIf="!isLogged()"></app-login>
 

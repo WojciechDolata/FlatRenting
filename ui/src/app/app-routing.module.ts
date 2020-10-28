@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'messages', component: AllConversationsComponent },
   { path: 'offer-messages/:id', component: OfferConversationsComponent },
-  { path: 'conversation', component: SingleConversationComponent },
+  { path: 'conversation/:id', component: SingleConversationComponent },
   { path: 'profile', component: ProfileDetailsComponent },
   { path: 'your-offers', component: YourOffersComponent },
   { path: 'preferences', component: UserPreferencesComponent },

@@ -37,7 +37,10 @@ export class MessageFormComponent implements OnInit {
   onSubmit(formValue) {
     if(this.createNewConversation) {
       this.messageService.addConversation(formValue.message, this.offerId).subscribe(
-        conversation => this.initFormGroup()
+        conversation => {
+          this.onSend.emit(conversation);
+          this.initFormGroup();
+        }
       )
     } else {
       this.messageService.addMessage(formValue.message, this.conversationId).subscribe(

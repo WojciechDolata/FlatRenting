@@ -57,8 +57,4 @@ export class OfferConversationsComponent implements OnInit {
     return DateUtils.formatDate(date);
   }
 
-  setAsCurrentConversation(conversation: Conversation) {
-    this.authService.currentConversation = conversation;
-  }
-
 }

@@ -1,4 +1,4 @@
-<div *ngIf="isLogged()">
+<div *ngIf="isLogged() && isLoaded">
   <div class="jumbotron jumbotron-fluid">
     <p class="lead pl-5 pr-5">
       Conversation with <strong>{{secondUser}}</strong>
@@ -21,5 +21,7 @@
                     [createNewConversation]="false"
                     (onSend)="updateConversationData($event)"></app-message-form>
 </div>
+<mat-spinner *ngIf="!isLoaded" style="margin: 20% auto;" [color]="'primary'"></mat-spinner>
+
 
 <app-login *ngIf="!isLogged()"></app-login>

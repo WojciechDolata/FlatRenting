@@ -16,8 +16,7 @@
       <small class="right">{{formatDate(conversation.messages[conversation.messages.length-1].creationTimestamp)}}</small>
       <br/>
       <br/>
-      <a [routerLink]="'/conversation'"
-         (click)="setAsCurrentConversation(conversation)">
+      <a routerLink="/conversation/{{conversation.id}}">
         <button type="button" class="btn btn-outline-primary btn-sm right">Go to conversation</button>
       </a>
     </li>
