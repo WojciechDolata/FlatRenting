@@ -43,10 +43,8 @@ export class ProfileDetailsComponent implements OnInit {
   }
 
   fetchData() {
-    this.userService.getEmail().subscribe(email => {
-
-      console.log(email);
-      this.email = email;
+    this.userService.getEmail().subscribe(response => {
+      this.email = response['response'];
     });
     this.userService.getUser().subscribe(user => this.user = user);
   }
@@ -61,12 +59,16 @@ export class ProfileDetailsComponent implements OnInit {
 
   onSubmit(formValue) {
     if(this.validate(formValue)) {
-      if(formValue.email != this.email) {
-        this.userService.updateEmail(formValue.email).subscribe();
+      if(formValue.email && formValue.email != this.email) {
+        this.userService.updateEmail(formValue.email).subscribe(
+          () => this.fetchData()
+        );
       }
 
-      if(formValue.phoneNumber != this.user.phoneNumber) {
-        this.userService.updatePhoneNumber(formValue.phoneNumber).subscribe();
+      if(formValue.phoneNumber && formValue.phoneNumber != this.user.phoneNumber) {
+        this.userService.updatePhoneNumber(formValue.phoneNumber).subscribe(
+          () => this.fetchData()
+        );
       }
     }
   }

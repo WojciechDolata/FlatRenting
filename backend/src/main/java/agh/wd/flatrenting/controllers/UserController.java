@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Collections;
+import java.util.Map;
 
 @CrossOrigin()
 @RestController
@@ -67,10 +69,10 @@ public class UserController {
 
     @PostMapping(value = "/getEmail", produces = {"application/json"})
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody ResponseEntity<String> getEmail(@RequestParam(value = "nick") String nick,
-                                                         Principal user) {
+    public @ResponseBody ResponseEntity<Map<String, String>> getEmail(@RequestParam(value = "nick") String nick,
+                                                 Principal user) {
         if(nick.equals(user.getName())) {
-            return ResponseEntity.ok(userService.findEmail(nick));
+            return ResponseEntity.ok(Collections.singletonMap("response", userService.findEmail(nick)));
         } else {
             throw new NotAuthorizedException();
         }
