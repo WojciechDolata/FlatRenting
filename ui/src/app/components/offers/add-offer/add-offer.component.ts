@@ -5,6 +5,7 @@ import {Offer} from "../../../models/models";
 import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {AuthService} from "../../../services/auth.service";
+import {cities} from "../../../../environments/cities";
 
 @Component({
   selector: 'app-add-offer',
@@ -28,7 +29,7 @@ export class AddOfferComponent implements OnInit {
   private initFormGroup() {
     this.newOfferForm = this.formBuilder.group({
       title: '',
-      location: '',
+      location: 'Pick location',
       roomCount: '1',
       flatSize: '',
       price: '',
@@ -64,6 +65,10 @@ export class AddOfferComponent implements OnInit {
         }
       });
 
+  }
+
+  getCities() {
+    return cities;
   }
 
   handleFileInput(event) {

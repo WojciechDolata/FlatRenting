@@ -3,6 +3,7 @@ import {Offer} from "../../../models/models";
 import {OfferService} from "../../../services/offer.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {environment} from "../../../../environments/environment";
+import {cities} from "../../../../environments/cities";
 
 @Component({
   selector: 'app-offer-search',
@@ -35,6 +36,7 @@ export class OfferSearchComponent implements OnInit {
       searchString: '',
       descriptionCheckbox: '',
       roomCount: 'Room count...',
+      location: 'Pick location...',
       size: 'Size...',
       orderBy: '1'
     });
@@ -53,6 +55,7 @@ export class OfferSearchComponent implements OnInit {
         this.searchForm.value.searchString,
         this.searchForm.value.descriptionCheckbox,
         this.searchForm.value.roomCount,
+        this.searchForm.value.location,
         this.searchForm.value.size,
         this.searchForm.value.orderBy,
         this.pageNumber
@@ -113,5 +116,9 @@ export class OfferSearchComponent implements OnInit {
       this.canFetchMore = false;
       this.loadMoreOffers();
     }
+  }
+
+  getCities() {
+    return cities;
   }
 }

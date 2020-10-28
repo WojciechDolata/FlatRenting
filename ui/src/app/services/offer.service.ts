@@ -49,6 +49,7 @@ export class OfferService {
   getOffersBy(searchQuery: string,
               descriptionCheck: string,
               roomCount: string,
+              location: string,
               size: string,
               orderBy: string,
               page: number): Observable<Offer[]> {
@@ -61,6 +62,10 @@ export class OfferService {
       if(descriptionCheck != "") {
         params = params.append("descriptionCheck", String(descriptionCheck));
       }
+    }
+
+    if(location != "Pick location...") {
+      params = params.append("location", location);
     }
 
     if(roomCount != "Room count...") {

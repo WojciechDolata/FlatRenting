@@ -98,7 +98,7 @@ public class OfferService {
         return optionalOffer.orElse(null);
     }
 
-    public List<Offer> getAllBy(String searchQuery, boolean descriptionCheck, Integer roomCount, String size, String orderBy, int page, int pageSize) {
+    public List<Offer> getAllBy(String searchQuery, boolean descriptionCheck, Integer roomCount, String location, String size, String orderBy, int page, int pageSize) {
         Sort sort = switch (orderBy) {
             case "2" -> Sort.by("creationTimestamp").ascending();
             case "3" -> Sort.by("price").ascending();
@@ -132,7 +132,7 @@ public class OfferService {
             }
         }
 
-        return offerRepository.findAllBy(searchQuery, descriptionCheck, roomCount, sizeMin, sizeMax, PageRequest.of(page, pageSize, sort)).toList();
+        return offerRepository.findAllBy(searchQuery, descriptionCheck, roomCount, location, sizeMin, sizeMax, PageRequest.of(page, pageSize, sort)).toList();
     }
 
     public List<Offer> getAllForUser(String nick) {

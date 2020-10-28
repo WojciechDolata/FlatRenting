@@ -53,10 +53,11 @@ public class OfferController {
             @RequestParam(value = "searchQuery", required = false) String searchQuery,
             @RequestParam(value = "descriptionCheck", required = false) boolean descriptionCheck,
             @RequestParam(value = "roomCount", required = false) Integer roomCount,
+            @RequestParam(value = "location", required = false) String location,
             @RequestParam(value = "size", required = false) String size,
             @RequestParam(value = "orderBy", required = false) String orderBy,
             @RequestParam(value = "page") int page) {
-        return ResponseEntity.ok().body(offerService.getAllBy(searchQuery, descriptionCheck, roomCount, size, orderBy, page, offerPageSize));
+        return ResponseEntity.ok().body(offerService.getAllBy(searchQuery, descriptionCheck, roomCount, location, size, orderBy, page, offerPageSize));
     }
 
     @PostMapping("/add/{ownerNick}")

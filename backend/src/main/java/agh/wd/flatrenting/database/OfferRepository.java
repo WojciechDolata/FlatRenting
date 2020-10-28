@@ -20,12 +20,14 @@ public interface OfferRepository extends JpaRepository<Offer, Integer> {
             "where (:sizeMin is null or o.size >= :sizeMin) " +
             "and (:sizeMax is null or o.size <= :sizeMax) " +
             "and (:roomCount is null or o.roomCount = :roomCount) " +
+            "and (:location is null or o.location = :location) " +
             "and (:searchQuery is null " +
             "   or (o.title LIKE CONCAT('%',:searchQuery,'%') " +
             "       or (:descriptionCheck = true and o.description LIKE CONCAT('%',:searchQuery,'%'))))")
     Page<Offer> findAllBy(@Param(value = "searchQuery") String searchQuery,
                           @Param(value = "descriptionCheck") boolean descriptionCheck,
                           @Param(value = "roomCount") Integer roomCount,
+                          @Param(value = "location") String location,
                           @Param(value = "sizeMin") Integer sizeMin,
                           @Param(value = "sizeMax") Integer sizeMax,
                           Pageable pageable);

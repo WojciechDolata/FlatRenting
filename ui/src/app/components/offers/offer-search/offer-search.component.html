@@ -32,6 +32,12 @@
             </select>
           </div>
           <div class="col-auto">
+            <select class="custom-select my-1 mr-sm-2" id="location" formControlName="location">
+              <option>Pick location...</option>
+              <option *ngFor="let city of getCities()">{{city}}</option>
+            </select>
+          </div>
+          <div class="col-auto">
             <select class="custom-select my-1 mr-sm-2" id="size" formControlName="size">
               <option selected>Size...</option>
               <option><25</option>
