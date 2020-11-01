@@ -12,10 +12,22 @@
     </div>
     <div class="form-group">
       <label for="roomCount">Flat location</label>
-      <select class="form-control" id="location" formControlName="location">
+      <select class="form-control" id="location" formControlName="location" [(ngModel)]="location" (ngModelChange)="updateMapLocation(location)">
         <option>Pick location</option>
         <option *ngFor="let city of getCities()">{{city}}</option>
       </select>
+      <google-map (mapClick)="onMapClick($event)"
+                  [center]="mapCenter"
+                  [zoom]="10"
+                  width="100%"
+                  height="300px">
+        <map-marker
+          *ngIf="marker"
+          [position]="{lat: marker.x, lng: marker.y}"
+          [title]="marker.title"
+        >
+        </map-marker>
+      </google-map>
     </div>
     <div class="form-group">
       <label for="price">Price</label>
@@ -56,6 +68,12 @@
 
     <button type="submit" class="btn btn-primary">Create offer!</button>
   </form>
+<!--  <agm-map [latitude]="59.326242" [longitude]="17.8419719" (mapClick)="onMapClick($event)">-->
+<!--    <agm-marker [latitude]="59.326242" [longitude]="17.8419719">-->
+<!--      <agm-info-window>Börk</agm-info-window>-->
+<!--    </agm-marker>-->
+<!--  </agm-map>-->
+
 </div>
 
 <mat-spinner *ngIf="loading" style="margin: 20% auto;" [color]="'primary'"></mat-spinner>

@@ -24,6 +24,8 @@ import {FooterComponent} from './components/footer/footer.component';
 import {UserPreferencesComponent} from './components/profile/user-preferences/user-preferences.component';
 import {PreferredOffersComponent} from './components/offers/preferred-offers/preferred-offers.component';
 import {NothingHereComponent} from './components/nothing-here/nothing-here.component';
+import {AgmCoreModule} from "@agm/core";
+import {GoogleMapsModule} from "@angular/google-maps";
 
 @NgModule({
   declarations: [
@@ -53,7 +55,11 @@ import {NothingHereComponent} from './components/nothing-here/nothing-here.compo
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    GoogleMapsModule,
+    AgmCoreModule.forRoot({
+      apiKey: ''
+    })
   ],
   entryComponents: [
     OfferSearchComponent

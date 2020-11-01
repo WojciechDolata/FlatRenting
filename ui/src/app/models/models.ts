@@ -11,6 +11,8 @@ export class Offer extends BasicModel{
   roomCount: number;
   visitCount: number = 0;
   description: string;
+  locationX: number;
+  locationY: number;
   owner: User;
   photos: Photo[];
 }
@@ -54,4 +56,10 @@ export class UserPreferences extends BasicModel{
   minSize: number;
   maxSize: number;
   maxDaysAgo: number;
+}
+
+export class Marker {
+  x: number;
+  y: number;
+  title: string;
 }
