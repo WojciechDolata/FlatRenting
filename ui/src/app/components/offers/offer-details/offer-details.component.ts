@@ -32,7 +32,7 @@ export class OfferDetailsComponent implements OnInit {
 
   getOfferPosition() {
     if (this.offer != null) {
-      return {lat: this.offer.locationX, lng: this.offer.locationY} as LatLng;
+      return new LatLng(this.offer.locationX, this.offer.locationY);
     }
     return null;
   }

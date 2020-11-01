@@ -15,7 +15,7 @@ export class GoogleMapsService {
   constructor(private http: HttpClient) { }
 
   getLocationByCityName(cityName: string): Observable<LatLng> {
-    return this.http.get<LatLng>(this.mapUrl + "address=" + (cityName ? cityName : 'warszawa') + "&key=" + this.key)
+    return this.http.get<any>(this.mapUrl + "address=" + (cityName ? cityName : 'warszawa') + "&key=" + this.key)
       .pipe(
         map(data => data.results[0].geometry.location as LatLng));
   }
