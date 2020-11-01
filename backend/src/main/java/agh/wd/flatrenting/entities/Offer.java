@@ -47,10 +47,10 @@ public class Offer {
     private String description;
 
     @Column
-    private Long locationX;
+    private Double locationX;
 
     @Column
-    private Long locationY;
+    private Double locationY;
 
     @ManyToOne
     private User owner;

@@ -1,11 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {OfferService} from "../../../services/offer.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {Offer} from "../../../models/models";
+import {Marker, Offer} from "../../../models/models";
 import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {AuthService} from "../../../services/auth.service";
 import {cities} from "../../../../environments/cities";
+import {GoogleMapsService} from "../../../services/google-maps.service";
+import LatLng = google.maps.LatLng;
 
 @Component({
   selector: 'app-add-offer',
@@ -16,10 +18,14 @@ export class AddOfferComponent implements OnInit {
   newOfferForm: FormGroup;
   filesToUpload: File[] = null;
   loading = false;
+  location: string;
+  mapCenter: LatLng;
+  marker: Marker;
 
   constructor(
     private offerService: OfferService,
     private authService: AuthService,
+    private mapsService: GoogleMapsService,
     private formBuilder: FormBuilder,
     private router: Router
   ) {
@@ -29,7 +35,7 @@ export class AddOfferComponent implements OnInit {
   private initFormGroup() {
     this.newOfferForm = this.formBuilder.group({
       title: '',
-      location: 'Pick location',
+      location: 'Warszawa',
       roomCount: '1',
       flatSize: '',
       price: '',
@@ -39,6 +45,8 @@ export class AddOfferComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+
 
   onSubmit(formValue) {
     var offer: Offer = {
@@ -50,6 +58,8 @@ export class AddOfferComponent implements OnInit {
       description: formValue.description,
       size: formValue.flatSize,
       price: formValue.price,
+      locationX: this.marker ? this.marker.x : null,
+      locationY: this.marker ? this.marker.y : null,
       owner: null,
       photos: [],
       visitCount: 0
@@ -65,6 +75,21 @@ export class AddOfferComponent implements OnInit {
         }
       });
 
+  }
+
+  updateMapLocation(location) {
+    this.marker = null;
+    this.mapsService.getLocationByCityName(location).subscribe(
+      data => this.mapCenter = data
+    );
+  }
+
+  public onMapClick(event) {
+    this.marker = {
+      x: event.latLng.lat(),
+      y: event.latLng.lng(),
+      title: 'Selected location'
+    }
   }
 
   getCities() {
