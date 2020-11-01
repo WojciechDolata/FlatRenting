@@ -46,6 +46,12 @@ public class Offer {
     @Column(length = 1023)
     private String description;
 
+    @Column
+    private Long locationX;
+
+    @Column
+    private Long locationY;
+
     @ManyToOne
     private User owner;
 
