@@ -10,7 +10,7 @@ import LatLng = google.maps.LatLng;
 export class GoogleMapsService {
 
   private mapUrl = "https://maps.googleapis.com/maps/api/geocode/json?";
-  private key = "AIzaSyDjKaD2Cl8SMzLCK3UCH7swyI2gd6LjRNo";
+  private key = "AIzaSyAA_d7vNw7MSfID3vzu_GeU0VnoIepQvOU";
 
   constructor(private http: HttpClient) { }
 

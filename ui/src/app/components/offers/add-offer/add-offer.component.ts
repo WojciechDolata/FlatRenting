@@ -8,6 +8,7 @@ import {AuthService} from "../../../services/auth.service";
 import {cities} from "../../../../environments/cities";
 import {GoogleMapsService} from "../../../services/google-maps.service";
 import LatLng = google.maps.LatLng;
+import computeDistanceBetween = google.maps.geometry.spherical.computeDistanceBetween;
 
 @Component({
   selector: 'app-add-offer',
@@ -15,6 +16,8 @@ import LatLng = google.maps.LatLng;
   styleUrls: ['./add-offer.component.css']
 })
 export class AddOfferComponent implements OnInit {
+  readonly MAX_DISTANCE_FROM_CITY_CENTER = 25000; //in meters
+
   newOfferForm: FormGroup;
   filesToUpload: File[] = null;
   loading = false;
@@ -45,8 +48,6 @@ export class AddOfferComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-
 
   onSubmit(formValue) {
     var offer: Offer = {
@@ -90,6 +91,16 @@ export class AddOfferComponent implements OnInit {
       y: event.latLng.lng(),
       title: 'Selected location'
     }
+
+    if(this.getMarkerDistanceFromCenter() > this.MAX_DISTANCE_FROM_CITY_CENTER) {
+      alert("Select location closer to the city center (max 25km)!");
+      this.marker = null;
+    }
+  }
+
+  getMarkerDistanceFromCenter(): number {
+    // @ts-ignore
+    return computeDistanceBetween(new LatLng(this.mapCenter.lat, this.mapCenter.lng), new LatLng(this.marker.x, this.marker.y));
   }
 
   getCities() {
