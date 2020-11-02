@@ -29,27 +29,34 @@ public class UserPreferences {
     private String nick;
 
     @Column
+
     private Integer maxPrice;
 
     @Column
+
     private Integer minPrice;
 
     @Column
     private String location;
 
     @Column
+
     private Integer minNumberOfRooms;
 
     @Column
+
     private Integer maxNumberOfRooms;
 
     @Column
+
     private Integer minSize;
 
     @Column
+
     private Integer maxSize;
 
     @Column
+
     private Integer maxDaysAgo;
 
     public void copyValues (UserPreferences preferences) {
@@ -61,6 +68,17 @@ public class UserPreferences {
         minSize = preferences.getMinSize();
         maxSize = preferences.getMaxSize();
         maxDaysAgo = preferences.getMaxDaysAgo();
+    }
+
+    public boolean isCorrect() {
+        return getMaxDaysAgo() >= 0 &&
+                getMaxNumberOfRooms() >= 1 &&
+                getMinNumberOfRooms() >= 1 &&
+                getMaxPrice() >= 0 &&
+                getMinPrice() >= 0 &&
+                getMaxSize() >= 1 &&
+                getMinSize() >= 1;
+
     }
 
 }

@@ -74,7 +74,7 @@ export class AddOfferComponent implements OnInit {
           this.initFormGroup();
           this.router.navigateByUrl("/offer-detail/" + offer.id);
         }
-      });
+      }, () => alert("Data incorrect. Make sure all the numbers are positive!"));
 
   }
 

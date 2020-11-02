@@ -8,7 +8,7 @@
   </div>
 
   <div *ngIf="hasPreferences">
-    <mat-spinner *ngIf="!offers" style="margin: 20% auto;" [color]="'primary'"></mat-spinner>
+<!--    <mat-spinner *ngIf="!offers" style="margin: 20% auto;" [color]="'primary'"></mat-spinner>-->
     <div *ngFor="let offers of splitOffersToThreeInRow()" class="row" style="width: 100%;">
       <div *ngFor="let offer of offers" class="card column">
         <div class="card-body">

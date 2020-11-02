@@ -66,8 +66,11 @@ public class OfferController {
                                           @RequestBody Offer offer,
                                           Principal user) {
         if(ownerNick.equals(user.getName())) {
-            offerService.addOffer(offer, ownerNick);
-            return ResponseEntity.ok().body(offer);
+            if(offerService.addOffer(offer, ownerNick)) {
+                return ResponseEntity.ok().body(offer);
+            } else {
+                return ResponseEntity.unprocessableEntity().build();
+            }
         } else {
             throw new NotAuthorizedException();
         }
@@ -75,8 +78,8 @@ public class OfferController {
 
     @GetMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Object> addOffer(@PathVariable(value = "id") Integer offerId,
-                                          Principal user) {
+    public ResponseEntity<Object> deleteOffer(@PathVariable(value = "id") Integer offerId,
+                                              Principal user) {
         Offer offer = offerService.get(offerId).orElseThrow(() -> new OfferNotFoundException(offerId.toString()));
         if(offer.getOwner().getNick().equals(user.getName())) {
             offerService.delete(offer);

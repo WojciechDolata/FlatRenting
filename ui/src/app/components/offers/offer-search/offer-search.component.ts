@@ -52,6 +52,7 @@ export class OfferSearchComponent implements OnInit {
   }
 
   processData(observable: Observable<Offer[]>): void {
+    this.loading = true;
     observable.subscribe(
       data => {
         data.forEach(item => this.offers.push(item));

@@ -35,12 +35,13 @@ public class Offer {
     private Integer price;
 
     @Column(name = "flat_size")
+
     private Integer size;
 
     @Column
     private Integer roomCount;
-
     @Column
+
     private Integer visitCount;
 
     @Column(length = 1023)
@@ -67,5 +68,9 @@ public class Offer {
         } else {
             visitCount++;
         }
+    }
+
+    public boolean isOfferCorrect() {
+        return getPrice() >= 0 && getRoomCount() > 0 && getSize() > 0;
     }
 }

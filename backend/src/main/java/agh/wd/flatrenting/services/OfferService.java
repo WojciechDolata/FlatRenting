@@ -70,19 +70,22 @@ public class OfferService {
 
     @Transactional
     public void delete(Offer offer) {
-//        offer.getConversations().forEach(entityManager::remove);
         offerRepository.delete(offer);
     }
 
-    public void addOffer(Offer offer, String ownerNick) {
-        User user = userRepository.findByNick(ownerNick).orElse(null);
-        if(user == null) {
-            logger.error("User " + ownerNick + " not found.");
-            throw new UserNotFoundException(ownerNick);
-        } else {
-            offer.setOwner(user);
-            save(offer);
+    public boolean addOffer(Offer offer, String ownerNick) {
+        if (offer.isOfferCorrect()) {
+            User user = userRepository.findByNick(ownerNick).orElse(null);
+            if(user == null) {
+                logger.error("User " + ownerNick + " not found.");
+                throw new UserNotFoundException(ownerNick);
+            } else {
+                offer.setOwner(user);
+                save(offer);
+                return true;
+            }
         }
+        return false;
     }
 
     @Transactional
@@ -148,8 +151,9 @@ public class OfferService {
     public List<Offer> getPreferredOffers(String nick, Integer maxSize) {
         UserPreferences preferences = userService.getPreferences(nick);
 
-        LocalDateTime minDay = preferences.getMaxDaysAgo() != null ? LocalDateTime.now().minusDays(preferences.getMaxDaysAgo()) : null;
-
+        LocalDateTime minDay = preferences.getMaxDaysAgo() != null ?
+                LocalDateTime.now().minusDays(preferences.getMaxDaysAgo()) :
+                LocalDateTime.of(1970,1,1,1,1);
         List<Offer> preferredOffers = offerRepository.findAllByPreference(
                 preferences.getMinPrice(),
                 preferences.getMaxPrice(),
@@ -166,7 +170,7 @@ public class OfferService {
         if(offersLength == 0) {
             return List.of();
         } else {
-            return preferredOffers.subList(0, offersLength < maxSize ? offersLength - 1 : maxSize - 1);
+            return preferredOffers.subList(0, offersLength < maxSize ? offersLength : maxSize);
         }
     }
 }

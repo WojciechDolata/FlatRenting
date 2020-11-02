@@ -39,8 +39,8 @@ public interface OfferRepository extends JpaRepository<Offer, Integer> {
             "and (:maxNumberOfRooms is null or (o.roomCount <= :maxNumberOfRooms)) " +
             "and (:minSize is null or (o.size >= :minSize)) " +
             "and (:maxSize is null or (o.size <= :maxSize)) " +
-            "and (:afterDay is null or (o.creationTimestamp >= :afterDay)) " +
-            "and (:location is null or (o.location like (:location))) " +
+            "and o.creationTimestamp >= :afterDay " +
+            "and (:location is null or (o.location = :location)) " +
             "order by o.creationTimestamp desc")
     List<Offer> findAllByPreference(
             @Param(value = "minPrice") Integer minPrice,

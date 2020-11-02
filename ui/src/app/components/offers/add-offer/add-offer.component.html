@@ -16,21 +16,24 @@
         <option>Pick location</option>
         <option *ngFor="let city of getCities()">{{city}}</option>
       </select>
-      <google-map (mapClick)="onMapClick($event)"
-                  [center]="mapCenter"
-                  [zoom]="10"
-                  width="100%"
-                  height="300px">
-        <map-marker
-          *ngIf="marker"
-          [position]="{lat: marker.x, lng: marker.y}"
-          [title]="marker.title">
-        </map-marker>
-      </google-map>
+      <div *ngIf="location">
+        <label>Point it on a map if you want.</label>
+        <google-map (mapClick)="onMapClick($event)"
+                    [center]="mapCenter"
+                    [zoom]="10"
+                    width="100%"
+                    height="300px">
+          <map-marker
+            *ngIf="marker"
+            [position]="{lat: marker.x, lng: marker.y}"
+            [title]="marker.title">
+          </map-marker>
+        </google-map>
+      </div>
     </div>
     <div class="form-group">
       <label for="price">Price</label>
-      <input type="number" class="form-control" id="price"
+      <input type="number" min="0" class="form-control" id="price"
              formControlName="price" required>
     </div>
     <div class="form-group">

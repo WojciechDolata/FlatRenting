@@ -74,7 +74,8 @@ export class UserPreferencesComponent implements OnInit {
     };
 
     this.userService.updatePreferences(newPreferences).subscribe(
-      data => this.router.navigateByUrl("/offers")
+      data => this.router.navigateByUrl("/offers"),
+      () => alert("Data incorrect. Make sure all the numbers are positive!")
     );
   }
 
