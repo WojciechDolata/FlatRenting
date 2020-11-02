@@ -41,6 +41,8 @@
 
 </div>
 
-<app-nothing-here *ngIf="isLogged() && !offers"></app-nothing-here>
+<mat-spinner *ngIf="loading" style="margin: 20% auto;" [color]="'primary'"></mat-spinner>
 
-<app-login *ngIf="!isLogged()"></app-login>
+<app-nothing-here *ngIf="isLogged() && !offers && !loading"></app-nothing-here>
+
+<app-login *ngIf="!isLogged() && !loading"></app-login>

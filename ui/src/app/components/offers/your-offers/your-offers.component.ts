@@ -13,6 +13,7 @@ export class YourOffersComponent implements OnInit {
   offers: Offer[];
   conversationLists: Conversation[][] = null;
   offerListMap = new Map<Offer, Conversation[]>();
+  loading = true;
 
   constructor(private authService: AuthService,
               private offerService: OfferService,
@@ -24,6 +25,7 @@ export class YourOffersComponent implements OnInit {
   }
 
   fetchData() {
+    this.loading = true;
     this.offerService.getAllForUser(this.authService.getNick()).subscribe(
       data => {
         this.offers = data;
@@ -31,7 +33,8 @@ export class YourOffersComponent implements OnInit {
         this.messageService.getAllConversationsForOffers(offerIds).subscribe(
           data => {
             this.conversationLists = data;
-            this.setMap()
+            this.setMap();
+            this.loading = false;
           }
         );
       }

@@ -22,6 +22,9 @@
     </li>
   </ul>
 </div>
-<app-nothing-here *ngIf="isAuthorized() && !conversations"></app-nothing-here>
 
-<app-auth-failed *ngIf="!isAuthorized()"></app-auth-failed>
+<mat-spinner *ngIf="loading" style="margin: 20% auto;" [color]="'primary'"></mat-spinner>
+
+<app-nothing-here *ngIf="isAuthorized() && !loading && !conversations"></app-nothing-here>
+
+<app-auth-failed *ngIf="!isAuthorized() && !loading"></app-auth-failed>

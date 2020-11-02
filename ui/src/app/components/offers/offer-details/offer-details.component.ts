@@ -17,7 +17,8 @@ export class OfferDetailsComponent implements OnInit {
 
   offer: Offer;
 
-  shouldCreateConversation: boolean
+  shouldCreateConversation: boolean;
+  loading = true;
 
   constructor(
     private offerService: OfferService,
@@ -38,11 +39,13 @@ export class OfferDetailsComponent implements OnInit {
   }
 
   fetchOffer() {
+    this.loading = true;
     this.id = +this.route.snapshot.paramMap.get('id');
     this.offerService.getOffer(this.id)
       .subscribe(offer => {
         this.offer = offer;
         this.setShouldCreateConversation();
+        this.loading = false;
       });
   }
 

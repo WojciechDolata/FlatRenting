@@ -19,7 +19,7 @@ export class OfferSearchComponent implements OnInit {
   private canFetchMore = true;
   private hasAlreadyFetchedAll = false;
   private areFiltersApplied = false;
-  loading = false;
+  loading = true;
 
   constructor(
     private offerService: OfferService,

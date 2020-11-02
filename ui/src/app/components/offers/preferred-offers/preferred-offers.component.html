@@ -32,6 +32,8 @@
   </div>
 </div>
 
-<app-nothing-here *ngIf="isLogged() && offers.length === 0 && hasPreferences"></app-nothing-here>
+<mat-spinner *ngIf="loading" style="margin: 20% auto;" [color]="'primary'"></mat-spinner>
 
-<app-auth-failed *ngIf="!isLogged()"></app-auth-failed>
+<app-nothing-here *ngIf="isLogged() && hasPreferences && !loading && offers.length === 0"></app-nothing-here>
+
+<app-auth-failed *ngIf="!isLogged() && !loading"></app-auth-failed>

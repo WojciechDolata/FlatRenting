@@ -13,6 +13,7 @@ export class AllConversationsComponent implements OnInit {
 
   conversations: Conversation[];
   conversationNewMessageMap: Map<Conversation, number> = new Map();
+  loading = true;
 
   constructor(private authService: AuthService,
               private messageService: MessageService) { }
@@ -28,9 +29,9 @@ export class AllConversationsComponent implements OnInit {
 
   fetchConversations() {
     this.messageService.getConversationsByNick().subscribe(data => {
-      // this.conversations = data;
       data.forEach(conv => this.conversationNewMessageMap.set(conv, this.getNewMessageCount(conv)))
-    });
+    }, () => alert("Something went wrong"),
+      () => this.loading = false);
   }
 
   getNewMessageCount(conversation: Conversation) {

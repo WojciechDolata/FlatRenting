@@ -12,6 +12,7 @@ import {AuthService} from "../../../services/auth.service";
 export class PreferredOffersComponent implements OnInit {
 
   offers: Offer[];
+  loading = true;
   hasPreferences: boolean;
 
   constructor(
@@ -25,12 +26,16 @@ export class PreferredOffersComponent implements OnInit {
   }
 
   fetchData() {
+    this.loading = true;
     this.offerService.getPreferredOffers().subscribe(
-      data => this.offers = data
-    );
+      data => this.offers = data,
+      () => null,
+      () => this.loading = false);
 
     this.userService.hasPreferences().subscribe(
-      data => this.hasPreferences = data
+      data => {
+        this.hasPreferences = data;
+      }
     );
   }
 

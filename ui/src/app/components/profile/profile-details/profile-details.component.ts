@@ -19,6 +19,7 @@ export class ProfileDetailsComponent implements OnInit {
   nickWrong: boolean;
   user: User;
   email: string;
+  loading = true;
 
   EMAIL_MATCHER: string = "[a-zA-Z0-9_\\.\\+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-\\.]+";
 
@@ -45,7 +46,8 @@ export class ProfileDetailsComponent implements OnInit {
   fetchData() {
     this.userService.getEmail().subscribe(response => {
       this.email = response['response'];
-    });
+    }, () => alert("Something went wrong"),
+      () => this.loading = false);
     this.userService.getUser().subscribe(user => this.user = user);
   }
 

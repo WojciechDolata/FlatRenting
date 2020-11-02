@@ -27,6 +27,8 @@
 
 </div>
 
-<app-login *ngIf="!isLogged()"></app-login>
+<mat-spinner *ngIf="loading" style="margin: 20% auto;" [color]="'primary'"></mat-spinner>
+
+<app-login *ngIf="!isLogged() && !loading"></app-login>
 
 

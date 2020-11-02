@@ -22,8 +22,8 @@ public interface OfferRepository extends JpaRepository<Offer, Integer> {
             "and (:roomCount is null or o.roomCount = :roomCount) " +
             "and (:location is null or o.location = :location) " +
             "and (:searchQuery is null " +
-            "   or (o.title LIKE CONCAT('%',:searchQuery,'%') " +
-            "       or (:descriptionCheck = true and o.description LIKE CONCAT('%',:searchQuery,'%'))))")
+            "   or (lower(o.title) LIKE LOWER(CONCAT('%',:searchQuery,'%')) " +
+            "       or (:descriptionCheck = true and lower(o.description) LIKE lower(CONCAT('%',:searchQuery,'%')))))")
     Page<Offer> findAllBy(@Param(value = "searchQuery") String searchQuery,
                           @Param(value = "descriptionCheck") boolean descriptionCheck,
                           @Param(value = "roomCount") Integer roomCount,

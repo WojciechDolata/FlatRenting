@@ -1,4 +1,3 @@
-<!--<div *ngIf="preferences && isLogged()">-->
 <div *ngIf="true">
   <h1 class="mt-5">Change your selected offers' preferences</h1>
   <br/>
@@ -75,6 +74,8 @@
 
 </div>
 
-<div *ngIf="!isLogged()">
+<mat-spinner *ngIf="loading" style="margin: 20% auto;" [color]="'primary'"></mat-spinner>
+
+<div *ngIf="!isLogged() && !loading">
   <app-login></app-login>
 </div>

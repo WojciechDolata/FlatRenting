@@ -88,7 +88,7 @@
 
 </div>
 
-<app-nothing-here *ngIf="offers.length === 0"></app-nothing-here>
+<app-nothing-here *ngIf="offers.length === 0 && !loading"></app-nothing-here>
 
-<mat-spinner *ngIf="!offers || loading" style="margin: 20% auto;" [color]="'primary'"></mat-spinner>
+<mat-spinner *ngIf="loading" style="margin: 20% auto;" [color]="'primary'"></mat-spinner>
 

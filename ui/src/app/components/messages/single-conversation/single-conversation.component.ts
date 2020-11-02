@@ -24,13 +24,17 @@ export class SingleConversationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.fetchData();
+  }
+
+  fetchData() {
     let id = +this.route.snapshot.paramMap.get('id');
     this.messageService.markRead(id).subscribe(
       conversation => {
         this.conversation = conversation;
         this.secondUser = this.conversation.user.nick == this.authService.getNick() ? this.conversation.offer.owner.nick : this.conversation.user.nick;
         this.isLoaded = true;
-      }
+      }, () => alert("Something went wrong")
     );
   }
 

@@ -14,6 +14,7 @@ import DateUtils from "../../../utils/date-utils";
 export class OfferConversationsComponent implements OnInit {
   offer: Offer;
   conversations: Conversation[];
+  loading = true;
 
   constructor(private authService: AuthService,
               private offerService: OfferService,
@@ -33,7 +34,8 @@ export class OfferConversationsComponent implements OnInit {
           .subscribe(
             data => {
               this.conversations = data[0];
-            }
+            }, () => alert("Something went wrong"),
+            () => this.loading = false
         )
       });
   }

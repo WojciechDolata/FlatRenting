@@ -14,6 +14,7 @@ import {cities} from "../../../../environments/cities";
 export class UserPreferencesComponent implements OnInit {
   preferences: UserPreferences;
   preferencesForm: FormGroup;
+  loading = true;
 
   constructor(private authService: AuthService,
               private userService: UserService,
@@ -52,7 +53,8 @@ export class UserPreferencesComponent implements OnInit {
           location: data.location,
           maxDaysAgo: data.maxDaysAgo,
         });
-      }
+      }, () => null,
+      () => this.loading = false
     );
   }
 
