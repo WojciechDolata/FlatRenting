@@ -80,9 +80,11 @@ export class AddOfferComponent implements OnInit {
 
   updateMapLocation(location) {
     this.marker = null;
-    this.mapsService.getLocationByCityName(location).subscribe(
-      data => this.mapCenter = data
-    );
+    if(this.location) {
+      this.mapsService.getLocationByCityName(location).subscribe(
+        data => this.mapCenter = data
+      );
+    }
   }
 
   public onMapClick(event) {

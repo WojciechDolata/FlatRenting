@@ -1,5 +1,6 @@
 package agh.wd.flatrenting.entities;
 
+import agh.wd.flatrenting.exceptions.PreferencesNotFoundException;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -59,15 +60,50 @@ public class UserPreferences {
 
     private Integer maxDaysAgo;
 
-    public void copyValues (UserPreferences preferences) {
-        maxPrice = preferences.getMaxPrice();
-        minPrice = preferences.getMinPrice();
+    public void copyValues(UserPreferences preferences) {
+        if (preferences.getMinPrice() > 0 || preferences.getMinPrice() == null) {
+            minPrice = preferences.getMinPrice();
+        } else {
+            throw new PreferencesNotFoundException(preferences.getNick());
+        }
+
+        if (preferences.getMaxPrice() > 0 || preferences.getMaxPrice() == null) {
+            maxPrice = preferences.getMaxPrice();
+        } else {
+            throw new PreferencesNotFoundException(preferences.getNick());
+        }
+
+        if (preferences.getMinSize() > 0 || preferences.getMinSize() == null) {
+            minSize = preferences.getMinSize();
+        } else {
+            throw new PreferencesNotFoundException(preferences.getNick());
+        }
+
+        if (preferences.getMaxSize() > 0 || preferences.getMaxSize() == null) {
+            maxSize = preferences.getMaxSize();
+        } else {
+            throw new PreferencesNotFoundException(preferences.getNick());
+        }
+
+        if (preferences.getMinNumberOfRooms() > 0 || preferences.getMinNumberOfRooms() == null) {
+            minNumberOfRooms = preferences.getMinNumberOfRooms();
+        } else {
+            throw new PreferencesNotFoundException(preferences.getNick());
+        }
+
+        if (preferences.getMaxNumberOfRooms() > 0 || preferences.getMaxNumberOfRooms() == null) {
+            maxNumberOfRooms = preferences.getMaxNumberOfRooms();
+        } else {
+            throw new PreferencesNotFoundException(preferences.getNick());
+        }
+
+        if (preferences.getMaxDaysAgo() > 0 || preferences.getMaxDaysAgo() == null) {
+            maxDaysAgo = preferences.getMaxDaysAgo();
+        } else {
+            throw new PreferencesNotFoundException(preferences.getNick());
+        }
+
         location = preferences.getLocation();
-        minNumberOfRooms = preferences.getMinNumberOfRooms();
-        maxNumberOfRooms = preferences.getMaxNumberOfRooms();
-        minSize = preferences.getMinSize();
-        maxSize = preferences.getMaxSize();
-        maxDaysAgo = preferences.getMaxDaysAgo();
     }
 
     public boolean isCorrect() {

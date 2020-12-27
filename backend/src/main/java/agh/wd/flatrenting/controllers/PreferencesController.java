@@ -32,15 +32,11 @@ public class PreferencesController {
     public @ResponseBody ResponseEntity<String> updatePreferences(
             @RequestBody UserPreferences preferences,
             Principal user) {
-        if(preferences.isCorrect()) {
-            if(preferences.getNick().equals(user.getName())) {
-                userService.updatePreferences(preferences);
-                return ResponseEntity.ok("");
-            } else {
-                throw new NotAuthorizedException();
-            }
+        if(preferences.getNick().equals(user.getName())) {
+            userService.updatePreferences(preferences);
+            return ResponseEntity.ok("");
         } else {
-            return ResponseEntity.unprocessableEntity().build();
+            throw new NotAuthorizedException();
         }
     }
 

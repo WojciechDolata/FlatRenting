@@ -20,6 +20,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class OfferService {
@@ -101,7 +102,14 @@ public class OfferService {
         return optionalOffer.orElse(null);
     }
 
-    public List<Offer> getAllBy(String searchQuery, boolean descriptionCheck, Integer roomCount, String location, String size, String orderBy, int page, int pageSize) {
+    public List<Offer> getAllBy(String searchQuery,
+                                boolean descriptionCheck,
+                                Integer roomCount,
+                                String location,
+                                String size,
+                                String orderBy,
+                                int page,
+                                int pageSize) {
         Sort sort = switch (orderBy) {
             case "2" -> Sort.by("creationTimestamp").ascending();
             case "3" -> Sort.by("price").ascending();
@@ -154,24 +162,17 @@ public class OfferService {
         LocalDateTime minDay = preferences.getMaxDaysAgo() != null ?
                 LocalDateTime.now().minusDays(preferences.getMaxDaysAgo()) :
                 LocalDateTime.of(1970,1,1,1,1);
-        List<Offer> preferredOffers = offerRepository.findAllByPreference(
-                preferences.getMinPrice(),
-                preferences.getMaxPrice(),
-                preferences.getMinNumberOfRooms(),
-                preferences.getMaxNumberOfRooms(),
-                preferences.getMinSize(),
-                preferences.getMaxSize(),
-                minDay,
-                preferences.getLocation()
-        );
-
-        int offersLength = preferredOffers.size();
-
-        if(offersLength == 0) {
-            return List.of();
-        } else {
-            return preferredOffers.subList(0, offersLength < maxSize ? offersLength : maxSize);
-        }
+        return offerRepository.findAllByPreference(
+                    preferences.getMinPrice(),
+                    preferences.getMaxPrice(),
+                    preferences.getMinNumberOfRooms(),
+                    preferences.getMaxNumberOfRooms(),
+                    preferences.getMinSize(),
+                    preferences.getMaxSize(),
+                    minDay,
+                    preferences.getLocation())
+                .limit(maxSize)
+                .collect(Collectors.toList());
     }
 }
 

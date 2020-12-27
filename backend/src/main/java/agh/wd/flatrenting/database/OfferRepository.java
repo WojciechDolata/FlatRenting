@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public interface OfferRepository extends JpaRepository<Offer, Integer> {
     @Override
@@ -42,7 +43,7 @@ public interface OfferRepository extends JpaRepository<Offer, Integer> {
             "and o.creationTimestamp >= :afterDay " +
             "and (:location is null or (o.location = :location)) " +
             "order by o.creationTimestamp desc")
-    List<Offer> findAllByPreference(
+    Stream<Offer> findAllByPreference(
             @Param(value = "minPrice") Integer minPrice,
             @Param(value = "maxPrice") Integer maxPrice,
             @Param(value = "minNumberOfRooms") Integer minNumberOfRooms,
