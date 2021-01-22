@@ -25,10 +25,9 @@
       </div>
     </li>
   </ul>
+
+  <mat-spinner *ngIf="loading" style="margin: 20% auto;" [color]="'primary'"></mat-spinner>
+  <app-nothing-here *ngIf="!loading && !conversationNewMessageMap.size > 0"></app-nothing-here>
 </div>
-
-<mat-spinner *ngIf="loading" style="margin: 20% auto;" [color]="'primary'"></mat-spinner>
-
-<app-nothing-here *ngIf="isLogged() && !loading && !conversations"></app-nothing-here>
 
 <app-login *ngIf="!isLogged() && !loading"></app-login>

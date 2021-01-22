@@ -11,7 +11,6 @@ import DateUtils from "../../../utils/date-utils";
 })
 export class AllConversationsComponent implements OnInit {
 
-  conversations: Conversation[];
   conversationNewMessageMap: Map<Conversation, number> = new Map();
   loading = true;
 
